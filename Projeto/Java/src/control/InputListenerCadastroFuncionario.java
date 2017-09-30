@@ -3,6 +3,9 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -103,10 +106,10 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 				getFunc().setDataAdmissao();
 				getFunc().setSenha(cadastroFuncionario.getTextPassword1().getText());
 
-				// getFunc().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
-				getFunc().setDataNascimento(getFunc().getDataAdmissao());
-				System.out.println(getFunc().getDataNascimento());
-
+				
+		        getFunc().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
+		       
+				
 				if (cadastroFuncionario.getChckbxAdministrador().isSelected())
 					getFunc().setAdministrador(true);
 				else

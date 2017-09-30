@@ -16,7 +16,7 @@ public class Funcionario {
 	private String bairro;
 	private String cidade;
 	private String cep;
-	private Date dataNascimento;
+	private String dataNascimento;
 	private long telefone;
 	private long celular;
 	private Date dataAdmissao;
@@ -122,10 +122,10 @@ public class Funcionario {
 	public void setCelular(long celular) {
 		this.celular = celular;
 	}
-	public Date getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public Date getDataAdmissao() {

@@ -14,7 +14,7 @@ public class Cliente {
 	private String bairro;
 	private String cidade;
 	private String cep;
-	private Date dataNascimento;
+	private String dataNascimento;
 	private long telefone;
 	private long celular;
 	private Date dataCadastro;
@@ -84,11 +84,11 @@ public class Cliente {
 		this.cidade = cidade;
 	}
 
-	public Date getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setDataNascimento(String data) {
+		this.dataNascimento = data;
 	}
 	public Date getDataCadastro() {
 		return dataCadastro;

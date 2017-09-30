@@ -112,10 +112,9 @@ public class InputListenerEditarCliente implements MouseListener {
 				System.out.println(getClie().getCep());
 
 				getClie().setDataCadastro();
+				
 
-				// getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
-				getClie().setDataNascimento(getClie().getDataCadastro());
-				System.out.println(getClie().getDataNascimento());
+				getClie().setDataNascimento(edicaoCliente.getTextDataNascimento().getText());
 
 				// TODO: Chamar DAO Cliente
 

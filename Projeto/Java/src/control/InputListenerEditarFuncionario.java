@@ -123,11 +123,7 @@ public class InputListenerEditarFuncionario implements MouseListener {
 					System.out.println(getFunc().getCep());
 
 					getFunc().setDataAdmissao();
-					System.out.println(getFunc().getDataAdmissao());
-
-					// getFunc().setDataNascimento(edicaoFuncionario.getTextDataNascimento().getText());
-					getFunc().setDataNascimento(getFunc().getDataAdmissao());
-					System.out.println(getFunc().getDataNascimento());
+					getFunc().setDataNascimento(edicaoFuncionario.getTextDataNascimento().getText());
 
 					if (edicaoFuncionario.getChckbxAdministrador().isSelected())
 						getFunc().setAdministrador(true);

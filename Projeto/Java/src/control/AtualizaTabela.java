@@ -18,9 +18,9 @@ public class AtualizaTabela implements Runnable{
 		this.funcionarioView = funcionarioView;
 	}
 
-	public AtualizaTabela(ClienteView clienteView) {
+	/*public AtualizaTabela(ClienteView clienteView) {
 		this.clienteView = clienteView;
-	}
+	}*/
 	@Override
 	public void run() {
 		try {
@@ -57,15 +57,12 @@ public class AtualizaTabela implements Runnable{
 		funcionarioView.revalidate();
 	}
 	
-	private void atualizarTabelaCliente() {
+/*	private void atualizarTabelaCliente() {
 		String[][] clientes = clieDAO.listaClienteArray("");
 		String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
 		
 		DefaultTableModel model = new DefaultTableModel(clientes,colunas) {
-			 
-			/**
-			 * 
-			 */
+		
 			private static final long serialVersionUID = -7680235106608274804L;
 			boolean[] canEdit = new boolean []{  
 			            false, false, false, false,false,false
@@ -79,5 +76,5 @@ public class AtualizaTabela implements Runnable{
 		clienteView.repaint();
 		clienteView.revalidate();
 	}
-	
+	*/
 }

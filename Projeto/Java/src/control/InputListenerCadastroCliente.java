@@ -95,9 +95,9 @@ public class InputListenerCadastroCliente implements MouseListener {
 			getClie().setCep(cadastroCliente.getTextCEP().getText());
 			getClie().setDataCadastro();
 
-			// getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
-			getClie().setDataNascimento(getClie().getDataCadastro());
-			System.out.println(getClie().getDataNascimento());
+			getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
+
+	       
 
 
 			if (clieDAO.verificaCPF(clie.getCpf()))

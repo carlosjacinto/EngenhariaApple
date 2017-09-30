@@ -17,15 +17,17 @@ public class FuncionarioDAO {
 
 	public boolean gravarFuncionario(Funcionario f) {
 		conex = bd.Conectar();
+		int adm=0;
+		if(f.isAdministrador()) adm=1;
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
-					"INSERT INTO funcionario(nomeFunc, ruaFunc, compFunc, numeroFunc, bairroFunc, cidadeFunc, dataNascFunc, dataAdmissaoFunc, cepFunc, senhaFunc, fotoFunc, telefoneFunc, celularFunc, cpfFunc, salarioFunc, comissaoFunc)VALUES ('"
+					"INSERT INTO funcionario(nomeFunc, ruaFunc, compFunc, numeroFunc, bairroFunc, cidadeFunc, dataNascFunc, dataAdmissaoFunc, cepFunc, senhaFunc, fotoFunc, telefoneFunc, celularFunc, cpfFunc, salarioFunc, comissaoFunc, administrador)VALUES ('"
 							+ f.getNome() + "','" + f.getRua() + "','" + f.getComplemento() + "','" + f.getNumero()
 							+ "','" + f.getBairro() + "','" + f.getCidade() + "','" + f.getDataNascimento() + "','"
 							+ f.getDataAdmissao() + "','" + f.getCep() + "','" + f.getSenha() + "','" + f.getFoto()
 							+ "','" + f.getTelefone() + "','" + f.getCelular() + "','" + f.getCpf() + "','"
-							+ f.getSalario() + "','" + f.getComissao() + "') ");
+							+ f.getSalario() + "','" + f.getComissao() + "','" + adm +"') ");
 
 			if (f.getFoto() != null) {
 				int codigo = buscaCodigoFuncionario(f.getCpf());
@@ -169,7 +171,7 @@ public class FuncionarioDAO {
 				funcs[cont][0] = "" + rs.getInt("idFuncionario");
 				funcs[cont][2] = "" + rs.getLong("cpfFunc");
 				funcs[cont][4] = "" + rs.getLong("telefoneFunc");
-				funcs[cont][5] = "" + rs.getDate("dataNascFunc");
+				funcs[cont][5] = "" + rs.getString("dataNascFunc");
 				funcs[cont][3] = rs.getString("ruaFunc");
 				cont++;
 			}

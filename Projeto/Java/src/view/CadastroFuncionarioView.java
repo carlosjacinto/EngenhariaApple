@@ -1,16 +1,19 @@
 package view;
 
 import java.awt.Color;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import javax.swing.text.MaskFormatter;
 
 import control.InputListenerCadastroFuncionario;
 
@@ -45,7 +48,7 @@ public class CadastroFuncionarioView extends JDialog {
 	private JLabel lblCEP;
 	private JTextField textCEP;
 	private JLabel lblDataNascimento;
-	private JTextField textDataNascimento;
+	private JFormattedTextField textDataNascimento;
 	private JLabel lblTelefone;
 	private JTextField textTelefone;
 	private JLabel lblCelular;
@@ -344,9 +347,15 @@ public class CadastroFuncionarioView extends JDialog {
 		}
 		return lblDataNascimento;
 	}
-	public JTextField getTextDataNascimento() {
+	public JFormattedTextField getTextDataNascimento() {
 		if (textDataNascimento == null) {
-			textDataNascimento = new JTextField();
+			try {
+				textDataNascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			textDataNascimento.setValue(null);
+			textDataNascimento.setColumns(6);
 			textDataNascimento.setBounds(28, 535, 281, 20);
 			textDataNascimento.setColumns(10);
 		}
