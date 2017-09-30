@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import model.Cliente;
 import model.ClienteDAO;
+import model.Validacao;
 import view.CadastroClienteView;
 
 public class InputListenerCadastroCliente implements MouseListener {
@@ -18,6 +19,7 @@ public class InputListenerCadastroCliente implements MouseListener {
 	private ImageIcon imageIcon;
 	private Cliente clie;
 	private ClienteDAO clieDAO = new ClienteDAO();
+	private Validacao valida = new Validacao();
 
 	public InputListenerCadastroCliente(CadastroClienteView cadastroCliente) {
 		// TODO Auto-generated constructor stub
@@ -68,7 +70,6 @@ public class InputListenerCadastroCliente implements MouseListener {
 				|| cadastroCliente.getTextTelefone().getText().equals("")
 				|| cadastroCliente.getTextCelular().getText().equals("")
 				|| cadastroCliente.getTextRua().getText().equals("")
-				|| cadastroCliente.getTextComplemento().getText().equals("")
 				|| cadastroCliente.getTextNumero().getText().equals("")
 				|| cadastroCliente.getTextBairro().getText().equals("")
 				|| cadastroCliente.getTextCidade().getText().equals("")
@@ -76,69 +77,61 @@ public class InputListenerCadastroCliente implements MouseListener {
 				|| cadastroCliente.getTextCelular().getText().equals("")
 				|| cadastroCliente.getTextRua().getText().equals("")
 				|| cadastroCliente.getTextDataNascimento().getText().equals(""))) {
+
+			try {
+				getClie().setTelefone(Long.parseLong(cadastroCliente.getTextTelefone().getText()));
+				getClie().setCelular(Long.parseLong(cadastroCliente.getTextCelular().getText()));
+			} catch (NumberFormatException e) {
+				System.out.println("Valor Errado!");
+			}
+
+			getClie().setCpf(cadastroCliente.getTextCPF().getText());
+			getClie().setNome(cadastroCliente.getTextNome().getText());
+			getClie().setRua(cadastroCliente.getTextRua().getText());
+			getClie().setComplemento(cadastroCliente.getTextComplemento().getText());
+			getClie().setNumero(cadastroCliente.getTextNumero().getText());
+			getClie().setBairro(cadastroCliente.getTextBairro().getText());
+			getClie().setCidade(cadastroCliente.getTextCidade().getText());
+			getClie().setCep(cadastroCliente.getTextCEP().getText());
+			getClie().setDataCadastro();
+
+			getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
+
+	       
+
+
+			if (clieDAO.verificaCPF(clie.getCpf()))
+				JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
+						JOptionPane.ERROR_MESSAGE);
+			else if (!valida.isCPF(clie.getCpf()))
+				JOptionPane.showMessageDialog(null, "CPF inválido!", null, JOptionPane.ERROR_MESSAGE);
+			else {
 				if (!(imageIcon == null)) {
-					getClie().setNome(cadastroCliente.getTextNome().getText());
-					System.out.println(getClie().getNome());
 
-					try {
+					clieDAO.gravarCliente(clie);
+					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+							JOptionPane.DEFAULT_OPTION);
+					cadastroCliente.dispose();
+				}
 
-						getClie().setCpf(Long.parseLong(cadastroCliente.getTextCPF().getText()));
-						System.out.println(getClie().getCpf());
-
-						getClie().setTelefone(Long.parseLong(cadastroCliente.getTextTelefone().getText()));
-						System.out.println(getClie().getTelefone());
-
-						getClie().setCelular(Long.parseLong(cadastroCliente.getTextCelular().getText()));
-						System.out.println(getClie().getCelular());
-					} catch (NumberFormatException e) {
-						// TODO: handle exception
-						System.out.println("Valor Errado!");
-					}
-
-					getClie().setRua(cadastroCliente.getTextRua().getText());
-					System.out.println(getClie().getRua());
-
-					getClie().setComplemento(cadastroCliente.getTextComplemento().getText());
-					System.out.println(getClie().getComplemento());
-
-					getClie().setNumero(cadastroCliente.getTextNumero().getText());
-					System.out.println(getClie().getNumero());
-
-					getClie().setBairro(cadastroCliente.getTextBairro().getText());
-					System.out.println(getClie().getBairro());
-
-					getClie().setCidade(cadastroCliente.getTextCidade().getText());
-					System.out.println(getClie().getCidade());
-
-					getClie().setCep(cadastroCliente.getTextCEP().getText());
-					System.out.println(getClie().getCep());
-
-
-					// getClie().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
-					getClie().setDataNascimento(getClie().getDataCadastro());
-					//System.out.println(getClie().getDataNascimento());
-
-					if (clieDAO.verificaCPF(clie.getCpf()))
-						JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
-								JOptionPane.ERROR_MESSAGE);
-					else
-						clieDAO.gravarCliente(clie);
-
-				} else {
+				else {
 					int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar o Cadastro sem Imagem?",
 							"Cadastrar", JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION) {
-						if (clieDAO.verificaCPF(clie.getCpf()))
-							JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
-									JOptionPane.ERROR_MESSAGE);
-						else
-							clieDAO.gravarCliente(clie);
+
+						clieDAO.gravarCliente(clie);
+						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+								JOptionPane.DEFAULT_OPTION);
+						cadastroCliente.dispose();
 					}
 				}
-		} else
-			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
+			}
+	} else
+		JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
 
-	}
+}
+
+					
 
 	public Cliente getClie() {
 		if (clie == null) {

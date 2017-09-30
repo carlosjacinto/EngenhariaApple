@@ -1,14 +1,17 @@
 package view;
 
 import java.awt.Color;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
+import javax.swing.text.MaskFormatter;
 
 import control.InputListenerEditarCliente;
 
@@ -38,7 +41,7 @@ public class EditarClienteView extends JDialog {
 	private JLabel lblCEP;
 	private JTextField textCEP;
 	private JLabel lblDataNascimento;
-	private JTextField textDataNascimento;
+	private JFormattedTextField textDataNascimento;
 	private JLabel lblTelefone;
 	private JTextField textTelefone;
 	private JLabel lblCelular;
@@ -306,14 +309,21 @@ public class EditarClienteView extends JDialog {
 		return lblDataNascimento;
 	}
 
-	public JTextField getTextDataNascimento() {
+	public JFormattedTextField getTextDataNascimento() {
 		if (textDataNascimento == null) {
-			textDataNascimento = new JTextField();
+			try {
+				textDataNascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			textDataNascimento.setValue(null);
+			textDataNascimento.setColumns(6);
 			textDataNascimento.setBounds(30, 454, 281, 20);
 			textDataNascimento.setColumns(10);
 		}
 		return textDataNascimento;
 	}
+	
 
 	public JLabel getLblTelefone() {
 		if (lblTelefone == null) {

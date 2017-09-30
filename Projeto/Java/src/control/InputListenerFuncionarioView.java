@@ -21,6 +21,7 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 		this.funcionarioView = funcionarioView;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -44,6 +45,8 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			funcionarioView.getTableFuncionario().setModel(model);
 			funcionarioView.repaint();
 			funcionarioView.revalidate();
+			funcionarioView.getT1().stop();
+			
 			
 			//EditarFuncionarioView edicaoFuncionarioView = new EditarFuncionarioView();
 			//edicaoFuncionarioView.setVisible(true);

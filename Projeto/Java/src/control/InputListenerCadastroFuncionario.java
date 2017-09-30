@@ -3,6 +3,9 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -10,6 +13,7 @@ import javax.swing.JOptionPane;
 
 import model.Funcionario;
 import model.FuncionarioDAO;
+import model.Validacao;
 import view.CadastroFuncionarioView;
 
 public class InputListenerCadastroFuncionario implements MouseListener {
@@ -18,6 +22,7 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 	private ImageIcon imageIcon;
 	private Funcionario func;
 	private FuncionarioDAO funcDAO = new FuncionarioDAO();
+	private Validacao valida = new Validacao();
 
 	public InputListenerCadastroFuncionario(CadastroFuncionarioView cadastroFuncionario) {
 		// TODO Auto-generated constructor stub
@@ -70,7 +75,6 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 				|| cadastroFuncionario.getTextTelefone().getText().equals("")
 				|| cadastroFuncionario.getTextCelular().getText().equals("")
 				|| cadastroFuncionario.getTextRua().getText().equals("")
-				|| cadastroFuncionario.getTextComplemento().getText().equals("")
 				|| cadastroFuncionario.getTextNumero().getText().equals("")
 				|| cadastroFuncionario.getTextBairro().getText().equals("")
 				|| cadastroFuncionario.getTextCidade().getText().equals("")
@@ -81,78 +85,60 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 			if (cadastroFuncionario.getTextPassword1().getText()
 					.equals(cadastroFuncionario.getTextPassword2().getText())
 					&& !cadastroFuncionario.getTextPassword1().getText().equals("")) {
-				if (!(imageIcon == null)) {
-					getFunc().setNome(cadastroFuncionario.getTextNome().getText());
-					System.out.println(getFunc().getNome());
 
-					try {
+				try {
+					getFunc().setSalario(Double.parseDouble(cadastroFuncionario.getTextSalario().getText()));
+					getFunc().setComissao(Double.parseDouble(cadastroFuncionario.getTextComissao().getText()));
+					getFunc().setTelefone(Long.parseLong(cadastroFuncionario.getTextTelefone().getText()));
+					getFunc().setCelular(Long.parseLong(cadastroFuncionario.getTextCelular().getText()));
+				} catch (NumberFormatException e) {
+					System.out.println("Valor Errado!");
+				}
 
-						getFunc().setSalario(Double.parseDouble(cadastroFuncionario.getTextSalario().getText()));
-						System.out.println(getFunc().getSalario());
+				getFunc().setCpf(cadastroFuncionario.getTextCPF().getText());
+				getFunc().setNome(cadastroFuncionario.getTextNome().getText());
+				getFunc().setRua(cadastroFuncionario.getTextRua().getText());
+				getFunc().setComplemento(cadastroFuncionario.getTextComplemento().getText());
+				getFunc().setNumero(cadastroFuncionario.getTextNumero().getText());
+				getFunc().setBairro(cadastroFuncionario.getTextBairro().getText());
+				getFunc().setCidade(cadastroFuncionario.getTextCidade().getText());
+				getFunc().setCep(cadastroFuncionario.getTextCEP().getText());
+				getFunc().setDataAdmissao();
+				getFunc().setSenha(cadastroFuncionario.getTextPassword1().getText());
 
-						getFunc().setComissao(Double.parseDouble(cadastroFuncionario.getTextComissao().getText()));
-						System.out.println(getFunc().getComissao());
+				
+		        getFunc().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
+		       
+				
+				if (cadastroFuncionario.getChckbxAdministrador().isSelected())
+					getFunc().setAdministrador(true);
+				else
+					getFunc().setAdministrador(false);
 
-						getFunc().setCpf(Long.parseLong(cadastroFuncionario.getTextCPF().getText()));
-						System.out.println(getFunc().getCpf());
+				if (funcDAO.verificaCPF(func.getCpf()))
+					JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
+							JOptionPane.ERROR_MESSAGE);
+				else if (!valida.isCPF(func.getCpf()))
+					JOptionPane.showMessageDialog(null, "CPF inválido!", null, JOptionPane.ERROR_MESSAGE);
+				else {
+					if (!(imageIcon == null)) {
 
-						getFunc().setTelefone(Long.parseLong(cadastroFuncionario.getTextTelefone().getText()));
-						System.out.println(getFunc().getTelefone());
-
-						getFunc().setCelular(Long.parseLong(cadastroFuncionario.getTextCelular().getText()));
-						System.out.println(getFunc().getCelular());
-					} catch (NumberFormatException e) {
-						// TODO: handle exception
-						System.out.println("Valor Errado!");
+						funcDAO.gravarFuncionario(func);
+						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+								JOptionPane.DEFAULT_OPTION);
+						cadastroFuncionario.dispose();
 					}
 
-					getFunc().setRua(cadastroFuncionario.getTextRua().getText());
-					System.out.println(getFunc().getRua());
+					else {
+						int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar o Cadastro sem Imagem?",
+								"Cadastrar", JOptionPane.YES_NO_OPTION);
+						if (result == JOptionPane.YES_OPTION) {
 
-					getFunc().setComplemento(cadastroFuncionario.getTextComplemento().getText());
-					System.out.println(getFunc().getComplemento());
-
-					getFunc().setNumero(cadastroFuncionario.getTextNumero().getText());
-					System.out.println(getFunc().getNumero());
-
-					getFunc().setBairro(cadastroFuncionario.getTextBairro().getText());
-					System.out.println(getFunc().getBairro());
-
-					getFunc().setCidade(cadastroFuncionario.getTextCidade().getText());
-					System.out.println(getFunc().getCidade());
-
-					getFunc().setCep(cadastroFuncionario.getTextCEP().getText());
-					System.out.println(getFunc().getCep());
-
-					getFunc().setDataAdmissao();
-
-					// getFunc().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
-					getFunc().setDataNascimento(getFunc().getDataAdmissao());
-					System.out.println(getFunc().getDataNascimento());
-
-					if (cadastroFuncionario.getChckbxAdministrador().isSelected())
-						getFunc().setAdministrador(true);
-					else
-						getFunc().setAdministrador(false);
-
-					getFunc().setSenha(cadastroFuncionario.getTextPassword1().getText());
-
-					if (funcDAO.verificaCPF(func.getCpf()))
-						JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
-								JOptionPane.ERROR_MESSAGE);
-					else
-						funcDAO.gravarFuncionario(func);
-
-				} else {
-					int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar o Cadastro sem Imagem?",
-							"Cadastrar", JOptionPane.YES_NO_OPTION);
-					if (result == JOptionPane.YES_OPTION) {
-
-						if (funcDAO.verificaCPF(func.getCpf()))
-							JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
-									JOptionPane.ERROR_MESSAGE);
-						else
 							funcDAO.gravarFuncionario(func);
+							JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+									JOptionPane.DEFAULT_OPTION);
+							cadastroFuncionario.dispose();
+						}
 					}
 				}
 			} else {

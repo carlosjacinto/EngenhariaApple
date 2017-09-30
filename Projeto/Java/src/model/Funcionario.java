@@ -9,14 +9,14 @@ public class Funcionario {
 	private String foto;
 	private double salario;
 	private double comissao;
-	private long cpf;
+	private String cpf;
 	private String rua;
 	private String complemento;
 	private String numero;
 	private String bairro;
 	private String cidade;
 	private String cep;
-	private Date dataNascimento;
+	private String dataNascimento;
 	private long telefone;
 	private long celular;
 	private Date dataAdmissao;
@@ -66,10 +66,11 @@ public class Funcionario {
 	public void setComissao(double comissao) {
 		this.comissao = comissao;
 	}
-	public long getCpf() {
+
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
 	public String getRua() {
@@ -121,10 +122,10 @@ public class Funcionario {
 	public void setCelular(long celular) {
 		this.celular = celular;
 	}
-	public Date getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Date dataNascimento) {
+	public void setDataNascimento(String dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 	public Date getDataAdmissao() {
@@ -133,8 +134,9 @@ public class Funcionario {
 	public void setDataAdmissao() {
 		this.dataAdmissao = new Date(System.currentTimeMillis());
 	}
-	public void setAdmissao(Date admissao) {
-		this.dataAdmissao = admissao;
+	public void setAdmissao(Date date) {
+		this.dataAdmissao = date;
+		
 	}
 	
 	

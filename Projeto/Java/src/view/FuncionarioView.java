@@ -10,12 +10,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.AtualizaTabela;
 import control.InputListenerFuncionarioView;
 import model.FuncionarioDAO;
+import javax.swing.ImageIcon;
 
 public class FuncionarioView extends JDialog {
 
@@ -29,6 +31,7 @@ public class FuncionarioView extends JDialog {
 	private JTextField textBusca;
 	private JButton btnBuscarFuncionario;
 	private JButton btnNovoFuncionario;
+	private JLabel btnExcluirFuncionario;
 	private JLabel lblBuscarPorNome;
 	private JScrollPane scrollBar;
 	InputListenerFuncionarioView listener;
@@ -52,10 +55,7 @@ public class FuncionarioView extends JDialog {
 		initialize();
 		initializeListeners();
 	}
-	
-	
-	
-	
+		
 	public void setTableFuncionario(JTable tableFuncionario) {
 		this.tableFuncionario = tableFuncionario;
 	}
@@ -111,7 +111,7 @@ public class FuncionarioView extends JDialog {
 	public JButton getbtnNovoFuncionario() {
 		if(btnNovoFuncionario == null){
 			btnNovoFuncionario = new JButton("Novo Funcionário");
-			btnNovoFuncionario.setBounds(469, 472, 150, 23);
+			btnNovoFuncionario.setBounds(385, 449, 150, 23);
 		}
 		return btnNovoFuncionario;
 	}
@@ -151,7 +151,19 @@ public class FuncionarioView extends JDialog {
 		panel.add(getbtnNovoFuncionario());	
 		panel.add(getTextBusca());		
 		panel.add(getlblBuscarPorNome());
+		panel.add(getbtnExcluirFuncionario());
 		getT1().start();
+	}
+	
+	public JLabel  getbtnExcluirFuncionario(){
+		if(btnExcluirFuncionario == null){
+			btnExcluirFuncionario = new JLabel("");
+			btnExcluirFuncionario.setToolTipText("Excluir Funcionario");
+			btnExcluirFuncionario.setHorizontalAlignment(SwingConstants.CENTER);
+			btnExcluirFuncionario .setIcon(new ImageIcon("Interno/delete.png"));
+			btnExcluirFuncionario.setBounds(556, 422, 93, 72);
+		}
+		return btnExcluirFuncionario;
 	}
 	
 	public Thread getT1() {

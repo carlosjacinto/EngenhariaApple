@@ -6,7 +6,7 @@ public class Cliente {
 
 	private int idCliente;
 	private String nome;
-	private long cpf;
+	private String cpf;
 	private String foto;
 	private String rua;
 	private String complemento;
@@ -14,7 +14,7 @@ public class Cliente {
 	private String bairro;
 	private String cidade;
 	private String cep;
-	private Date dataNascimento;
+	private String dataNascimento;
 	private long telefone;
 	private long celular;
 	private Date dataCadastro;
@@ -37,11 +37,15 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public long getCpf() {
+
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 	public String getFoto() {
 		return foto;
@@ -80,16 +84,16 @@ public class Cliente {
 		this.cidade = cidade;
 	}
 
-	public Date getDataNascimento() {
+	public String getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(Date dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setDataNascimento(String data) {
+		this.dataNascimento = data;
 	}
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro() {
 		this.dataCadastro = new Date(System.currentTimeMillis());
 	}
 	public long getTelefone() {

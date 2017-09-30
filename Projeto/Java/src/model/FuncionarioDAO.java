@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import control.DataBase;
 
@@ -18,18 +17,22 @@ public class FuncionarioDAO {
 
 	public boolean gravarFuncionario(Funcionario f) {
 		conex = bd.Conectar();
+		int adm=0;
+		if(f.isAdministrador()) adm=1;
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
-					"INSERT INTO funcionario(nomeFunc, ruaFunc, compFunc, numeroFunc, bairroFunc, cidadeFunc, dataNascFunc, dataAdmissaoFunc, cepFunc, senhaFunc, fotoFunc, telefoneFunc, celularFunc, cpfFunc, salarioFunc, comissaoFunc)VALUES ('"
+					"INSERT INTO funcionario(nomeFunc, ruaFunc, compFunc, numeroFunc, bairroFunc, cidadeFunc, dataNascFunc, dataAdmissaoFunc, cepFunc, senhaFunc, fotoFunc, telefoneFunc, celularFunc, cpfFunc, salarioFunc, comissaoFunc, administrador)VALUES ('"
 							+ f.getNome() + "','" + f.getRua() + "','" + f.getComplemento() + "','" + f.getNumero()
 							+ "','" + f.getBairro() + "','" + f.getCidade() + "','" + f.getDataNascimento() + "','"
 							+ f.getDataAdmissao() + "','" + f.getCep() + "','" + f.getSenha() + "','" + f.getFoto()
 							+ "','" + f.getTelefone() + "','" + f.getCelular() + "','" + f.getCpf() + "','"
-							+ f.getSalario() + "','" + f.getComissao() + "') ");
+							+ f.getSalario() + "','" + f.getComissao() + "','" + adm +"') ");
 
-			int codigo = buscaCodigoFuncionario(f.getCpf());
-			CopiarImagemFuncionario(codigo, f.getFoto());
+			if (f.getFoto() != null) {
+				int codigo = buscaCodigoFuncionario(f.getCpf());
+				CopiarImagemFuncionario(codigo, f.getFoto());
+			}
 			System.out.println("deu bom");
 			return true;
 		} catch (SQLException sqle) {
@@ -41,17 +44,17 @@ public class FuncionarioDAO {
 
 	}
 
-	public int buscaCodigoFuncionario(long CPF) {
+	public int buscaCodigoFuncionario(String CPF) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
 			String SQL = "SELECT * FROM funcionario";
 			ResultSet rs = stmt.executeQuery(SQL);
-			double cpfF;
+			String cpfF;
 			while (rs.next()) {
-				cpfF = rs.getDouble("cpfFunc");
+				cpfF = rs.getString("cpfFunc");
 
-				if (cpfF == CPF) {
+				if (cpfF.toLowerCase().equals(CPF.toLowerCase())) {
 					return rs.getInt("idFuncionario");
 				}
 			}
@@ -64,17 +67,40 @@ public class FuncionarioDAO {
 		return 0;
 	}
 
-	public boolean verificaCPF(long CPF) {
+	public Funcionario RetornaFuncionario(int iid) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM funcionario where idFuncionario = "+iid;
+			ResultSet rs = stmt.executeQuery(SQL);
+			Funcionario f = new Funcionario();
+			while (rs.next()) {
+				f.setNome(rs.getString("nomeFunc"));
+				f.setCpf(rs.getString("cpfFunc"));
+				f.setBairro(rs.getString("bairroFunc"));
+				f.setCidade(rs.getString("cidadeFunc"));
+				f.setRua(rs.getString("ruaFunc"));
+				f.setNumero(rs.getString("numeroFunc"));
+			}
+			return f;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	public boolean verificaCPF(String CPF) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
 			String SQL = "SELECT * FROM funcionario";
 			ResultSet rs = stmt.executeQuery(SQL);
-			double cpfF;
+			String cpfF;
 			while (rs.next()) {
-				cpfF = rs.getDouble("cpfFunc");
+				cpfF = rs.getString("cpfFunc");
 
-				if (cpfF == CPF) {
+				if (cpfF.toLowerCase().equals(CPF.toLowerCase())) {
 					return true;
 				}
 			}
@@ -107,7 +133,7 @@ public class FuncionarioDAO {
 
 	}
 
-	public boolean editarArmaSQL(Funcionario f) {
+	public boolean editarFuncionario(Funcionario f) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = conex.createStatement();
@@ -127,84 +153,12 @@ public class FuncionarioDAO {
 		return false;
 	}
 
-	public ArrayList<Funcionario> buscaCPFNomeFuncionario(String campo) {
-		conex = bd.Conectar();
-
-		try {
-			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM funcionario WHERE nomeFunc LIKE '%" + campo + "%' OR cpfFunc LIKE '" + campo
-					+ "'";
-			ResultSet rs = stmt.executeQuery(SQL);
-			ArrayList<Funcionario> funcs = new ArrayList<>();
-			Funcionario func = new Funcionario();
-			while (rs.next()) {
-				func.setNome(rs.getString("nomeFunc"));
-				func.setIdFuncionario(rs.getInt("idFuncionario"));
-				func.setCpf(rs.getLong("cpfFunc"));
-				func.setDataNascimento(rs.getDate("dataNascFunc"));
-				func.setTelefone(rs.getLong("telefoneFunc"));
-				func.setRua(rs.getString("ruaFunc"));
-				funcs.add(func);
-
-			}
-			rs.close();
-			stmt.close();
-			return funcs;
-		} catch (SQLException sqle) {
-			System.out.println("Erro ao consultar..." + sqle.getMessage());
-			return null;
-		} finally {
-			bd.Desconectar(conex);
-		}
-	}
-
-	public ArrayList<Funcionario> listaFuncionario() {
-		conex = bd.Conectar();
-
-		try {
-			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM funcionario";
-			ResultSet rs = stmt.executeQuery(SQL);
-			ArrayList<Funcionario> funcs = new ArrayList<>();
-			Funcionario func = new Funcionario();
-			while (rs.next()) {
-				func.setNome(rs.getString("nomeFunc"));
-				func.setIdFuncionario(rs.getInt("idFuncionario"));
-				func.setCpf(rs.getLong("cpfFunc"));
-				func.setDataNascimento(rs.getDate("dataNascFunc"));
-				func.setTelefone(rs.getLong("telefoneFunc"));
-				func.setRua(rs.getString("ruaFunc"));
-				func.setBairro(rs.getString("bairroFunc"));
-				func.setCidade(rs.getString("cidadeFunc"));
-				func.setAdministrador(rs.getBoolean("administrador"));
-				func.setCelular(rs.getLong("celularFunc"));
-				func.setCep(rs.getString("cepFunc"));
-				func.setComissao(rs.getDouble("comissaoFunc"));
-				func.setComplemento(rs.getString("compFunc"));
-				func.setAdmissao(rs.getDate("dataAdmissao"));
-				func.setFoto(rs.getString("fotoFunc"));
-				func.setNumero(rs.getString("numeroFunc"));
-				func.setSalario(rs.getDouble("salarioFunc"));
-				func.setSenha(rs.getString("senhaFunc"));
-				funcs.add(func);
-			}
-			rs.close();
-			stmt.close();
-			return funcs;
-		} catch (SQLException sqle) {
-			System.out.println("Erro ao consultar..." + sqle.getMessage());
-			return null;
-		} finally {
-			bd.Desconectar(conex);
-		}
-	}
-
 	public String[][] listaFuncionarioArray(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM funcionario WHERE nomeFunc LIKE '%" + campo + "%' OR cpfFunc LIKE '" + campo
-					+ "'";
+			String SQL = "SELECT * FROM funcionario WHERE nomeFunc LIKE '%" + campo + "%' OR cpfFunc LIKE '%" + campo
+					+ "%'";
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.last();
 			int size = rs.getRow();
@@ -217,8 +171,8 @@ public class FuncionarioDAO {
 				funcs[cont][0] = "" + rs.getInt("idFuncionario");
 				funcs[cont][2] = "" + rs.getLong("cpfFunc");
 				funcs[cont][4] = "" + rs.getLong("telefoneFunc");
-				funcs[cont][3] = "" + rs.getDate("dataNascFunc");
-				funcs[cont][5] = rs.getString("ruaFunc");
+				funcs[cont][5] = "" + rs.getString("dataNascFunc");
+				funcs[cont][3] = rs.getString("ruaFunc");
 				cont++;
 			}
 			rs.close();
@@ -231,5 +185,78 @@ public class FuncionarioDAO {
 			bd.Desconectar(conex);
 		}
 	}
-
 }
+
+/*
+public ArrayList<Funcionario> buscaCPFNomeFuncionario(String campo) {
+	conex = bd.Conectar();
+
+	try {
+		Statement stmt = (Statement) conex.createStatement();
+		String SQL = "SELECT * FROM funcionario WHERE nomeFunc LIKE '%" + campo + "%' OR cpfFunc LIKE '" + campo
+				+ "'";
+		ResultSet rs = stmt.executeQuery(SQL);
+		ArrayList<Funcionario> funcs = new ArrayList<>();
+		Funcionario func = new Funcionario();
+		while (rs.next()) {
+			func.setNome(rs.getString("nomeFunc"));
+			func.setIdFuncionario(rs.getInt("idFuncionario"));
+			func.setCpf(rs.getString("cpfFunc"));
+			func.setDataNascimento(rs.getDate("dataNascFunc"));
+			func.setTelefone(rs.getLong("telefoneFunc"));
+			func.setRua(rs.getString("ruaFunc"));
+			funcs.add(func);
+
+		}
+		rs.close();
+		stmt.close();
+		return funcs;
+	} catch (SQLException sqle) {
+		System.out.println("Erro ao consultar..." + sqle.getMessage());
+		return null;
+	} finally {
+		bd.Desconectar(conex);
+	}
+}
+
+public ArrayList<Funcionario> listaFuncionario() {
+	conex = bd.Conectar();
+
+	try {
+		Statement stmt = (Statement) conex.createStatement();
+		String SQL = "SELECT * FROM funcionario";
+		ResultSet rs = stmt.executeQuery(SQL);
+		ArrayList<Funcionario> funcs = new ArrayList<>();
+		Funcionario func = new Funcionario();
+		while (rs.next()) {
+			func.setNome(rs.getString("nomeFunc"));
+			func.setIdFuncionario(rs.getInt("idFuncionario"));
+			func.setCpf(rs.getString("cpfFunc"));
+			func.setDataNascimento(rs.getDate("dataNascFunc"));
+			func.setTelefone(rs.getLong("telefoneFunc"));
+			func.setRua(rs.getString("ruaFunc"));
+			func.setBairro(rs.getString("bairroFunc"));
+			func.setCidade(rs.getString("cidadeFunc"));
+			func.setAdministrador(rs.getBoolean("administrador"));
+			func.setCelular(rs.getLong("celularFunc"));
+			func.setCep(rs.getString("cepFunc"));
+			func.setComissao(rs.getDouble("comissaoFunc"));
+			func.setComplemento(rs.getString("compFunc"));
+			func.setAdmissao(rs.getDate("dataAdmissao"));
+			func.setFoto(rs.getString("fotoFunc"));
+			func.setNumero(rs.getString("numeroFunc"));
+			func.setSalario(rs.getDouble("salarioFunc"));
+			func.setSenha(rs.getString("senhaFunc"));
+			funcs.add(func);
+		}
+		rs.close();
+		stmt.close();
+		return funcs;
+	} catch (SQLException sqle) {
+		System.out.println("Erro ao consultar..." + sqle.getMessage());
+		return null;
+	} finally {
+		bd.Desconectar(conex);
+	}
+}
+*/
