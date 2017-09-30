@@ -91,7 +91,7 @@ public class InputListenerEditarFuncionario implements MouseListener {
 						getFunc().setComissao(Double.parseDouble(edicaoFuncionario.getTextComissao().getText()));
 						System.out.println(getFunc().getComissao());
 
-						getFunc().setCpf(Long.parseLong(edicaoFuncionario.getTextCPF().getText()));
+						getFunc().setCpf(edicaoFuncionario.getTextCPF().getText());
 						System.out.println(getFunc().getCpf());
 
 						getFunc().setTelefone(Long.parseLong(edicaoFuncionario.getTextTelefone().getText()));

@@ -8,14 +8,16 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import model.Funcionario;
+import model.Cliente;
+import model.ClienteDAO;
 import view.EditarClienteView;
 
 public class InputListenerEditarCliente implements MouseListener {
 	private EditarClienteView edicaoCliente;
 	private JFileChooser jFileChooser;
 	private ImageIcon imageIcon;
-	private Funcionario func;
+	private Cliente clie;
+	private ClienteDAO clieDAO = new ClienteDAO();
 
 	public InputListenerEditarCliente(EditarClienteView edicaoCliente) {
 		// TODO Auto-generated constructor stub
@@ -73,48 +75,47 @@ public class InputListenerEditarCliente implements MouseListener {
 				|| edicaoCliente.getTextRua().getText().equals("")
 				|| edicaoCliente.getTextDataNascimento().getText().equals(""))) {
 			if (!(imageIcon == null)) {
-				getFunc().setNome(edicaoCliente.getTextNome().getText());
-				System.out.println(getFunc().getNome());
+				getClie().setNome(edicaoCliente.getTextNome().getText());
+				System.out.println(getClie().getNome());
 
 				try {
 
-					getFunc().setCpf(Long.parseLong(edicaoCliente.getTextCPF().getText()));
-					System.out.println(getFunc().getCpf());
+					getClie().setCpf(Long.parseLong(edicaoCliente.getTextCPF().getText()));
+					System.out.println(getClie().getCpf());
 
-					getFunc().setTelefone(Long.parseLong(edicaoCliente.getTextTelefone().getText()));
-					System.out.println(getFunc().getTelefone());
+					getClie().setTelefone(Long.parseLong(edicaoCliente.getTextTelefone().getText()));
+					System.out.println(getClie().getTelefone());
 
-					getFunc().setCelular(Long.parseLong(edicaoCliente.getTextCelular().getText()));
-					System.out.println(getFunc().getCelular());
+					getClie().setCelular(Long.parseLong(edicaoCliente.getTextCelular().getText()));
+					System.out.println(getClie().getCelular());
 				} catch (NumberFormatException e) {
 					// TODO: handle exception
 					System.out.println("Valor Errado!");
 				}
 
-				getFunc().setRua(edicaoCliente.getTextRua().getText());
-				System.out.println(getFunc().getRua());
+				getClie().setRua(edicaoCliente.getTextRua().getText());
+				System.out.println(getClie().getRua());
 
-				getFunc().setComplemento(edicaoCliente.getTextComplemento().getText());
-				System.out.println(getFunc().getComplemento());
+				getClie().setComplemento(edicaoCliente.getTextComplemento().getText());
+				System.out.println(getClie().getComplemento());
 
-				getFunc().setNumero(edicaoCliente.getTextNumero().getText());
-				System.out.println(getFunc().getNumero());
+				getClie().setNumero(edicaoCliente.getTextNumero().getText());
+				System.out.println(getClie().getNumero());
 
-				getFunc().setBairro(edicaoCliente.getTextBairro().getText());
-				System.out.println(getFunc().getBairro());
+				getClie().setBairro(edicaoCliente.getTextBairro().getText());
+				System.out.println(getClie().getBairro());
 
-				getFunc().setCidade(edicaoCliente.getTextCidade().getText());
-				System.out.println(getFunc().getCidade());
+				getClie().setCidade(edicaoCliente.getTextCidade().getText());
+				System.out.println(getClie().getCidade());
 
-				getFunc().setCep(edicaoCliente.getTextCEP().getText());
-				System.out.println(getFunc().getCep());
+				getClie().setCep(edicaoCliente.getTextCEP().getText());
+				System.out.println(getClie().getCep());
 
-				getFunc().setDataAdmissao();
-				System.out.println(getFunc().getDataAdmissao());
+				getClie().setDataCadastro();
 
-				// getFunc().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
-				getFunc().setDataNascimento(getFunc().getDataAdmissao());
-				System.out.println(getFunc().getDataNascimento());
+				// getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
+				getClie().setDataNascimento(getClie().getDataCadastro());
+				System.out.println(getClie().getDataNascimento());
 
 				// TODO: Chamar DAO Cliente
 
@@ -130,21 +131,21 @@ public class InputListenerEditarCliente implements MouseListener {
 
 	}
 
-	public Funcionario getFunc() {
-		if (func == null) {
-			func = new Funcionario();
+	public Cliente getClie() {
+		if (clie == null) {
+			clie = new Cliente();
 		}
-		return func;
+		return clie;
 	}
 
 	public void getImagem() {
 		getJFileChooser().showOpenDialog(null);
 		if (!(getJFileChooser().getSelectedFile() == null)) {
-			getFunc().setFoto(getJFileChooser().getSelectedFile().getAbsolutePath());
+			getClie().setFoto(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon = new ImageIcon(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon.setImage(imageIcon.getImage().getScaledInstance(275, 281, 100));
 			edicaoCliente.getLblFoto().setIcon(imageIcon);
-			System.out.println(getFunc().getFoto());
+			System.out.println(getClie().getFoto());
 		}
 
 	}
