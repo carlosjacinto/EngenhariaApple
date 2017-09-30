@@ -6,7 +6,7 @@ public class Cliente {
 
 	private int idCliente;
 	private String nome;
-	private long cpf;
+	private String cpf;
 	private String foto;
 	private String rua;
 	private String complemento;
@@ -37,11 +37,15 @@ public class Cliente {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public long getCpf() {
+
+	public String getCpf() {
 		return cpf;
 	}
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	public void setDataCadastro(Date dataCadastro) {
+		this.dataCadastro = dataCadastro;
 	}
 	public String getFoto() {
 		return foto;

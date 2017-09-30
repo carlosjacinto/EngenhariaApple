@@ -25,8 +25,10 @@ public class ClienteDAO {
 							+ "','" + c.getBairro() + "','" + c.getCidade()  + "','" + c.getCep() + "','" + c.getFoto()
 							+ "','" + c.getTelefone() + "','" + c.getCelular() + "','" + c.getCpf() +"') ");
 
-			int codigo = buscaCodigoCliente(c.getCpf());
-			CopiarImagemCliente(codigo, c.getFoto());
+			if (c.getFoto() != null) {
+				int codigo = buscaCodigoCliente(c.getCpf());
+				CopiarImagemCliente(codigo, c.getFoto());
+			}
 			System.out.println("deu bom");
 			return true;
 		} catch (SQLException sqle) {
@@ -38,18 +40,65 @@ public class ClienteDAO {
 
 	}
 	
-	
-	public boolean verificaCPF(long CPF) {
+
+	public int buscaCodigoCliente(String CPF) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
 			String SQL = "SELECT * FROM cliente";
 			ResultSet rs = stmt.executeQuery(SQL);
-			double cpfF;
+			String cpfF;
 			while (rs.next()) {
-				cpfF = rs.getDouble("cpfCliente");
+				cpfF = rs.getString("cpfCliente");
 
-				if (cpfF == CPF) {
+				if (cpfF.toLowerCase().equals(CPF.toLowerCase())) {
+					return rs.getInt("idCliente");
+				}
+			}
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+			return 0;
+		} finally {
+			bd.Desconectar(conex);
+		}
+		return 0;
+	}
+
+	public Cliente RetornaCliente(int iid) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM funcionario where idCliente = "+iid;
+			ResultSet rs = stmt.executeQuery(SQL);
+			Cliente c = new Cliente();
+			while (rs.next()) {
+				c.setIdCliente(rs.getInt("idCliente"));
+				c.setNome(rs.getString("nomeCliente"));
+				c.setCpf(rs.getString("cpfCliente"));
+				c.setBairro(rs.getString("bairroCliente"));
+				c.setCidade(rs.getString("cidadeCliente"));
+				c.setRua(rs.getString("ruaCliente"));
+				c.setNumero(rs.getString("numeroCliente"));
+			}
+			return c;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	public boolean verificaCPF(String CPF) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM cliente";
+			ResultSet rs = stmt.executeQuery(SQL);
+			String cpfF;
+			while (rs.next()) {
+				cpfF = rs.getString("cpfCliente");
+
+				if (cpfF.toLowerCase().equals(CPF.toLowerCase())) {
 					return true;
 				}
 			}
@@ -81,26 +130,55 @@ public class ClienteDAO {
 		}
 
 	}
-	public int buscaCodigoCliente(long CPF) {
+
+	public boolean editarCliente(Cliente c) {
 		conex = bd.Conectar();
 		try {
-			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM cliente";
-			ResultSet rs = stmt.executeQuery(SQL);
-			double cpfF;
-			while (rs.next()) {
-				cpfF = rs.getDouble("cpfCliente");
-
-				if (cpfF == CPF) {
-					return rs.getInt("idCliente");
-				}
-			}
+			Statement stmt = conex.createStatement();
+			stmt.execute("UPDATE funcionario SET nomeCliente='" + c.getNome() + "', ruaCliente='" + c.getRua()
+					+ "', compCliente='" + c.getComplemento() + "', numeroCliente='" + c.getNumero() + "', bairroCliente='"
+					+ c.getBairro() + "', cidadeCliente='" + c.getCidade() + "', dataNascCliente='" + c.getDataNascimento()
+					+ "', cepCliente ='" + c.getCep() + "', celularCliente='" + c.getCelular() + "', telefoneCliente='" + c.getTelefone() + "'  WHERE idCliente='" + c.getIdCliente() + "' ");
+			stmt.close();
+			return true;
 		} catch (SQLException sqle) {
-			System.out.println("Erro ao consultar..." + sqle.getMessage());
-			return 0;
+			System.out.println("Erro ao alterar..." + sqle.getMessage());
 		} finally {
 			bd.Desconectar(conex);
 		}
-		return 0;
+		return false;
+	}
+
+	public String[][] listaClienteArray(String campo) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM Cliente WHERE nomeCliente LIKE '%" + campo + "%' OR cpfCliente LIKE '%" + campo
+					+ "%'";
+			ResultSet rs = stmt.executeQuery(SQL);
+			rs.last();
+			int size = rs.getRow();
+			rs.beforeFirst();
+
+			String clientes[][] = new String[size][6];
+			int cont = 0;
+			while (rs.next()) {
+				clientes[cont][1] = rs.getString("nomeCliente");
+				clientes[cont][0] = "" + rs.getInt("idCliente");
+				clientes[cont][2] = "" + rs.getLong("cpfCliente");
+				clientes[cont][4] = "" + rs.getLong("telefoneCliente");
+				clientes[cont][5] = "" + rs.getDate("dataNascCliente");
+				clientes[cont][3] = rs.getString("ruaCliente");
+				cont++;
+			}
+			rs.close();
+			stmt.close();
+			return clientes;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao listar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
 	}
 }

@@ -55,10 +55,7 @@ public class FuncionarioView extends JDialog {
 		initialize();
 		initializeListeners();
 	}
-	
-	
-	
-	
+		
 	public void setTableFuncionario(JTable tableFuncionario) {
 		this.tableFuncionario = tableFuncionario;
 	}

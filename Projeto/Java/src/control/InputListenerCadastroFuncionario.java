@@ -72,7 +72,6 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 				|| cadastroFuncionario.getTextTelefone().getText().equals("")
 				|| cadastroFuncionario.getTextCelular().getText().equals("")
 				|| cadastroFuncionario.getTextRua().getText().equals("")
-				|| cadastroFuncionario.getTextComplemento().getText().equals("")
 				|| cadastroFuncionario.getTextNumero().getText().equals("")
 				|| cadastroFuncionario.getTextBairro().getText().equals("")
 				|| cadastroFuncionario.getTextCidade().getText().equals("")

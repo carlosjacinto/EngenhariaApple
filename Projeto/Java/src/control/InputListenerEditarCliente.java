@@ -80,7 +80,7 @@ public class InputListenerEditarCliente implements MouseListener {
 
 				try {
 
-					getClie().setCpf(Long.parseLong(edicaoCliente.getTextCPF().getText()));
+					//getClie().setCpf(Long.parseLong(edicaoCliente.getTextCPF().getText()));
 					System.out.println(getClie().getCpf());
 
 					getClie().setTelefone(Long.parseLong(edicaoCliente.getTextTelefone().getText()));
