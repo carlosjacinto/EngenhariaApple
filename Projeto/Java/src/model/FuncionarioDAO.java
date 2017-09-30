@@ -65,6 +65,29 @@ public class FuncionarioDAO {
 		return 0;
 	}
 
+	public Funcionario RetornaFuncionario(int iid) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM funcionario where idFuncionario = "+iid;
+			ResultSet rs = stmt.executeQuery(SQL);
+			Funcionario f = new Funcionario();
+			while (rs.next()) {
+				f.setNome(rs.getString("nomeFunc"));
+				f.setCpf(rs.getString("cpfFunc"));
+				f.setBairro(rs.getString("bairroFunc"));
+				f.setCidade(rs.getString("cidadeFunc"));
+				f.setRua(rs.getString("ruaFunc"));
+				f.setNumero(rs.getString("numeroFunc"));
+			}
+			return f;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
 	public boolean verificaCPF(String CPF) {
 		conex = bd.Conectar();
 		try {
@@ -132,8 +155,8 @@ public class FuncionarioDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM funcionario WHERE nomeFunc LIKE '%" + campo + "%' OR cpfFunc LIKE '" + campo
-					+ "'";
+			String SQL = "SELECT * FROM funcionario WHERE nomeFunc LIKE '%" + campo + "%' OR cpfFunc LIKE '%" + campo
+					+ "%'";
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.last();
 			int size = rs.getRow();
@@ -146,8 +169,8 @@ public class FuncionarioDAO {
 				funcs[cont][0] = "" + rs.getInt("idFuncionario");
 				funcs[cont][2] = "" + rs.getLong("cpfFunc");
 				funcs[cont][4] = "" + rs.getLong("telefoneFunc");
-				funcs[cont][3] = "" + rs.getDate("dataNascFunc");
-				funcs[cont][5] = rs.getString("ruaFunc");
+				funcs[cont][5] = "" + rs.getDate("dataNascFunc");
+				funcs[cont][3] = rs.getString("ruaFunc");
 				cont++;
 			}
 			rs.close();
