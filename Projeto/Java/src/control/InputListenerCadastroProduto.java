@@ -51,7 +51,7 @@ public class InputListenerCadastroProduto implements MouseListener{
 	
 	public void capturaDados() {
 		if(!(cadastroProduto.getTextNome().equals("")
-				|| cadastroProduto.getTextPrecoCompra().equals("") || cadastroProduto.getTextPrecoVenda().equals("")
+				|| cadastroProduto.getTextPrecoVenda().equals("")
 				|| cadastroProduto.getTextDescricao().equals(""))) {
 			
 		}

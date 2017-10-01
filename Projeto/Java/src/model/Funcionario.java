@@ -131,14 +131,10 @@ public class Funcionario {
 	public Date getDataAdmissao() {
 		return dataAdmissao;
 	}
-	public void setDataAdmissao() {
-		this.dataAdmissao = new Date(System.currentTimeMillis());
-	}
-	public void setAdmissao(Date date) {
+	public void setDataAdmissao(Date date) {
 		this.dataAdmissao = date;
-		
 	}
-	
+	 //;
 	
 	
 }

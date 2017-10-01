@@ -3,6 +3,7 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.sql.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -93,7 +94,7 @@ public class InputListenerCadastroCliente implements MouseListener {
 			getClie().setBairro(cadastroCliente.getTextBairro().getText());
 			getClie().setCidade(cadastroCliente.getTextCidade().getText());
 			getClie().setCep(cadastroCliente.getTextCEP().getText());
-			getClie().setDataCadastro();
+			getClie().setDataCadastro(new Date(System.currentTimeMillis()));
 
 			getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
 

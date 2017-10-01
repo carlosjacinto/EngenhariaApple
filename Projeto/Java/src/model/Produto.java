@@ -40,8 +40,8 @@ public class Produto {
 	public Date getDataCadastroProduto() {
 		return dataCadastroProduto;
 	}
-	public void setDataCadastroProduto() {
-		this.dataCadastroProduto = new Date(System.currentTimeMillis());
+	public void setDataCadastroProduto(Date dataCadastroProduto) {
+		this.dataCadastroProduto = dataCadastroProduto;
 	}
 	public float getPrecoVendaProduto() {
 		return precoVendaProduto;
