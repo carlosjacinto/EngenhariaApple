@@ -12,6 +12,7 @@ public class Produto {
 	private String descricaoProduto;
 	private Date ultimaDataCompraProduto;
 	private Date dataCadastroProduto;
+	
 	public int getIdProduto() {
 		return idProduto;
 	}
@@ -39,8 +40,8 @@ public class Produto {
 	public Date getDataCadastroProduto() {
 		return dataCadastroProduto;
 	}
-	public void setDataCadastroProduto(Date dataCadastroProduto) {
-		this.dataCadastroProduto = dataCadastroProduto;
+	public void setDataCadastroProduto() {
+		this.dataCadastroProduto = new Date(System.currentTimeMillis());
 	}
 	public float getPrecoVendaProduto() {
 		return precoVendaProduto;
