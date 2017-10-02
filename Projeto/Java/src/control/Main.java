@@ -1,6 +1,6 @@
 package control;
 
-import view.Principal;
+import view.PrincipalAdm;
 
 public class Main {
 
@@ -10,8 +10,7 @@ public class Main {
 			com.birosoft.liquid.LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 		} catch (Exception e) {
 		}
-		new Principal().setVisible(true);
-		//tefsjfoisdjfakqkfeoif
+		new PrincipalAdm().setVisible(true);
 	}
 
 }

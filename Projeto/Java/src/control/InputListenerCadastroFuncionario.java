@@ -171,7 +171,7 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 			jFileChooser = new JFileChooser();
 			jFileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
 				public boolean accept(File f) {
-					return (f.getName().endsWith(".jpg") || f.getName().endsWith(".PNG")) || f.isDirectory();
+					return (f.getName().endsWith(".jpg") || f.getName().endsWith(".png")) || f.isDirectory();
 				}
 
 				public String getDescription() {
