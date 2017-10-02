@@ -207,7 +207,6 @@ CREATE TABLE `produto` (
   `precoCompraProduto` float unsigned NOT NULL DEFAULT '0',
   `precoVendaProduto` float unsigned NOT NULL DEFAULT '0',
   `qtdEstoqueProduto` int(10) unsigned NOT NULL DEFAULT '0',
-  `fotoProduto` varchar(100) DEFAULT NULL,
   `descricaoProduto` varchar(200) DEFAULT NULL,
   `ultimaDataCompraProduto` date DEFAULT NULL,
   `dataCadastroProduto` date DEFAULT NULL,

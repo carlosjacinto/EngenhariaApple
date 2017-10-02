@@ -25,8 +25,6 @@ public class CadastroProdutoView extends JDialog {
 	InputListenerCadastroProduto listener;
 	private JLabel lblNome;
 	private JTextField textNome;
-	private JLabel lblPrecoCompra;
-	private JTextField textPrecoCompra;
 	private JLabel lblPrecoVenda;
 	private JTextField textPrecoVenda;
 	private JLabel lblDescricao;
@@ -68,7 +66,7 @@ public class CadastroProdutoView extends JDialog {
 	public JButton getbtnPesquisarImagem() {
 		if (btnPesquisarImagem == null) {
 			btnPesquisarImagem = new JButton("Pesquisar Imagem");
-			btnPesquisarImagem.setBounds(403, 362, 147, 23);
+			btnPesquisarImagem.setBounds(406, 361, 147, 23);
 		}
 		return btnPesquisarImagem;
 	}
@@ -82,8 +80,6 @@ public class CadastroProdutoView extends JDialog {
 			contentPanel.setLayout(null);
 			contentPanel.add(getLblNome());
 			contentPanel.add(getTextNome());
-			contentPanel.add(getLblPrecoCompra());
-			contentPanel.add(getTextPrecoCompra());
 			contentPanel.add(getLblPrecoVenda());
 			contentPanel.add(getTextPrecoVenda());
 			contentPanel.add(getLblDescricao());
@@ -101,7 +97,7 @@ public class CadastroProdutoView extends JDialog {
 	public JPanel getpanelFoto() {
 		if (panelFoto == null) {
 			panelFoto = new JPanel();
-			panelFoto.setBounds(340, 70, 275, 281);
+			panelFoto.setBounds(348, 69, 275, 281);
 		}
 		return panelFoto;
 
@@ -110,7 +106,7 @@ public class CadastroProdutoView extends JDialog {
 	public JTextField getTextNome() {
 		if (textNome == null) {
 			textNome = new JTextField();
-			textNome.setBounds(30, 95, 281, 20);
+			textNome.setBounds(30, 63, 281, 20);
 			textNome.setColumns(10);
 		}
 		return textNome;
@@ -119,32 +115,15 @@ public class CadastroProdutoView extends JDialog {
 	public JLabel getLblNome() {
 		if (lblNome == null) {
 			lblNome = new JLabel("Nome");
-			lblNome.setBounds(30, 70, 46, 14);
+			lblNome.setBounds(30, 38, 46, 14);
 		}
 		return lblNome;
-	}
-
-	public JLabel getLblPrecoCompra() {
-		if (lblPrecoCompra == null) {
-			lblPrecoCompra = new JLabel("Pre\u00E7o Compra (R$)");
-			lblPrecoCompra.setBounds(30, 126, 221, 14);
-		}
-		return lblPrecoCompra;
-	}
-
-	public JTextField getTextPrecoCompra() {
-		if (textPrecoCompra == null) {
-			textPrecoCompra = new JTextField();
-			textPrecoCompra.setBounds(30, 151, 281, 20);
-			textPrecoCompra.setColumns(10);
-		}
-		return textPrecoCompra;
 	}
 
 	public JLabel getLblPrecoVenda() {
 		if (lblPrecoVenda == null) {
 			lblPrecoVenda = new JLabel("Pre\u00E7o Venda (R$)");
-			lblPrecoVenda.setBounds(30, 182, 167, 14);
+			lblPrecoVenda.setBounds(30, 105, 167, 14);
 		}
 		return lblPrecoVenda;
 	}
@@ -152,7 +131,7 @@ public class CadastroProdutoView extends JDialog {
 	public JTextField getTextPrecoVenda() {
 		if (textPrecoVenda == null) {
 			textPrecoVenda = new JTextField();
-			textPrecoVenda.setBounds(30, 207, 281, 20);
+			textPrecoVenda.setBounds(30, 130, 281, 20);
 			textPrecoVenda.setColumns(10);
 		}
 		return textPrecoVenda;
@@ -161,7 +140,7 @@ public class CadastroProdutoView extends JDialog {
 	public JLabel getLblDescricao() {
 		if (lblDescricao == null) {
 			lblDescricao = new JLabel("Descri\u00E7\u00E3o");
-			lblDescricao.setBounds(30, 238, 69, 14);
+			lblDescricao.setBounds(31, 172, 69, 14);
 		}
 		return lblDescricao;
 	}
@@ -169,7 +148,7 @@ public class CadastroProdutoView extends JDialog {
 	public JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBounds(534, 427, 89, 23);
+			btnCancelar.setBounds(534, 411, 89, 23);
 		}
 		return btnCancelar;
 	}
@@ -177,7 +156,7 @@ public class CadastroProdutoView extends JDialog {
 	public JButton getBtnGravar() {
 		if (btnGravar == null) {
 			btnGravar = new JButton("Gravar");
-			btnGravar.setBounds(435, 427, 89, 23);
+			btnGravar.setBounds(434, 411, 89, 23);
 		}
 		return btnGravar;
 	}
@@ -186,7 +165,7 @@ public class CadastroProdutoView extends JDialog {
 		if (textDescricao == null) {
 			textDescricao = new JTextArea();
 			textDescricao.setBorder(UIManager.getBorder("TextField.border"));
-			textDescricao.setBounds(30, 263, 281, 154);
+			textDescricao.setBounds(30, 197, 281, 154);
 		}
 		return textDescricao;
 	}

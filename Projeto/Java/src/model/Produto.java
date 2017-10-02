@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 public class Produto {
 	private int idProduto;
 	private String nomeProduto;
@@ -8,8 +10,9 @@ public class Produto {
 	private int qtdEstoqueProduto;
 	private String fotoProduto;
 	private String descricaoProduto;
-	private String ultimaDataCompraProduto;
-	private String dataCadastroProduto;
+	private Date ultimaDataCompraProduto;
+	private Date dataCadastroProduto;
+	
 	public int getIdProduto() {
 		return idProduto;
 	}
@@ -27,6 +30,18 @@ public class Produto {
 	}
 	public void setPrecoCompraProduto(float precoCompraProduto) {
 		this.precoCompraProduto = precoCompraProduto;
+	}
+	public Date getUltimaDataCompraProduto() {
+		return ultimaDataCompraProduto;
+	}
+	public void setUltimaDataCompraProduto(Date ultimaDataCompraProduto) {
+		this.ultimaDataCompraProduto = ultimaDataCompraProduto;
+	}
+	public Date getDataCadastroProduto() {
+		return dataCadastroProduto;
+	}
+	public void setDataCadastroProduto(Date dataCadastroProduto) {
+		this.dataCadastroProduto = dataCadastroProduto;
 	}
 	public float getPrecoVendaProduto() {
 		return precoVendaProduto;
@@ -52,18 +67,7 @@ public class Produto {
 	public void setDescricaoProduto(String descricaoProduto) {
 		this.descricaoProduto = descricaoProduto;
 	}
-	public String getUltimaDataCompraProduto() {
-		return ultimaDataCompraProduto;
-	}
-	public void setUltimaDataCompraProduto(String ultimaDataCompraProduto) {
-		this.ultimaDataCompraProduto = ultimaDataCompraProduto;
-	}
-	public String getDataCadastroProduto() {
-		return dataCadastroProduto;
-	}
-	public void setDataCadastroProduto(String dataCadastroProduto) {
-		this.dataCadastroProduto = dataCadastroProduto;
-	}
+	
 	
 	
 }

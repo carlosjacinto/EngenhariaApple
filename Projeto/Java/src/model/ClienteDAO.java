@@ -68,7 +68,7 @@ public class ClienteDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM funcionario where idCliente = "+iid;
+			String SQL = "SELECT * FROM cliente where idCliente = "+iid;
 			ResultSet rs = stmt.executeQuery(SQL);
 			Cliente c = new Cliente();
 			while (rs.next()) {
@@ -135,7 +135,7 @@ public class ClienteDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = conex.createStatement();
-			stmt.execute("UPDATE funcionario SET nomeCliente='" + c.getNome() + "', ruaCliente='" + c.getRua()
+			stmt.execute("UPDATE cliente SET nomeCliente='" + c.getNome() + "', ruaCliente='" + c.getRua()
 					+ "', compCliente='" + c.getComplemento() + "', numeroCliente='" + c.getNumero() + "', bairroCliente='"
 					+ c.getBairro() + "', cidadeCliente='" + c.getCidade() + "', dataNascCliente='" + c.getDataNascimento()
 					+ "', cepCliente ='" + c.getCep() + "', celularCliente='" + c.getCelular() + "', telefoneCliente='" + c.getTelefone() + "'  WHERE idCliente='" + c.getIdCliente() + "' ");

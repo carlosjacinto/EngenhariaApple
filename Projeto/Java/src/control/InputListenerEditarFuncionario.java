@@ -3,6 +3,7 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.sql.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -122,7 +123,7 @@ public class InputListenerEditarFuncionario implements MouseListener {
 					getFunc().setCep(edicaoFuncionario.getTextCEP().getText());
 					System.out.println(getFunc().getCep());
 
-					getFunc().setDataAdmissao();
+					getFunc().setDataAdmissao(new Date(System.currentTimeMillis()));
 					getFunc().setDataNascimento(edicaoFuncionario.getTextDataNascimento().getText());
 
 					if (edicaoFuncionario.getChckbxAdministrador().isSelected())

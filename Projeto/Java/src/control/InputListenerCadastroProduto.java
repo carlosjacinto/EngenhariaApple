@@ -2,13 +2,20 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Date;
+
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 import model.Produto;
+import model.ProdutoDAO;
 import view.CadastroProdutoView;
 
 public class InputListenerCadastroProduto implements MouseListener{
 	private CadastroProdutoView cadastroProduto;
+	private ImageIcon imageIcon;
 	private Produto produto;
+	private ProdutoDAO produtoDAO;
 	public InputListenerCadastroProduto(CadastroProdutoView cadastroProduto) {
 		// TODO Auto-generated constructor stub
 		this.cadastroProduto = cadastroProduto;
@@ -51,10 +58,47 @@ public class InputListenerCadastroProduto implements MouseListener{
 	
 	public void capturaDados() {
 		if(!(cadastroProduto.getTextNome().equals("")
-				|| cadastroProduto.getTextPrecoCompra().equals("") || cadastroProduto.getTextPrecoVenda().equals("")
+				|| cadastroProduto.getTextPrecoVenda().equals("")
 				|| cadastroProduto.getTextDescricao().equals(""))) {
 			
-		}
+				try {
+					getProduto().setPrecoVendaProduto(Float.parseFloat(cadastroProduto.getTextPrecoVenda().getText()));
+				} catch (NumberFormatException e) {
+					System.out.println("Valor Errado!");
+				}
+
+				getProduto().setNomeProduto(cadastroProduto.getTextNome().getText());
+				getProduto().setDescricaoProduto(cadastroProduto.getTextDescricao().getText());
+				
+				getProduto().setDataCadastroProduto(new Date(System.currentTimeMillis()));				
+
+				if (produtoDAO.verificaNome(produto.getNomeProduto()))
+					JOptionPane.showMessageDialog(null, "Nome do produto já se encontra cadastrado em nosso sistema!", null,
+							JOptionPane.ERROR_MESSAGE);
+				else {
+					if (!(imageIcon == null)) {
+
+						produtoDAO.gravarProduto(produto);
+						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+								JOptionPane.DEFAULT_OPTION);
+						cadastroProduto.dispose();
+					}
+
+					else {
+						int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar o Cadastro sem Imagem?",
+								"Cadastrar", JOptionPane.YES_NO_OPTION);
+						if (result == JOptionPane.YES_OPTION) {
+
+							produtoDAO.gravarProduto(produto);
+							JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+									JOptionPane.DEFAULT_OPTION);
+							cadastroProduto.dispose();
+						}
+					}
+				}
+		} else
+			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
+
 	}
 	
 	public Produto getProduto() {

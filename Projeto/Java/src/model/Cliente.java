@@ -93,9 +93,7 @@ public class Cliente {
 	public Date getDataCadastro() {
 		return dataCadastro;
 	}
-	public void setDataCadastro() {
-		this.dataCadastro = new Date(System.currentTimeMillis());
-	}
+
 	public long getTelefone() {
 		return telefone;
 	}
