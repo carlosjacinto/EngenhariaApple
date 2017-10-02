@@ -11,6 +11,7 @@ public class Main {
 		} catch (Exception e) {
 		}
 		new Principal().setVisible(true);
+		//tefsjfoisdjfakqkfeoif
 	}
 
 }
