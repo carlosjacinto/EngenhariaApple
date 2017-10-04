@@ -16,11 +16,13 @@ import javax.swing.border.BevelBorder;
 import javax.swing.text.MaskFormatter;
 
 import control.InputListenerEditarFuncionario;
+import model.Funcionario;
 
 public class EditarFuncionarioView extends JDialog {
 
 	private static final long serialVersionUID = -799512330089900923L;
 	InputListenerEditarFuncionario listener;
+	Funcionario func;
 	private JPanel contentPanel;
 	private JPanel panelFoto;
 	private JTextField textCodigo;
@@ -71,6 +73,13 @@ public class EditarFuncionarioView extends JDialog {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public EditarFuncionarioView(Funcionario func) {
+		this.func = func;
+		listener = new InputListenerEditarFuncionario(this);
+		initialize();
+		initializeListeners();
 	}
 
 	public EditarFuncionarioView() {
@@ -173,6 +182,7 @@ public class EditarFuncionarioView extends JDialog {
 			textCodigo = new JTextField();
 			textCodigo.setBounds(30, 37, 281, 22);
 			textCodigo.setEditable(false);
+			textCodigo.setText(""+func.getIdFuncionario());
 		}
 		return textCodigo;
 	}
@@ -182,6 +192,7 @@ public class EditarFuncionarioView extends JDialog {
 			textNome = new JTextField();
 			textNome.setBounds(30, 95, 281, 20);
 			textNome.setColumns(10);
+			textNome.setText(func.getNome());
 		}
 		return textNome;
 	}
@@ -224,6 +235,7 @@ public class EditarFuncionarioView extends JDialog {
 			txtDataDoCadastro.setBounds(339, 38, 284, 20);
 			txtDataDoCadastro.setColumns(10);
 			txtDataDoCadastro.setEditable(false);
+			txtDataDoCadastro.setText(""+func.getDataAdmissao());
 		}
 		return txtDataDoCadastro;
 	}
@@ -241,6 +253,7 @@ public class EditarFuncionarioView extends JDialog {
 			textSalario = new JTextField();
 			textSalario.setBounds(30, 152, 281, 20);
 			textSalario.setColumns(10);
+			textSalario.setText(func.getSalario()+"");
 		}
 		return textSalario;
 	}
@@ -266,6 +279,7 @@ public class EditarFuncionarioView extends JDialog {
 			textComissao = new JTextField();
 			textComissao.setBounds(30, 208, 281, 20);
 			textComissao.setColumns(10);
+			textComissao.setText(func.getComissao()+"");
 		}
 		return textComissao;
 	}
@@ -283,6 +297,7 @@ public class EditarFuncionarioView extends JDialog {
 			textCPF = new JTextField();
 			textCPF.setBounds(30, 261, 281, 20);
 			textCPF.setColumns(10);
+			textCPF.setText(func.getCpf());
 		}
 		return textCPF;
 	}
@@ -300,6 +315,7 @@ public class EditarFuncionarioView extends JDialog {
 			textRua = new JTextField();
 			textRua.setBounds(30, 310, 204, 20);
 			textRua.setColumns(10);
+			textRua.setText(func.getRua());
 		}
 		return textRua;
 	}
@@ -309,6 +325,7 @@ public class EditarFuncionarioView extends JDialog {
 			textBairro = new JTextField();
 			textBairro.setBounds(30, 363, 281, 20);
 			textBairro.setColumns(10);
+			textBairro.setText(func.getBairro());
 		}
 		return textBairro;
 	}
@@ -318,6 +335,7 @@ public class EditarFuncionarioView extends JDialog {
 			textCidade = new JTextField();
 			textCidade.setBounds(30, 414, 281, 20);
 			textCidade.setColumns(10);
+			textCidade.setText(func.getCidade());
 		}
 		return textCidade;
 	}
@@ -351,6 +369,7 @@ public class EditarFuncionarioView extends JDialog {
 			textNumero = new JTextField();
 			textNumero.setBounds(244, 310, 67, 20);
 			textNumero.setColumns(10);
+			textNumero.setText(func.getNumero());
 		}
 		return textNumero;
 	}
@@ -368,6 +387,7 @@ public class EditarFuncionarioView extends JDialog {
 			textComplemento = new JTextField();
 			textComplemento.setBounds(30, 470, 281, 20);
 			textComplemento.setColumns(10);
+			textComplemento.setText(func.getComplemento());
 		}
 		return textComplemento;
 	}
@@ -385,6 +405,7 @@ public class EditarFuncionarioView extends JDialog {
 			textCEP = new JTextField();
 			textCEP.setBounds(30, 517, 281, 20);
 			textCEP.setColumns(10);
+			textCEP.setText(func.getCep());
 		}
 		return textCEP;
 	}
@@ -408,6 +429,7 @@ public class EditarFuncionarioView extends JDialog {
 			textDataNascimento.setColumns(6);
 			textDataNascimento.setBounds(30, 569, 281, 20);
 			textDataNascimento.setColumns(10);
+			textDataNascimento.setText(func.getDataNascimento());
 		}
 		return textDataNascimento;
 	}
@@ -425,6 +447,7 @@ public class EditarFuncionarioView extends JDialog {
 			textTelefone = new JTextField();
 			textTelefone.setBounds(339, 95, 284, 20);
 			textTelefone.setColumns(10);
+			textTelefone.setText(func.getTelefone()+"");
 		}
 		return textTelefone;
 	}
@@ -458,6 +481,7 @@ public class EditarFuncionarioView extends JDialog {
 		if (textPassword1 == null) {
 			textPassword1 = new JPasswordField();
 			textPassword1.setBounds(339, 208, 284, 20);
+			textPassword1.setText(func.getSenha());
 		}
 		return textPassword1;
 	}
@@ -475,6 +499,7 @@ public class EditarFuncionarioView extends JDialog {
 		if (textPassword2 == null) {
 			textPassword2 = new JPasswordField();
 			textPassword2.setBounds(339, 261, 284, 20);
+			textPassword2.setText(func.getSenha());
 		}
 		return textPassword2;
 	}
@@ -483,6 +508,7 @@ public class EditarFuncionarioView extends JDialog {
 		if (chckbxAdministrador == null) {
 			chckbxAdministrador = new JCheckBox("Administrador");
 			chckbxAdministrador.setBounds(30, 615, 147, 23);
+			chckbxAdministrador.setSelected(func.isAdministrador());
 		}
 		return chckbxAdministrador;
 	}

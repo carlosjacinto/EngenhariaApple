@@ -7,8 +7,10 @@ import java.awt.event.WindowListener;
 
 import javax.swing.table.DefaultTableModel;
 
+import model.Funcionario;
 import model.FuncionarioDAO;
 import view.CadastroFuncionarioView;
+import view.EditarFuncionarioView;
 import view.FuncionarioView;
 
 public class InputListenerFuncionarioView implements MouseListener, WindowListener {
@@ -56,7 +58,9 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			cadastroFuncionarioView = new CadastroFuncionarioView();
 			cadastroFuncionarioView.setVisible(true);
 		} else if (e.getSource() == funcionarioView.getTableFuncionario()) {
-			System.err.println("Tabela clicada, linha: " + funcionarioView.getTableFuncionario().getSelectedRow());
+			String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
+			Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
+			new EditarFuncionarioView(func).setVisible(true);
 		}
 	}
 

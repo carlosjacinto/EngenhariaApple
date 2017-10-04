@@ -45,6 +45,7 @@ public class Principal extends JFrame {
 	
 	public void initializeListeners() {
 		getBtnIniciar().addMouseListener(getListener());
+		this.addWindowListener(getListener());
 	}
 	public InputListenerPrincipal getListener() {
 		if(listener == null) {

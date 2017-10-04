@@ -73,16 +73,28 @@ public class FuncionarioDAO {
 			Statement stmt = (Statement) conex.createStatement();
 			String SQL = "SELECT * FROM funcionario where idFuncionario = "+iid;
 			ResultSet rs = stmt.executeQuery(SQL);
-			Funcionario f = new Funcionario();
+			Funcionario func = new Funcionario();
 			while (rs.next()) {
-				f.setNome(rs.getString("nomeFunc"));
-				f.setCpf(rs.getString("cpfFunc"));
-				f.setBairro(rs.getString("bairroFunc"));
-				f.setCidade(rs.getString("cidadeFunc"));
-				f.setRua(rs.getString("ruaFunc"));
-				f.setNumero(rs.getString("numeroFunc"));
+				func.setNome(rs.getString("nomeFunc"));
+				func.setIdFuncionario(rs.getInt("idFuncionario"));
+				func.setCpf(rs.getString("cpfFunc"));
+				func.setDataNascimento(rs.getString("dataNascFunc"));
+				func.setTelefone(rs.getLong("telefoneFunc"));
+				func.setRua(rs.getString("ruaFunc"));
+				func.setBairro(rs.getString("bairroFunc"));
+				func.setCidade(rs.getString("cidadeFunc"));
+				func.setAdministrador(rs.getBoolean("administrador"));
+				func.setCelular(rs.getLong("celularFunc"));
+				func.setCep(rs.getString("cepFunc"));
+				func.setComissao(rs.getDouble("comissaoFunc"));
+				func.setComplemento(rs.getString("compFunc"));
+				func.setDataAdmissao(rs.getDate("dataAdmissaoFunc"));
+				func.setFoto(rs.getString("fotoFunc"));
+				func.setNumero(rs.getString("numeroFunc"));
+				func.setSalario(rs.getDouble("salarioFunc"));
+				func.setSenha(rs.getString("senhaFunc"));
 			}
-			return f;
+			return func;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 			return null;

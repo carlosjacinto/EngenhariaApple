@@ -2,11 +2,13 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import view.LoginView;
 import view.Principal;
 
-public class InputListenerPrincipal implements MouseListener{
+public class InputListenerPrincipal implements MouseListener, WindowListener{
 	
 	private Principal principal;
 	
@@ -43,6 +45,49 @@ public class InputListenerPrincipal implements MouseListener{
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		principal.getT1().interrupt();
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
 		
 	}

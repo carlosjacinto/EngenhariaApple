@@ -125,8 +125,8 @@ public class Funcionario {
 	public String getDataNascimento() {
 		return dataNascimento;
 	}
-	public void setDataNascimento(String dataNascimento) {
-		this.dataNascimento = dataNascimento;
+	public void setDataNascimento(String date) {
+		this.dataNascimento = date;
 	}
 	public Date getDataAdmissao() {
 		return dataAdmissao;
