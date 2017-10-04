@@ -14,8 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import control.AtualizaTabela;
 import control.InputListenerFuncionarioView;
+import model.AtualizaTabela;
 import model.FuncionarioDAO;
 import javax.swing.ImageIcon;
 

@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import control.Contador;
 import control.InputListenerPrincipal;
+import model.Contador;
 
 public class Principal extends JFrame {
 

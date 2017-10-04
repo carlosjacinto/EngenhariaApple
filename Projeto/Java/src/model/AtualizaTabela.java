@@ -1,9 +1,7 @@
-package control;
+package model;
 
 import javax.swing.table.DefaultTableModel;
 
-import model.ClienteDAO;
-import model.FuncionarioDAO;
 import view.ClienteView;
 import view.FuncionarioView;
 
