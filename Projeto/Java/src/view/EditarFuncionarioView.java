@@ -74,7 +74,7 @@ public class EditarFuncionarioView extends JDialog {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public EditarFuncionarioView(Funcionario func) {
 		this.func = func;
 		listener = new InputListenerEditarFuncionario(this);
@@ -182,7 +182,7 @@ public class EditarFuncionarioView extends JDialog {
 			textCodigo = new JTextField();
 			textCodigo.setBounds(30, 37, 281, 22);
 			textCodigo.setEditable(false);
-			textCodigo.setText(""+func.getIdFuncionario());
+			textCodigo.setText("" + func.getIdFuncionario());
 		}
 		return textCodigo;
 	}
@@ -235,7 +235,7 @@ public class EditarFuncionarioView extends JDialog {
 			txtDataDoCadastro.setBounds(339, 38, 284, 20);
 			txtDataDoCadastro.setColumns(10);
 			txtDataDoCadastro.setEditable(false);
-			txtDataDoCadastro.setText(""+func.getDataAdmissao());
+			txtDataDoCadastro.setText("" + func.getDataAdmissao());
 		}
 		return txtDataDoCadastro;
 	}
@@ -253,7 +253,7 @@ public class EditarFuncionarioView extends JDialog {
 			textSalario = new JTextField();
 			textSalario.setBounds(30, 152, 281, 20);
 			textSalario.setColumns(10);
-			textSalario.setText(func.getSalario()+"");
+			textSalario.setText(func.getSalario() + "");
 		}
 		return textSalario;
 	}
@@ -279,7 +279,7 @@ public class EditarFuncionarioView extends JDialog {
 			textComissao = new JTextField();
 			textComissao.setBounds(30, 208, 281, 20);
 			textComissao.setColumns(10);
-			textComissao.setText(func.getComissao()+"");
+			textComissao.setText(func.getComissao() + "");
 		}
 		return textComissao;
 	}
@@ -297,6 +297,7 @@ public class EditarFuncionarioView extends JDialog {
 			textCPF = new JTextField();
 			textCPF.setBounds(30, 261, 281, 20);
 			textCPF.setColumns(10);
+			textCPF.setEditable(false);
 			textCPF.setText(func.getCpf());
 		}
 		return textCPF;
@@ -447,7 +448,7 @@ public class EditarFuncionarioView extends JDialog {
 			textTelefone = new JTextField();
 			textTelefone.setBounds(339, 95, 284, 20);
 			textTelefone.setColumns(10);
-			textTelefone.setText(func.getTelefone()+"");
+			textTelefone.setText(func.getTelefone() + "");
 		}
 		return textTelefone;
 	}
@@ -517,7 +518,9 @@ public class EditarFuncionarioView extends JDialog {
 		if (lblFoto == null) {
 			lblFoto = new JLabel("");
 			lblFoto.setBounds(0, 0, 275, 281);
-			lblFoto.setIcon(new ImageIcon("Interno/default-avatar.png"));
+			lblFoto.setIcon(new ImageIcon("Media/Funcionario/" + getTextCodigo() + ".jpg"));
+			if (!(lblFoto == null))
+				lblFoto.setIcon(new ImageIcon("Interno/default-avatar.png"));
 		}
 		return lblFoto;
 	}

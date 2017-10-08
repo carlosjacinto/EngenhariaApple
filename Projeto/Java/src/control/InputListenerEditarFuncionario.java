@@ -3,7 +3,6 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.sql.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -70,7 +69,6 @@ public class InputListenerEditarFuncionario implements MouseListener {
 				|| edicaoFuncionario.getTextTelefone().getText().equals("")
 				|| edicaoFuncionario.getTextCelular().getText().equals("")
 				|| edicaoFuncionario.getTextRua().getText().equals("")
-				|| edicaoFuncionario.getTextComplemento().getText().equals("")
 				|| edicaoFuncionario.getTextNumero().getText().equals("")
 				|| edicaoFuncionario.getTextBairro().getText().equals("")
 				|| edicaoFuncionario.getTextCidade().getText().equals("")
@@ -80,75 +78,60 @@ public class InputListenerEditarFuncionario implements MouseListener {
 				|| edicaoFuncionario.getTextDataNascimento().getText().equals(""))) {
 			if (edicaoFuncionario.getTextPassword1().getText().equals(edicaoFuncionario.getTextPassword2().getText())
 					&& !edicaoFuncionario.getTextPassword1().getText().equals("")) {
+
+				try {
+					getFunc().setSalario(Double.parseDouble(edicaoFuncionario.getTextSalario().getText()));
+					getFunc().setComissao(Double.parseDouble(edicaoFuncionario.getTextComissao().getText()));
+					getFunc().setTelefone(Long.parseLong(edicaoFuncionario.getTextTelefone().getText()));
+					getFunc().setCelular(Long.parseLong(edicaoFuncionario.getTextCelular().getText()));
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Valor Inválido!", null, JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+
+				getFunc().setCpf(edicaoFuncionario.getTextCPF().getText());
+				getFunc().setNome(edicaoFuncionario.getTextNome().getText());
+				getFunc().setRua(edicaoFuncionario.getTextRua().getText());
+				getFunc().setComplemento(edicaoFuncionario.getTextComplemento().getText());
+				getFunc().setNumero(edicaoFuncionario.getTextNumero().getText());
+				getFunc().setBairro(edicaoFuncionario.getTextBairro().getText());
+				getFunc().setCidade(edicaoFuncionario.getTextCidade().getText());
+				getFunc().setCep(edicaoFuncionario.getTextCEP().getText());
+				getFunc().setSenha(edicaoFuncionario.getTextPassword1().getText());
+
+				getFunc().setDataNascimento(edicaoFuncionario.getTextDataNascimento().getText());
+
+				if (edicaoFuncionario.getChckbxAdministrador().isSelected())
+					getFunc().setAdministrador(true);
+				else
+					getFunc().setAdministrador(false);
+
 				if (!(imageIcon == null)) {
-					getFunc().setNome(edicaoFuncionario.getTextNome().getText());
-					System.out.println(getFunc().getNome());
-
-					try {
-
-						getFunc().setSalario(Double.parseDouble(edicaoFuncionario.getTextSalario().getText()));
-						System.out.println(getFunc().getSalario());
-
-						getFunc().setComissao(Double.parseDouble(edicaoFuncionario.getTextComissao().getText()));
-						System.out.println(getFunc().getComissao());
-
-						getFunc().setCpf(edicaoFuncionario.getTextCPF().getText());
-						System.out.println(getFunc().getCpf());
-
-						getFunc().setTelefone(Long.parseLong(edicaoFuncionario.getTextTelefone().getText()));
-						System.out.println(getFunc().getTelefone());
-
-						getFunc().setCelular(Long.parseLong(edicaoFuncionario.getTextCelular().getText()));
-						System.out.println(getFunc().getCelular());
-					} catch (NumberFormatException e) {
-						// TODO: handle exception
-						System.out.println("Valor Errado!");
-					}
-
-					getFunc().setRua(edicaoFuncionario.getTextRua().getText());
-					System.out.println(getFunc().getRua());
-
-					getFunc().setComplemento(edicaoFuncionario.getTextComplemento().getText());
-					System.out.println(getFunc().getComplemento());
-
-					getFunc().setNumero(edicaoFuncionario.getTextNumero().getText());
-					System.out.println(getFunc().getNumero());
-
-					getFunc().setBairro(edicaoFuncionario.getTextBairro().getText());
-					System.out.println(getFunc().getBairro());
-
-					getFunc().setCidade(edicaoFuncionario.getTextCidade().getText());
-					System.out.println(getFunc().getCidade());
-
-					getFunc().setCep(edicaoFuncionario.getTextCEP().getText());
-					System.out.println(getFunc().getCep());
-
-					getFunc().setDataAdmissao(new Date(System.currentTimeMillis()));
-					getFunc().setDataNascimento(edicaoFuncionario.getTextDataNascimento().getText());
-
-					if (edicaoFuncionario.getChckbxAdministrador().isSelected())
-						getFunc().setAdministrador(true);
-					else
-						getFunc().setAdministrador(false);
-
-					getFunc().setSenha(edicaoFuncionario.getTextPassword1().getText());
 
 					funcDAO.gravarFuncionario(func);
+					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					edicaoFuncionario.dispose();
+				}
 
-				} else {
-					int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar a Edição sem adicionar Imagem?",
-							"Cadastrar", JOptionPane.YES_NO_OPTION);
+				else {
+					int result = JOptionPane.showConfirmDialog(null,
+							"Deseja realizar a edição sem adicionar uma imagem?", "Cadastrar",
+							JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION) {
+
 						funcDAO.gravarFuncionario(func);
-						// System.out.println(func.get);
+						JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+								JOptionPane.DEFAULT_OPTION);
+						edicaoFuncionario.dispose();
 					}
 				}
-			} else {
-				JOptionPane.showMessageDialog(null, "Senhas não Conferem!", null, JOptionPane.ERROR_MESSAGE);
-			}
-		} else
-			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
+		} else 
+			JOptionPane.showMessageDialog(null, "Senhas não Conferem!", null, JOptionPane.ERROR_MESSAGE);
+		
+	
 
+	}
 	}
 
 	public Funcionario getFunc() {
