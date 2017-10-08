@@ -11,6 +11,7 @@ public class AtualizaTabela implements Runnable{
 	FuncionarioDAO funcDAO = new FuncionarioDAO();
 	ClienteView clienteView;
 	ClienteDAO clieDAO = new ClienteDAO();
+	private String busca = "";
 	
 	public AtualizaTabela(FuncionarioView funcionarioView) {
 		this.funcionarioView = funcionarioView;
@@ -33,7 +34,8 @@ public class AtualizaTabela implements Runnable{
 	}
 
 	private void atualizarTabelaFunc() {
-		String[][] funcs = funcDAO.listaFuncionarioArray("");
+		
+		String[][] funcs = funcDAO.listaFuncionarioArray(busca);
 		String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
 		
 		DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
@@ -50,10 +52,29 @@ public class AtualizaTabela implements Runnable{
 			            return canEdit [columnIndex];  
 			        }
 		};
+		
+		int l = funcionarioView.getTableFuncionario().getSelectedRow();
+		
+		
 		funcionarioView.getTableFuncionario().setModel(model);
+		try {
+			funcionarioView.getTableFuncionario().setRowSelectionInterval(l, l);
+		} catch (IllegalArgumentException e) {
+			// TODO: handle exception
+		}
+		
 		funcionarioView.repaint();
 		funcionarioView.revalidate();
 	}
+	
+	public String getBusca() {
+		return busca;
+	}
+
+	public void setBusca(String busca) {
+		this.busca = busca;
+	}
+
 	
 /*	private void atualizarTabelaCliente() {
 		String[][] clientes = clieDAO.listaClienteArray("");

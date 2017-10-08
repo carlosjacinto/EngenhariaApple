@@ -31,6 +31,7 @@ public class CadastroProdutoView extends JDialog {
 	private JButton btnCancelar;
 	private JButton btnGravar;
 	private JTextArea textDescricao;
+	private JLabel lblFoto;
 
 	public static void main(String[] args) {
 		try {
@@ -85,6 +86,7 @@ public class CadastroProdutoView extends JDialog {
 			contentPanel.add(getLblDescricao());
 			contentPanel.add(getbtnPesquisarImagem());
 
+			contentPanel.add(getLblFoto());
 			contentPanel.add(getpanelFoto());
 			contentPanel.add(getBtnCancelar());
 			contentPanel.add(getBtnGravar());
@@ -164,9 +166,17 @@ public class CadastroProdutoView extends JDialog {
 	public JTextArea getTextDescricao() {
 		if (textDescricao == null) {
 			textDescricao = new JTextArea();
+			textDescricao.setLineWrap(true);
 			textDescricao.setBorder(UIManager.getBorder("TextField.border"));
 			textDescricao.setBounds(30, 197, 281, 154);
 		}
 		return textDescricao;
+	}
+	public JLabel getLblFoto() {
+		if (lblFoto == null) {
+			lblFoto = new JLabel("");
+			lblFoto.setBounds(348, 69, 275, 281);
+		}
+		return lblFoto;
 	}
 }

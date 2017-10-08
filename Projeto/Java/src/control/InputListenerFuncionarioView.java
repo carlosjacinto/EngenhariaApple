@@ -5,6 +5,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import model.Funcionario;
@@ -23,7 +25,6 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 		this.funcionarioView = funcionarioView;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -47,7 +48,7 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			funcionarioView.getTableFuncionario().setModel(model);
 			funcionarioView.repaint();
 			funcionarioView.revalidate();
-			funcionarioView.getT1().stop();
+			funcionarioView.setBuscaAT1(funcionarioView.getTextBusca().getText());
 			
 			
 			//EditarFuncionarioView edicaoFuncionarioView = new EditarFuncionarioView();
@@ -58,33 +59,97 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			cadastroFuncionarioView = new CadastroFuncionarioView();
 			cadastroFuncionarioView.setVisible(true);
 		} else if (e.getSource() == funcionarioView.getTableFuncionario()) {
-			String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
-			Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
-			new EditarFuncionarioView(func).setVisible(true);
+			//String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
+			//Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
+			//new EditarFuncionarioView(func).setVisible(true);
+		}else if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+			confirmarExclusao();
+		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+			if(funcionarioView.getTableFuncionario().getSelectedRow()!=-1) {
+				String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
+				Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
+				new EditarFuncionarioView(func).setVisible(true);
+			}else JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null,
+					JOptionPane.WARNING_MESSAGE);
 		}
+	}
+
+	public void confirmarExclusao() {
+		// TODO Auto-generated method stub
+		int i = funcionarioView.getTableFuncionario().getSelectedRow();
+		if(i!=-1) {
+			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
+						+funcionarioView.getTableFuncionario().getValueAt(i, 1)+"?",
+					"Excluir", JOptionPane.YES_NO_OPTION);
+			if(result == JOptionPane.YES_OPTION) {
+				int sucesso = funcDAO.excluirFuncionario(Integer.parseInt(funcionarioView.getTableFuncionario().getValueAt(i, 0).toString()));
+				
+				if(sucesso == 1)JOptionPane.showMessageDialog(null, "Funcionário Excluido!", null,
+						JOptionPane.INFORMATION_MESSAGE);
+				else JOptionPane.showMessageDialog(null, "Erro ao tentar excluir!", null,
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}else JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null,
+				JOptionPane.WARNING_MESSAGE);
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete2x.png"));
+		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new2x.png"));
+		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
+		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit2x.png"));
+		}
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete.png"));
+		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new.png"));
+		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
+		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit.png"));
+		}
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete.png"));
+		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new.png"));
+		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
+		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit.png"));
+		}
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete2x.png"));
+		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new2x.png"));
+		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
+		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit2x.png"));
+		}
 
 	}
 

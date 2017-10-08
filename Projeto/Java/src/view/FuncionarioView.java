@@ -1,8 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.util.NoSuchElementException;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import control.InputListenerFuncionarioView;
 import model.AtualizaTabela;
 import model.FuncionarioDAO;
-import javax.swing.ImageIcon;
+import javax.swing.ListSelectionModel;
 
 public class FuncionarioView extends JDialog {
 
@@ -29,8 +30,8 @@ public class FuncionarioView extends JDialog {
 	JPanel panel;
 	private JTable tableFuncionario;
 	private JTextField textBusca;
-	private JButton btnBuscarFuncionario;
-	private JButton btnNovoFuncionario;
+	private JLabel btnBuscarFuncionario;
+	private JLabel btnNovoFuncionario;
 	private JLabel btnExcluirFuncionario;
 	private JLabel lblBuscarPorNome;
 	private JScrollPane scrollBar;
@@ -38,6 +39,7 @@ public class FuncionarioView extends JDialog {
 	private AtualizaTabela aT1;
 	private Thread t1;
 	private FuncionarioDAO funcDAO = new FuncionarioDAO();
+	private JLabel btnEditarFuncionario;
 
 	/**
 	 * Launch the application.
@@ -79,6 +81,7 @@ public class FuncionarioView extends JDialog {
 				        }
 			};
 			tableFuncionario = new JTable(model);
+			tableFuncionario.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
 		return tableFuncionario;
 	}
@@ -100,18 +103,23 @@ public class FuncionarioView extends JDialog {
 		return textBusca;
 	}
 	
-	public JButton getBuscarButton() {
+	public JLabel getBuscarButton() {
 		if(btnBuscarFuncionario == null){
-			btnBuscarFuncionario = new JButton("Buscar");
-			btnBuscarFuncionario.setBounds(266, 472, 75, 23);
+			btnBuscarFuncionario = new JLabel();
+			btnBuscarFuncionario.setToolTipText("Buscar");
+			btnBuscarFuncionario.setHorizontalAlignment(SwingConstants.CENTER);
+			btnBuscarFuncionario.setBounds(266, 472, 23, 23);
+			btnBuscarFuncionario.setIcon(new ImageIcon("Interno/search-icon.png"));
 		}
 		return btnBuscarFuncionario;
 	}
 	
-	public JButton getbtnNovoFuncionario() {
+	public JLabel getbtnNovoFuncionario() {
 		if(btnNovoFuncionario == null){
-			btnNovoFuncionario = new JButton("Novo Funcionário");
-			btnNovoFuncionario.setBounds(385, 449, 150, 23);
+			btnNovoFuncionario = new JLabel();
+			btnNovoFuncionario.setToolTipText("Novo Funcion\u00E1rio");
+			btnNovoFuncionario.setBounds(466, 422, 80, 80);
+			btnNovoFuncionario.setIcon(new ImageIcon("Interno/new.png"));
 		}
 		return btnNovoFuncionario;
 	}
@@ -128,6 +136,8 @@ public class FuncionarioView extends JDialog {
 		getBuscarButton().addMouseListener(listener);
 		getbtnNovoFuncionario().addMouseListener(listener);
 		getTableFuncionario().addMouseListener(listener);
+		getbtnExcluirFuncionario().addMouseListener(listener);
+		getBtnEditarFuncionario().addMouseListener(listener);
 		this.addWindowListener(listener);
 	}
 	
@@ -152,6 +162,7 @@ public class FuncionarioView extends JDialog {
 		panel.add(getTextBusca());		
 		panel.add(getlblBuscarPorNome());
 		panel.add(getbtnExcluirFuncionario());
+		panel.add(getBtnEditarFuncionario());
 		getT1().start();
 	}
 	
@@ -161,16 +172,40 @@ public class FuncionarioView extends JDialog {
 			btnExcluirFuncionario.setToolTipText("Excluir Funcionario");
 			btnExcluirFuncionario.setHorizontalAlignment(SwingConstants.CENTER);
 			btnExcluirFuncionario .setIcon(new ImageIcon("Interno/delete.png"));
-			btnExcluirFuncionario.setBounds(556, 422, 93, 72);
+			btnExcluirFuncionario.setBounds(556, 422, 80, 80);
 		}
 		return btnExcluirFuncionario;
 	}
 	
 	public Thread getT1() {
 		if(t1 == null) {
-			aT1 = new AtualizaTabela(this);
-			t1 = new Thread(aT1);
+			
+			try {
+				aT1 = new AtualizaTabela(this);
+				t1 = new Thread(aT1);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// TODO: handle exception
+				System.out.println(1);
+			}catch (NoSuchElementException e) {
+				// TODO: handle exception
+				System.out.println(2);
+			}
 		}
 		return t1;
+	}
+	
+	public void setBuscaAT1(String busca) {
+		aT1.setBusca(busca);
+	}
+	
+	public JLabel getBtnEditarFuncionario() {
+		if (btnEditarFuncionario == null) {
+			btnEditarFuncionario = new JLabel("");
+			btnEditarFuncionario.setToolTipText("Editar Funcionario");
+			btnEditarFuncionario.setHorizontalAlignment(SwingConstants.CENTER);
+			btnEditarFuncionario.setIcon(new ImageIcon("Interno/edit.png"));
+			btnEditarFuncionario.setBounds(646, 422, 80, 80);
+		}
+		return btnEditarFuncionario;
 	}
 }

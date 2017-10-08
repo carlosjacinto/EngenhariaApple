@@ -2,9 +2,11 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.sql.Date;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import model.Produto;
@@ -13,9 +15,10 @@ import view.CadastroProdutoView;
 
 public class InputListenerCadastroProduto implements MouseListener{
 	private CadastroProdutoView cadastroProduto;
+	private JFileChooser jFileChooser;
 	private ImageIcon imageIcon;
 	private Produto produto;
-	private ProdutoDAO produtoDAO;
+	private ProdutoDAO produtoDAO = new ProdutoDAO();
 	public InputListenerCadastroProduto(CadastroProdutoView cadastroProduto) {
 		// TODO Auto-generated constructor stub
 		this.cadastroProduto = cadastroProduto;
@@ -30,6 +33,8 @@ public class InputListenerCadastroProduto implements MouseListener{
 		}else if ((e.getSource()) == cadastroProduto.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
 			capturaDados();
+		}else if(e.getSource() == cadastroProduto.getbtnPesquisarImagem()){
+			getImagem();
 		}
 	}
 
@@ -64,7 +69,8 @@ public class InputListenerCadastroProduto implements MouseListener{
 				try {
 					getProduto().setPrecoVendaProduto(Float.parseFloat(cadastroProduto.getTextPrecoVenda().getText()));
 				} catch (NumberFormatException e) {
-					System.out.println("Valor Errado!");
+					JOptionPane.showMessageDialog(null, "Valor Inválido!", null,
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 				getProduto().setNomeProduto(cadastroProduto.getTextNome().getText());
@@ -106,5 +112,31 @@ public class InputListenerCadastroProduto implements MouseListener{
 			produto = new Produto();
 		}
 		return produto;
+	}
+	public void getImagem() {
+		getJFileChooser().showOpenDialog(null);
+		if (!(getJFileChooser().getSelectedFile() == null)) {
+			imageIcon = new ImageIcon(getJFileChooser().getSelectedFile().getAbsolutePath());
+			imageIcon.setImage(imageIcon.getImage().getScaledInstance(275, 281, 100));
+			cadastroProduto.getLblFoto().setIcon(imageIcon);
+		}
+
+	}
+	
+	public JFileChooser getJFileChooser() {
+		if (jFileChooser == null) {
+			jFileChooser = new JFileChooser();
+			jFileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+				public boolean accept(File f) {
+					return (f.getName().endsWith(".jpg") ||f.getName().endsWith(".JPG") || f.getName().endsWith(".png"))|| f.getName().endsWith(".PNG")|| f.isDirectory();
+				}
+
+				public String getDescription() {
+					return "Arquivo de Imagem(*.jpg, *.png)";
+				}
+			});
+		}
+
+		return jFileChooser;
 	}
 }

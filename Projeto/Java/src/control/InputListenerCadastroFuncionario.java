@@ -90,7 +90,9 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 					getFunc().setTelefone(Long.parseLong(cadastroFuncionario.getTextTelefone().getText()));
 					getFunc().setCelular(Long.parseLong(cadastroFuncionario.getTextCelular().getText()));
 				} catch (NumberFormatException e) {
-					System.out.println("Valor Errado!");
+					JOptionPane.showMessageDialog(null, "Valor Inválido!", null,
+							JOptionPane.ERROR_MESSAGE);
+					return;
 				}
 
 				getFunc().setCpf(cadastroFuncionario.getTextCPF().getText());
@@ -122,8 +124,8 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 					if (!(imageIcon == null)) {
 
 						funcDAO.gravarFuncionario(func);
-						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
-								JOptionPane.DEFAULT_OPTION);
+						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
 						cadastroFuncionario.dispose();
 					}
 

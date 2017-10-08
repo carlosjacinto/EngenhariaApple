@@ -66,6 +66,22 @@ public class FuncionarioDAO {
 		}
 		return 0;
 	}
+	
+	public int excluirFuncionario(int iid) {
+		conex = bd.Conectar();
+		int result = 0;
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "DELETE FROM funcionario where idFuncionario = "+iid;
+			result = stmt.executeUpdate(SQL);
+			
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+		} finally {
+			bd.Desconectar(conex);
+		}
+		return result;
+	}
 
 	public Funcionario RetornaFuncionario(int iid) {
 		conex = bd.Conectar();
