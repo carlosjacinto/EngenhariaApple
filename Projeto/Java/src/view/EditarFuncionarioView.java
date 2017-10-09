@@ -466,6 +466,7 @@ public class EditarFuncionarioView extends JDialog {
 			textCelular = new JTextField();
 			textCelular.setBounds(339, 152, 284, 20);
 			textCelular.setColumns(10);
+			textCelular.setText(func.getCelular() + "");
 		}
 		return textCelular;
 	}

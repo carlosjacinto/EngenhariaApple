@@ -28,7 +28,7 @@ public class InputListenerEditarFuncionario implements MouseListener {
 		if (e.getSource() == edicaoFuncionario.getBtnCancelar()) {
 			edicaoFuncionario.dispose();
 		} else if ((e.getSource()) == edicaoFuncionario.getBtnGravar()) {
-			System.out.println("Botão ok Clicado");
+			System.out.println("Botão grvar Clicado");
 			capturarDadosFunc();
 		} else if ((e.getSource()) == edicaoFuncionario.getbtnPesquisarImagem()) {
 			getImagem();
@@ -61,11 +61,10 @@ public class InputListenerEditarFuncionario implements MouseListener {
 	}
 
 	public void capturarDadosFunc() {
-		// TODO Auto-generated method stub
+		System.out.println("tete");
 		if (!(edicaoFuncionario.getTextNome().getText().equals("")
 				|| edicaoFuncionario.getTextSalario().getText().equals("")
 				|| edicaoFuncionario.getTextComissao().getText().equals("")
-				|| edicaoFuncionario.getTextCPF().getText().equals("")
 				|| edicaoFuncionario.getTextTelefone().getText().equals("")
 				|| edicaoFuncionario.getTextCelular().getText().equals("")
 				|| edicaoFuncionario.getTextRua().getText().equals("")
@@ -73,9 +72,9 @@ public class InputListenerEditarFuncionario implements MouseListener {
 				|| edicaoFuncionario.getTextBairro().getText().equals("")
 				|| edicaoFuncionario.getTextCidade().getText().equals("")
 				|| edicaoFuncionario.getTextCEP().getText().equals("")
-				|| edicaoFuncionario.getTextCelular().getText().equals("")
-				|| edicaoFuncionario.getTextRua().getText().equals("")
 				|| edicaoFuncionario.getTextDataNascimento().getText().equals(""))) {
+
+			System.out.println("tete2");
 			if (edicaoFuncionario.getTextPassword1().getText().equals(edicaoFuncionario.getTextPassword2().getText())
 					&& !edicaoFuncionario.getTextPassword1().getText().equals("")) {
 
@@ -88,7 +87,7 @@ public class InputListenerEditarFuncionario implements MouseListener {
 					JOptionPane.showMessageDialog(null, "Valor Inválido!", null, JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-
+				getFunc().setIdFuncionario(Integer.parseInt(edicaoFuncionario.getTextCodigo().getText()));
 				getFunc().setCpf(edicaoFuncionario.getTextCPF().getText());
 				getFunc().setNome(edicaoFuncionario.getTextNome().getText());
 				getFunc().setRua(edicaoFuncionario.getTextRua().getText());
@@ -108,7 +107,7 @@ public class InputListenerEditarFuncionario implements MouseListener {
 
 				if (!(imageIcon == null)) {
 
-					funcDAO.gravarFuncionario(func);
+					funcDAO.editarFuncionario(func);
 					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
 							JOptionPane.INFORMATION_MESSAGE);
 					edicaoFuncionario.dispose();
@@ -120,18 +119,16 @@ public class InputListenerEditarFuncionario implements MouseListener {
 							JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION) {
 
-						funcDAO.gravarFuncionario(func);
+						funcDAO.editarFuncionario(func);
 						JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
 								JOptionPane.DEFAULT_OPTION);
 						edicaoFuncionario.dispose();
 					}
 				}
-		} else 
-			JOptionPane.showMessageDialog(null, "Senhas não Conferem!", null, JOptionPane.ERROR_MESSAGE);
-		
-	
+			} else
+				JOptionPane.showMessageDialog(null, "Senhas não Conferem!", null, JOptionPane.ERROR_MESSAGE);
 
-	}
+		}
 	}
 
 	public Funcionario getFunc() {
