@@ -118,7 +118,7 @@ public class ProdutoDAO {
 		try {
 			origem = new FileInputStream(caminho);
 			System.out.println();
-			destino = new FileOutputStream("Media/Produto/" + codigo + ".jpg");
+			destino = new FileOutputStream("Media/Produto/" + codigo + ".png");
 			fcOrigem = origem.getChannel();
 			fcDestino = destino.getChannel();
 			fcOrigem.transferTo(0, fcOrigem.size(), fcDestino);

@@ -119,7 +119,7 @@ public class ClienteDAO {
 		try {
 			origem = new FileInputStream(caminho);
 			System.out.println();
-			destino = new FileOutputStream("Media/Cliente/" + codigo + ".jpg");
+			destino = new FileOutputStream("Media/Cliente/" + codigo + ".png");
 			fcOrigem = origem.getChannel();
 			fcDestino = destino.getChannel();
 			fcOrigem.transferTo(0, fcOrigem.size(), fcDestino);
