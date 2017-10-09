@@ -2,40 +2,37 @@ package model;
 
 import javax.swing.table.DefaultTableModel;
 
-import view.FuncionarioView;
+import view.ClienteView;
 
-public class AtualizaTabela implements Runnable {
+public class AtualizaTabelaCliente implements Runnable {
 
-	FuncionarioView funcionarioView;
-	FuncionarioDAO funcDAO = new FuncionarioDAO();
+	ClienteView clienteView;
+	ClienteDAO clieDAO = new ClienteDAO();
 	private String busca = "";
 
-	public AtualizaTabela(FuncionarioView funcionarioView) {
-		this.funcionarioView = funcionarioView;
+	public AtualizaTabelaCliente(ClienteView clienteView) {
+		this.clienteView = clienteView;
 	}
 
+	@Override
 	public void run() {
 		try {
 			for (;;) {
 				Thread.sleep(3000);
-				atualizarTabelaFunc();
-
+				atualizarTabelaCliente();
 			}
 		} catch (InterruptedException e) {
-			// TODO Auto-generatee.printStackTrace();
+
 		}
 	}
 
-	private void atualizarTabelaFunc() {
+	private void atualizarTabelaCliente() {
 
-		String[][] funcs = funcDAO.listaFuncionarioArray(busca);
+		String[][] funcs = clieDAO.listaClienteArray(busca);
 		String[] colunas = { "id", "Nome", "CPF", "Endereço", "Telefone", "Nascimento" };
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
 
-			/**
-			 * 
-			 */
 			private static final long serialVersionUID = -7680235106608274804L;
 			boolean[] canEdit = new boolean[] { false, false, false, false, false, false };
 
@@ -45,17 +42,17 @@ public class AtualizaTabela implements Runnable {
 			}
 		};
 
-		int l = funcionarioView.getTableFuncionario().getSelectedRow();
+		int l = clienteView.getTableCliente().getSelectedRow();
 
-		funcionarioView.getTableFuncionario().setModel(model);
+		clienteView.getTableCliente().setModel(model);
 		try {
-			funcionarioView.getTableFuncionario().setRowSelectionInterval(l, l);
+			clienteView.getTableCliente().setRowSelectionInterval(l, l);
 		} catch (IllegalArgumentException e) {
 			// TODO: handle exception
 		}
 
-		funcionarioView.repaint();
-		funcionarioView.revalidate();
+		clienteView.repaint();
+		clienteView.revalidate();
 	}
 
 	public String getBusca() {
@@ -65,4 +62,5 @@ public class AtualizaTabela implements Runnable {
 	public void setBusca(String busca) {
 		this.busca = busca;
 	}
+
 }

@@ -2,11 +2,13 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import view.CadastroClienteView;
 import view.ClienteView;
 
-public class InputListenerClienteView implements MouseListener {
+public class InputListenerClienteView implements MouseListener, WindowListener {
 	ClienteView clienteView;
 
 	public InputListenerClienteView(ClienteView clienteView) {
@@ -49,6 +51,48 @@ public class InputListenerClienteView implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowOpened(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

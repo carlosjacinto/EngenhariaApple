@@ -14,6 +14,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.text.MaskFormatter;
 
 import control.InputListenerEditarCliente;
+import model.Cliente;
 
 public class EditarClienteView extends JDialog {
 
@@ -51,6 +52,7 @@ public class EditarClienteView extends JDialog {
 	private JTextField txtDataDoCadastro;
 	private JTextField textCodigo;
 	private JLabel lblCodigo;
+	Cliente clie;
 
 	/**
 	 * Launch the application.
@@ -84,7 +86,7 @@ public class EditarClienteView extends JDialog {
 		setContentPane(getContentPanel());
 		setLocationRelativeTo(null);
 		setResizable(false);
-
+		setTitle("Edição de Cliente");
 	}
 
 	public JButton getbtnPesquisarImagem() {
@@ -154,6 +156,7 @@ public class EditarClienteView extends JDialog {
 			textNome = new JTextField();
 			textNome.setBounds(30, 95, 281, 20);
 			textNome.setColumns(10);
+			textNome.setText(clie.getNome());
 		}
 		return textNome;
 	}
@@ -195,6 +198,8 @@ public class EditarClienteView extends JDialog {
 			textCPF = new JTextField();
 			textCPF.setBounds(30, 146, 281, 20);
 			textCPF.setColumns(10);
+			textCPF.setEditable(false);
+			textCPF.setText(clie.getCpf());
 		}
 		return textCPF;
 	}
@@ -212,6 +217,7 @@ public class EditarClienteView extends JDialog {
 			textRua = new JTextField();
 			textRua.setBounds(30, 195, 204, 20);
 			textRua.setColumns(10);
+			textRua.setText(clie.getRua());
 		}
 		return textRua;
 	}
@@ -221,6 +227,7 @@ public class EditarClienteView extends JDialog {
 			textBairro = new JTextField();
 			textBairro.setBounds(30, 248, 281, 20);
 			textBairro.setColumns(10);
+			textBairro.setText(clie.getBairro());
 		}
 		return textBairro;
 	}
@@ -230,6 +237,7 @@ public class EditarClienteView extends JDialog {
 			textCidade = new JTextField();
 			textCidade.setBounds(30, 299, 281, 20);
 			textCidade.setColumns(10);
+			textCidade.setText(clie.getCidade());
 		}
 		return textCidade;
 	}
@@ -263,6 +271,7 @@ public class EditarClienteView extends JDialog {
 			textNumero = new JTextField();
 			textNumero.setBounds(244, 195, 67, 20);
 			textNumero.setColumns(10);
+			textNumero.setText(clie.getNumero());
 		}
 		return textNumero;
 	}
@@ -280,6 +289,7 @@ public class EditarClienteView extends JDialog {
 			textComplemento = new JTextField();
 			textComplemento.setBounds(30, 355, 281, 20);
 			textComplemento.setColumns(10);
+			textComplemento.setText(clie.getComplemento());
 		}
 		return textComplemento;
 	}
@@ -297,6 +307,7 @@ public class EditarClienteView extends JDialog {
 			textCEP = new JTextField();
 			textCEP.setBounds(30, 402, 281, 20);
 			textCEP.setColumns(10);
+			textCEP.setText(clie.getCep());
 		}
 		return textCEP;
 	}
@@ -320,10 +331,10 @@ public class EditarClienteView extends JDialog {
 			textDataNascimento.setColumns(6);
 			textDataNascimento.setBounds(30, 454, 281, 20);
 			textDataNascimento.setColumns(10);
+			textDataNascimento.setText(clie.getDataNascimento());
 		}
 		return textDataNascimento;
 	}
-	
 
 	public JLabel getLblTelefone() {
 		if (lblTelefone == null) {
@@ -338,6 +349,7 @@ public class EditarClienteView extends JDialog {
 			textTelefone = new JTextField();
 			textTelefone.setBounds(339, 95, 284, 20);
 			textTelefone.setColumns(10);
+			textTelefone.setText(clie.getTelefone()+"");
 		}
 		return textTelefone;
 	}
@@ -355,6 +367,7 @@ public class EditarClienteView extends JDialog {
 			textCelular = new JTextField();
 			textCelular.setBounds(339, 152, 284, 20);
 			textCelular.setColumns(10);
+			textCelular.setText(clie.getCelular()+"");
 		}
 		return textCelular;
 	}
@@ -362,8 +375,11 @@ public class EditarClienteView extends JDialog {
 	public JLabel getLblFoto() {
 		if (lblFoto == null) {
 			lblFoto = new JLabel("");
-			lblFoto.setBounds(348, 195, 275, 281);
-			lblFoto.setIcon(new ImageIcon("Interno/default-avatar.png"));
+			lblFoto.setBounds(0, 0, 275, 281);
+			System.out.println(clie.getIdCliente());
+			lblFoto.setIcon(new ImageIcon("Media/Cliente/" + clie.getIdCliente() + ".png"));
+			if (!(lblFoto == null))
+				lblFoto.setIcon(new ImageIcon("Interno/default-avatar.png"));
 		}
 		return lblFoto;
 	}
@@ -374,6 +390,7 @@ public class EditarClienteView extends JDialog {
 			txtDataDoCadastro.setBounds(339, 38, 284, 20);
 			txtDataDoCadastro.setColumns(10);
 			txtDataDoCadastro.setEditable(false);
+			txtDataDoCadastro.setText(clie.getDataCadastro()+"");
 		}
 		return txtDataDoCadastro;
 	}
@@ -391,6 +408,7 @@ public class EditarClienteView extends JDialog {
 			textCodigo = new JTextField();
 			textCodigo.setBounds(30, 37, 281, 22);
 			textCodigo.setEditable(false);
+			textCodigo.setText("" + clie.getIdCliente());
 		}
 		return textCodigo;
 	}

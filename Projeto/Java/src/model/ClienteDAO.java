@@ -20,10 +20,9 @@ public class ClienteDAO {
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
-					"INSERT INTO Cliente(nomeCliente, ruaCliente, compCliente, numeroCliente, bairroCliente, cidadeCliente, cepCliente, fotoCliente, telefoneCliente, celularCliente, cpfCliente, dataCadastro, dataNascCliente)VALUES ('"
+					"INSERT INTO Cliente(nomeCliente, ruaCliente, compCliente, numeroCliente, bairroCliente, cidadeCliente, cepCliente, telefoneCliente, celularCliente, cpfCliente, dataCadastro, dataNascCliente)VALUES ('"
 							+ c.getNome() + "','" + c.getRua() + "','" + c.getComplemento() + "','" + c.getNumero()
-							+ "','" + c.getBairro() + "','" + c.getCidade()  + "','" + c.getCep() + "','" + c.getFoto()
-							+ "','" + c.getTelefone() + "','" + c.getCelular() + "','" + c.getCpf() +"','" + c.getDataCadastro() +"','" + c.getDataNascimento() +"') ");
+							+ "','" + c.getBairro() + "','" + c.getCidade()  + "','" + c.getCep() + "','" + c.getTelefone() + "','" + c.getCelular() + "','" + c.getCpf() +"','" + c.getDataCadastro() +"','" + c.getDataNascimento() +"') ");
 
 			if (c.getFoto() != null) {
 				int codigo = buscaCodigoCliente(c.getCpf());

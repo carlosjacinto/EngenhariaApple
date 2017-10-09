@@ -22,11 +22,10 @@ public class FuncionarioDAO {
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
-					"INSERT INTO funcionario(nomeFunc, ruaFunc, compFunc, numeroFunc, bairroFunc, cidadeFunc, dataNascFunc, dataAdmissaoFunc, cepFunc, senhaFunc, fotoFunc, telefoneFunc, celularFunc, cpfFunc, salarioFunc, comissaoFunc, administrador)VALUES ('"
+					"INSERT INTO funcionario(nomeFunc, ruaFunc, compFunc, numeroFunc, bairroFunc, cidadeFunc, dataNascFunc, dataAdmissaoFunc, cepFunc, senhaFunc, telefoneFunc, celularFunc, cpfFunc, salarioFunc, comissaoFunc, administrador)VALUES ('"
 							+ f.getNome() + "','" + f.getRua() + "','" + f.getComplemento() + "','" + f.getNumero()
 							+ "','" + f.getBairro() + "','" + f.getCidade() + "','" + f.getDataNascimento() + "','"
-							+ f.getDataAdmissao() + "','" + f.getCep() + "','" + f.getSenha() + "','" + f.getFoto()
-							+ "','" + f.getTelefone() + "','" + f.getCelular() + "','" + f.getCpf() + "','"
+							+ f.getDataAdmissao() + "','" + f.getCep() + "','" + f.getSenha() + "','" + f.getTelefone() + "','" + f.getCelular() + "','" + f.getCpf() + "','"
 							+ f.getSalario() + "','" + f.getComissao() + "','" + adm +"') ");
 
 			if (f.getFoto() != null) {

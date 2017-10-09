@@ -3,7 +3,6 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.sql.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -25,13 +24,12 @@ public class InputListenerEditarCliente implements MouseListener {
 		this.edicaoCliente = edicaoCliente;
 	}
 
-	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == edicaoCliente.getBtnCancelar()) {
 			edicaoCliente.dispose();
 		} else if ((e.getSource()) == edicaoCliente.getBtnGravar()) {
-			System.out.println("Botão ok Clicado");
-			capturarDadosFunc();
+			System.out.println("Botão grvar Clicado");
+			capturarDadosCliente();
 		} else if ((e.getSource()) == edicaoCliente.getbtnPesquisarImagem()) {
 			getImagem();
 		}
@@ -62,70 +60,54 @@ public class InputListenerEditarCliente implements MouseListener {
 
 	}
 
-	public void capturarDadosFunc() {
-		// TODO Auto-generated method stub
+	public void capturarDadosCliente() {
 		if (!(edicaoCliente.getTextNome().getText().equals("") || edicaoCliente.getTextCPF().getText().equals("")
 				|| edicaoCliente.getTextTelefone().getText().equals("")
 				|| edicaoCliente.getTextCelular().getText().equals("")
-				|| edicaoCliente.getTextRua().getText().equals("")
-				|| edicaoCliente.getTextComplemento().getText().equals("")
-				|| edicaoCliente.getTextNumero().getText().equals("")
+				|| edicaoCliente.getTextRua().getText().equals("") || edicaoCliente.getTextNumero().getText().equals("")
 				|| edicaoCliente.getTextBairro().getText().equals("")
 				|| edicaoCliente.getTextCidade().getText().equals("") || edicaoCliente.getTextCEP().getText().equals("")
 				|| edicaoCliente.getTextCelular().getText().equals("")
 				|| edicaoCliente.getTextRua().getText().equals("")
 				|| edicaoCliente.getTextDataNascimento().getText().equals(""))) {
+
+			try {
+				getClie().setTelefone(Long.parseLong(edicaoCliente.getTextTelefone().getText()));
+				getClie().setCelular(Long.parseLong(edicaoCliente.getTextCelular().getText()));
+			} catch (NumberFormatException e) {
+				System.out.println("Valor Errado!");
+			}
+
+			getClie().setCpf(edicaoCliente.getTextCPF().getText());
+			getClie().setNome(edicaoCliente.getTextNome().getText());
+			getClie().setRua(edicaoCliente.getTextRua().getText());
+			getClie().setComplemento(edicaoCliente.getTextComplemento().getText());
+			getClie().setNumero(edicaoCliente.getTextNumero().getText());
+			getClie().setBairro(edicaoCliente.getTextBairro().getText());
+			getClie().setCidade(edicaoCliente.getTextCidade().getText());
+			getClie().setCep(edicaoCliente.getTextCEP().getText());
+
+			getClie().setDataNascimento(edicaoCliente.getTextDataNascimento().getText());
+
 			if (!(imageIcon == null)) {
-				getClie().setNome(edicaoCliente.getTextNome().getText());
-				System.out.println(getClie().getNome());
 
-				try {
+				clieDAO.gravarCliente(clie);
+				JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso", JOptionPane.DEFAULT_OPTION);
+				edicaoCliente.dispose();
+			}
 
-					//getClie().setCpf(Long.parseLong(edicaoCliente.getTextCPF().getText()));
-					System.out.println(getClie().getCpf());
-
-					getClie().setTelefone(Long.parseLong(edicaoCliente.getTextTelefone().getText()));
-					System.out.println(getClie().getTelefone());
-
-					getClie().setCelular(Long.parseLong(edicaoCliente.getTextCelular().getText()));
-					System.out.println(getClie().getCelular());
-				} catch (NumberFormatException e) {
-					// TODO: handle exception
-					System.out.println("Valor Errado!");
-				}
-
-				getClie().setRua(edicaoCliente.getTextRua().getText());
-				System.out.println(getClie().getRua());
-
-				getClie().setComplemento(edicaoCliente.getTextComplemento().getText());
-				System.out.println(getClie().getComplemento());
-
-				getClie().setNumero(edicaoCliente.getTextNumero().getText());
-				System.out.println(getClie().getNumero());
-
-				getClie().setBairro(edicaoCliente.getTextBairro().getText());
-				System.out.println(getClie().getBairro());
-
-				getClie().setCidade(edicaoCliente.getTextCidade().getText());
-				System.out.println(getClie().getCidade());
-
-				getClie().setCep(edicaoCliente.getTextCEP().getText());
-				System.out.println(getClie().getCep());
-
-				getClie().setDataCadastro(new Date(System.currentTimeMillis()));
-				
-
-				getClie().setDataNascimento(edicaoCliente.getTextDataNascimento().getText());
-
-				// TODO: Chamar DAO Cliente
-
-			} else {
-				int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar a Edição sem adicionar uma Imagem?",
-						"Cadastrar", JOptionPane.YES_NO_OPTION);
+			else {
+				int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar o Cadastro sem Imagem?", "Cadastrar",
+						JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
-					// TODO: Chamar DAO Cliente
+
+					clieDAO.gravarCliente(clie);
+					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+							JOptionPane.DEFAULT_OPTION);
+					edicaoCliente.dispose();
 				}
 			}
+
 		} else
 			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
 
