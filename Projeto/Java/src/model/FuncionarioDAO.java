@@ -104,7 +104,6 @@ public class FuncionarioDAO {
 				func.setComissao(rs.getDouble("comissaoFunc"));
 				func.setComplemento(rs.getString("compFunc"));
 				func.setDataAdmissao(rs.getDate("dataAdmissaoFunc"));
-				func.setFoto(rs.getString("fotoFunc"));
 				func.setNumero(rs.getString("numeroFunc"));
 				func.setSalario(rs.getDouble("salarioFunc"));
 				func.setSenha(rs.getString("senhaFunc"));

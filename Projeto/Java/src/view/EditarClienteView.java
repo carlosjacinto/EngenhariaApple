@@ -67,6 +67,13 @@ public class EditarClienteView extends JDialog {
 		}
 	}
 
+	public EditarClienteView(Cliente clie) {
+		this.clie = clie;
+		listener = new InputListenerEditarCliente(this);
+		initialize();
+		initializeListeners();
+	}
+	
 	public EditarClienteView() {
 		listener = new InputListenerEditarCliente(this);
 		initialize();

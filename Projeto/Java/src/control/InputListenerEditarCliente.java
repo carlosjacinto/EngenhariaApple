@@ -77,7 +77,7 @@ public class InputListenerEditarCliente implements MouseListener {
 			} catch (NumberFormatException e) {
 				System.out.println("Valor Errado!");
 			}
-
+			getClie().setIdCliente(Integer.parseInt(edicaoCliente.getTextCodigo().getText()));
 			getClie().setCpf(edicaoCliente.getTextCPF().getText());
 			getClie().setNome(edicaoCliente.getTextNome().getText());
 			getClie().setRua(edicaoCliente.getTextRua().getText());
@@ -91,18 +91,18 @@ public class InputListenerEditarCliente implements MouseListener {
 
 			if (!(imageIcon == null)) {
 
-				clieDAO.gravarCliente(clie);
-				JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso", JOptionPane.DEFAULT_OPTION);
+				clieDAO.editarCliente(clie);
+				JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso", JOptionPane.DEFAULT_OPTION);
 				edicaoCliente.dispose();
 			}
 
 			else {
-				int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar o Cadastro sem Imagem?", "Cadastrar",
+				int result = JOptionPane.showConfirmDialog(null, "Deseja realizar a edição sem adicionar uma imagem?", "Cadastrar",
 						JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 
-					clieDAO.gravarCliente(clie);
-					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
+					clieDAO.editarCliente(clie);
+					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
 							JOptionPane.DEFAULT_OPTION);
 					edicaoCliente.dispose();
 				}

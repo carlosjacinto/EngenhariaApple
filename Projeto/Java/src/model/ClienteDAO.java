@@ -78,6 +78,13 @@ public class ClienteDAO {
 				c.setCidade(rs.getString("cidadeCliente"));
 				c.setRua(rs.getString("ruaCliente"));
 				c.setNumero(rs.getString("numeroCliente"));
+				c.setCep(rs.getString("cepCliente"));
+				c.setDataCadastro(rs.getDate("dataCadastro"));
+				c.setComplemento(rs.getString("compCliente"));
+				c.setDataNascimento(rs.getString("dataNascCliente"));
+				c.setTelefone(rs.getLong("telefoneCliente"));
+				c.setCelular(rs.getLong("celularCliente"));
+				
 			}
 			return c;
 		} catch (SQLException sqle) {
@@ -132,6 +139,7 @@ public class ClienteDAO {
 
 	public boolean editarCliente(Cliente c) {
 		conex = bd.Conectar();
+		System.out.println("entrou");
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute("UPDATE cliente SET nomeCliente='" + c.getNome() + "', ruaCliente='" + c.getRua()
@@ -166,7 +174,7 @@ public class ClienteDAO {
 				clientes[cont][0] = "" + rs.getInt("idCliente");
 				clientes[cont][2] = "" + rs.getLong("cpfCliente");
 				clientes[cont][4] = "" + rs.getLong("telefoneCliente");
-				clientes[cont][5] = "" + rs.getDate("dataNascCliente");
+				clientes[cont][5] = "" + rs.getString("dataNascCliente");
 				clientes[cont][3] = rs.getString("ruaCliente");
 				cont++;
 			}
@@ -180,4 +188,21 @@ public class ClienteDAO {
 			bd.Desconectar(conex);
 		}
 	}
+
+	public int excluirCliente(int iid) {
+		conex = bd.Conectar();
+		int result = 0;
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "DELETE FROM cliente where idCliente = "+iid;
+			result = stmt.executeUpdate(SQL);
+			
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+		} finally {
+			bd.Desconectar(conex);
+		}
+		return result;
+	}
+	
 }
