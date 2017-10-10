@@ -1,9 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.util.NoSuchElementException;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -11,10 +11,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.InputListenerNotaEntradaView;
+import model.AtualizaTabelaNotaEntrada;
+import model.NotaEntradaDAO;
 
 public class NotaEntradaView extends JDialog {
 
@@ -24,28 +28,22 @@ public class NotaEntradaView extends JDialog {
 	private static final long serialVersionUID = -8141345248153320486L;
 	private JPanel contentPane;
 	JPanel panel;
-	private JTable tablePedido;
+	private JTable tableNotaEntrada;
 	private JTextField textBusca;
-	private JButton btnBuscarNota;
-	private JButton btnNovaNota;
-	private JLabel lblBuscarNota;
+	private JLabel btnBuscarNotaEntrada;
+	private JLabel btnNovoNotaEntrada;
+	private JLabel btnExcluirNotaEntrada;
+	private JLabel lblBuscarPorNome;
 	private JScrollPane scrollBar;
 	InputListenerNotaEntradaView listener;
+	private AtualizaTabelaNotaEntrada aT1;
+	private Thread t1;
+	private NotaEntradaDAO notaEntDAO = new NotaEntradaDAO();
+	private JLabel btnEditarNotaEntrada;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					NotaEntradaView frame = new NotaEntradaView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		NotaEntradaView frame = new NotaEntradaView();
+		frame.setVisible(true);
 	}
 
 	/**
@@ -56,78 +54,90 @@ public class NotaEntradaView extends JDialog {
 		initialize();
 		initializeListeners();
 	}
-	
-	public JTable getTablePedido() {
-		if(tablePedido == null){
-			String[] colunas = {"id","Produto", "Quantidade", "Data da Compra","Fornecedor","Preço (R$)"};
-			String[][] dados = {{"1","teste","teste","teste","teste","teste"},
-					{"2","teste2","teste2","teste2","teste2","teste2"},
-					{"3","teste3","teste3","teste3","teste3","teste3"}};
-			tablePedido = new JTable(new DefaultTableModel(dados,colunas) {
-				 /**
-				 * 
-				 */
-				private static final long serialVersionUID = -7018342759131611914L;
-				boolean[] canEdit = new boolean []{  
-				            false, false, false, false,false,false
-				        };  
-				        @Override  
-				        public boolean isCellEditable(int rowIndex, int columnIndex) {  
-				            return canEdit [columnIndex];  
-				        }
-			});
-		}
-		return tablePedido;
+
+	public void setTableNotaEntrada(JTable tableNotaEntrada) {
+		this.tableNotaEntrada = tableNotaEntrada;
 	}
-	
+
+	public JTable getTableNotaEntrada() {
+		if (tableNotaEntrada == null) {
+			String[][] notas = notaEntDAO.listaNotaEntradaArray("");
+			String[] colunas = { "Número", "Nome", "CNPJ", "Total", "Funcionário", "Data do Cadastro" };
+
+			DefaultTableModel model = new DefaultTableModel(notas, colunas) {
+				/**
+				* 
+				*/
+				private static final long serialVersionUID = -7018342759131611914L;
+				boolean[] canEdit = new boolean[] { false, false, false, false, false, false };
+
+				@Override
+				public boolean isCellEditable(int rowIndex, int columnIndex) {
+					return canEdit[columnIndex];
+				}
+			};
+			tableNotaEntrada = new JTable(model);
+			tableNotaEntrada.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return tableNotaEntrada;
+	}
+
 	public JScrollPane getScrollBar() {
-		if(scrollBar == null){
-			scrollBar = new JScrollPane(getTablePedido());
+		if (scrollBar == null) {
+			scrollBar = new JScrollPane(getTableNotaEntrada());
 			scrollBar.setBounds(58, 52, 668, 359);
 		}
 		return scrollBar;
 	}
-	
+
 	public JTextField getTextBusca() {
-		if(textBusca == null){
+		if (textBusca == null) {
 			textBusca = new JTextField();
 			textBusca.setColumns(10);
 			textBusca.setBounds(58, 473, 198, 23);
 		}
 		return textBusca;
 	}
-	
-	public JButton getBuscarButton() {
-		if(btnBuscarNota == null){
-			btnBuscarNota = new JButton("Buscar");
-			btnBuscarNota.setBounds(266, 472, 75, 23);
+
+	public JLabel getBuscarButton() {
+		if (btnBuscarNotaEntrada == null) {
+			btnBuscarNotaEntrada = new JLabel();
+			btnBuscarNotaEntrada.setToolTipText("Buscar");
+			btnBuscarNotaEntrada.setHorizontalAlignment(SwingConstants.CENTER);
+			btnBuscarNotaEntrada.setBounds(266, 472, 23, 23);
+			btnBuscarNotaEntrada.setIcon(new ImageIcon("Interno/search-icon.png"));
 		}
-		return btnBuscarNota;
+		return btnBuscarNotaEntrada;
 	}
-	
-	public JButton getbtnNovoPedido() {
-		if(btnNovaNota == null){
-			btnNovaNota = new JButton("Nova Nota");
-			btnNovaNota.setBounds(469, 472, 150, 23);
+
+	public JLabel getbtnNovoNotaEntrada() {
+		if (btnNovoNotaEntrada == null) {
+			btnNovoNotaEntrada = new JLabel();
+			btnNovoNotaEntrada.setToolTipText("Nova Nota de Entrada");
+			btnNovoNotaEntrada.setBounds(466, 422, 80, 80);
+			btnNovoNotaEntrada.setIcon(new ImageIcon("Interno/new.png"));
 		}
-		return btnNovaNota;
+		return btnNovoNotaEntrada;
 	}
-	
-	public JLabel getlblBuscarPedido() {
-		if(lblBuscarNota == null){
-			lblBuscarNota = new JLabel("Buscar por N\u00FAmero da Nota:");
-			lblBuscarNota.setBounds(58, 449, 185, 14);
+
+	public JLabel getlblBuscarPorNome() {
+		if (lblBuscarPorNome == null) {
+			lblBuscarPorNome = new JLabel("Buscar por NFE ou Nome do Funcion\u00E1rio:");
+			lblBuscarPorNome.setBounds(58, 449, 258, 14);
 		}
-		return lblBuscarNota;
+		return lblBuscarPorNome;
 	}
-	
+
 	public void initializeListeners() {
 		getBuscarButton().addMouseListener(listener);
-		getbtnNovoPedido().addMouseListener(listener);
-		getTablePedido().addMouseListener(listener);
+		getbtnNovoNotaEntrada().addMouseListener(listener);
+		getTableNotaEntrada().addMouseListener(listener);
+		getbtnExcluirNotaEntrada().addMouseListener(listener);
+		getBtnEditarNotaEntrada().addMouseListener(listener);
+		this.addWindowListener(listener);
 	}
-	
-	public void initialize(){
+
+	public void initialize() {
 		setModal(true);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
@@ -138,14 +148,60 @@ public class NotaEntradaView extends JDialog {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
-		
+
 		panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		panel.add(getScrollBar());		
-		panel.add(getBuscarButton());		
-		panel.add(getbtnNovoPedido());	
-		panel.add(getTextBusca());		
-		panel.add(getlblBuscarPedido());
+		panel.add(getScrollBar());
+		panel.add(getBuscarButton());
+		panel.add(getbtnNovoNotaEntrada());
+		panel.add(getTextBusca());
+		panel.add(getlblBuscarPorNome());
+		panel.add(getbtnExcluirNotaEntrada());
+		panel.add(getBtnEditarNotaEntrada());
+		getT1().start();
+	}
+
+	public JLabel getbtnExcluirNotaEntrada() {
+		if (btnExcluirNotaEntrada == null) {
+			btnExcluirNotaEntrada = new JLabel("");
+			btnExcluirNotaEntrada.setToolTipText("Excluir Nota de Entrada");
+			btnExcluirNotaEntrada.setHorizontalAlignment(SwingConstants.CENTER);
+			btnExcluirNotaEntrada.setIcon(new ImageIcon("Interno/delete.png"));
+			btnExcluirNotaEntrada.setBounds(556, 422, 80, 80);
+		}
+		return btnExcluirNotaEntrada;
+	}
+
+	public Thread getT1() {
+		if (t1 == null) {
+
+			try {
+				aT1 = new AtualizaTabelaNotaEntrada(this);
+				t1 = new Thread(aT1);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// TODO: handle exception
+				System.out.println(1);
+			} catch (NoSuchElementException e) {
+				// TODO: handle exception
+				System.out.println(2);
+			}
+		}
+		return t1;
+	}
+
+	public void setBuscaAT1(String busca) {
+		aT1.setBusca(busca);
+	}
+
+	public JLabel getBtnEditarNotaEntrada() {
+		if (btnEditarNotaEntrada == null) {
+			btnEditarNotaEntrada = new JLabel("");
+			btnEditarNotaEntrada.setToolTipText("Editar Nota de Entrada");
+			btnEditarNotaEntrada.setHorizontalAlignment(SwingConstants.CENTER);
+			btnEditarNotaEntrada.setIcon(new ImageIcon("Interno/edit.png"));
+			btnEditarNotaEntrada.setBounds(646, 422, 80, 80);
+		}
+		return btnEditarNotaEntrada;
 	}
 }

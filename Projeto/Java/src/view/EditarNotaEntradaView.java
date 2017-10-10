@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
 import control.InputListenerEditarNotaEntrada;
+import model.NotaEntrada;
 
 public class EditarNotaEntradaView extends JDialog {
 
@@ -36,6 +37,7 @@ public class EditarNotaEntradaView extends JDialog {
 	private JTextField txtDataEmissao;
 	private JTextField textCodigo;
 	private JLabel lblCodigo;
+	private NotaEntrada nota;
 
 	public static void main(String[] args) {
 
@@ -47,13 +49,22 @@ public class EditarNotaEntradaView extends JDialog {
 			e.printStackTrace();
 		}
 	}
+	
+	public EditarNotaEntradaView(NotaEntrada nota) {
+		this.nota = nota;
+		listener = new InputListenerEditarNotaEntrada(this);
+		initialize();
+		initializeListeners();
+	}
 
 	public EditarNotaEntradaView() {
-		listener = new InputListenerEditarNotaEntrada();
+		listener = new InputListenerEditarNotaEntrada(this);
 		initialize();
 		initializeListeners();
 
 	}
+	
+	
 
 	public void initializeListeners() {
 		getBtnGravar().addMouseListener(listener);

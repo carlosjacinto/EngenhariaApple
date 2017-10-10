@@ -3,10 +3,16 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import view.EditarFuncionarioView;
 import view.EditarNotaEntradaView;
 
 public class InputListenerEditarNotaEntrada implements MouseListener {
 	private EditarNotaEntradaView edicaoNotaEntrada;
+
+	public InputListenerEditarNotaEntrada(EditarNotaEntradaView editarNotaEntradaView) {
+	this.edicaoNotaEntrada = editarNotaEntradaView;
+	}
+
 
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == edicaoNotaEntrada.getBtnCancelar()) {

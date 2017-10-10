@@ -37,11 +37,11 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`idCliente`),
   UNIQUE KEY `cpfCliente_UNIQUE` (`cpfCliente`),
   UNIQUE KEY `idCliente_UNIQUE` (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cliente` */
 
-insert  into `cliente`(`idCliente`,`nomeCliente`,`cpfCliente`,`celularCliente`,`ruaCliente`,`compCliente`,`numeroCliente`,`bairroCliente`,`cidadeCliente`,`cepCliente`,`dataNascCliente`,`dataCadastro`,`telefoneCliente`) values (8,'1',11542601606,'1','1','1','1','1','1',11,'11/11/1111','2017-10-09','1');
+insert  into `cliente`(`idCliente`,`nomeCliente`,`cpfCliente`,`celularCliente`,`ruaCliente`,`compCliente`,`numeroCliente`,`bairroCliente`,`cidadeCliente`,`cepCliente`,`dataNascCliente`,`dataCadastro`,`telefoneCliente`) values (8,'1',11542601606,'1','1','1','1','1','1',11,'11/11/1111','2017-10-09','1'),(9,'1',13161894650,'1','1','1','1','1','1',1,'11/11/1111','2017-10-10','1');
 
 /*Table structure for table `compra` */
 
@@ -49,15 +49,23 @@ DROP TABLE IF EXISTS `compra`;
 
 CREATE TABLE `compra` (
   `idCompra` int(11) NOT NULL AUTO_INCREMENT,
-  `nomeFornec` varchar(45) NOT NULL,
-  `cnpjFornec` varchar(45) NOT NULL,
+  `nomeFornecCompra` varchar(45) NOT NULL,
+  `cnpjFornecCompra` varchar(45) NOT NULL,
   `dataCompra` date NOT NULL,
-  `outros` float unsigned DEFAULT NULL,
-  `valorTotal` float unsigned NOT NULL,
-  PRIMARY KEY (`idCompra`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `outrosCompra` float unsigned DEFAULT NULL,
+  `valorTotalCompra` float unsigned NOT NULL,
+  `chaveAcessoCompra` varchar(50) DEFAULT NULL,
+  `dataEntradaCompra` date NOT NULL,
+  `numeroNFECompra` int(10) unsigned NOT NULL,
+  `idFuncCompra` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idCompra`),
+  KEY `idFuncCompra` (`idFuncCompra`),
+  CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`idFuncCompra`) REFERENCES `funcionario` (`idFuncionario`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 /*Data for the table `compra` */
+
+insert  into `compra`(`idCompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`numeroNFECompra`,`idFuncCompra`) values (1,'1','1','2017-10-04',1,1,'1','2017-10-10',1,1);
 
 /*Table structure for table `compra_has_produto` */
 
@@ -121,11 +129,11 @@ CREATE TABLE `funcionario` (
   PRIMARY KEY (`idFuncionario`),
   UNIQUE KEY `idFuncionario_UNIQUE` (`idFuncionario`),
   UNIQUE KEY `cpfFunc_UNIQUE` (`cpfFunc`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
 
 /*Data for the table `funcionario` */
 
-insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30',1,'1',1),(2,'1',1,1,'2','1','1','1','1','1','2017-09-25','1','1','2017-09-25',1,'2',0),(43,'1',1,1,'13161894650','1','1','1','1','1','11/11/1111','1','1','2017-10-10',1,'1',0);
+insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30',1,'1',1),(2,'1',1,1,'2','1','1','1','1','1','2017-09-25','1','1','2017-09-25',1,'2',0),(45,'1',1,1,'11542601606','1','1','1','1','1','11/11/1111','1','1','2017-10-10',1,'1',1),(46,'1',1,1,'13161894650','1','1','1','1','1','11/11/1111','1','1','2017-10-10',1,'1',0);
 
 /*Table structure for table `gerente` */
 
@@ -208,6 +216,7 @@ CREATE TABLE `produto` (
   `descricaoProduto` varchar(200) DEFAULT NULL,
   `ultimaDataCompraProduto` date DEFAULT NULL,
   `dataCadastroProduto` date DEFAULT NULL,
+  `percLucro` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`idProduto`),
   UNIQUE KEY `idProduto_UNIQUE` (`idProduto`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
