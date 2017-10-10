@@ -165,15 +165,7 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 			getFunc().setFoto(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon = new ImageIcon(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon.setImage(imageIcon.getImage().getScaledInstance(275, 281, 100));
-			//cadastroFuncionario.getLblFoto().setIcon(imageIcon);
-			ImageIcon i = new ImageIcon("Interno/xxx.png");
-			cadastroFuncionario.getLblFoto().setIcon(i);
-			try {
-				ImageIO.read(new URL("./Interno/01.jpg"));
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			cadastroFuncionario.getLblFoto().setIcon(imageIcon);
 			//System.out.println(getFunc().getFoto());
 		}
 

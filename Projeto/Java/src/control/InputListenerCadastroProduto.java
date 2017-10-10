@@ -63,19 +63,12 @@ public class InputListenerCadastroProduto implements MouseListener{
 	
 	public void capturaDados() {
 		if(!(cadastroProduto.getTextNome().equals("")
-				|| cadastroProduto.getTextPrecoVenda().equals("")
 				|| cadastroProduto.getTextDescricao().equals(""))) {
 			
-				try {
-					getProduto().setPrecoVendaProduto(Float.parseFloat(cadastroProduto.getTextPrecoVenda().getText()));
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Valor Inválido!", null,
-							JOptionPane.ERROR_MESSAGE);
-				}
 
 				getProduto().setNomeProduto(cadastroProduto.getTextNome().getText());
 				getProduto().setDescricaoProduto(cadastroProduto.getTextDescricao().getText());
-				
+				getProduto().setPercentualLucro(Integer.parseInt(cadastroProduto.getSpinner().getValue().toString()));
 				getProduto().setDataCadastroProduto(new Date(System.currentTimeMillis()));				
 
 				if (produtoDAO.verificaNome(produto.getNomeProduto()))
@@ -116,6 +109,7 @@ public class InputListenerCadastroProduto implements MouseListener{
 	public void getImagem() {
 		getJFileChooser().showOpenDialog(null);
 		if (!(getJFileChooser().getSelectedFile() == null)) {
+			getProduto().setFotoProduto(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon = new ImageIcon(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon.setImage(imageIcon.getImage().getScaledInstance(275, 281, 100));
 			cadastroProduto.getLblFoto().setIcon(imageIcon);

@@ -7,6 +7,7 @@ public class Produto {
 	private String nomeProduto;
 	private float precoCompraProduto;
 	private float precoVendaProduto;
+	private int percentualLucro;
 	private int qtdEstoqueProduto;
 	private String fotoProduto;
 	private String descricaoProduto;
@@ -66,6 +67,12 @@ public class Produto {
 	}
 	public void setDescricaoProduto(String descricaoProduto) {
 		this.descricaoProduto = descricaoProduto;
+	}
+	public int getPercentualLucro() {
+		return percentualLucro;
+	}
+	public void setPercentualLucro(int percentualLucro) {
+		this.percentualLucro = percentualLucro;
 	}
 	
 	

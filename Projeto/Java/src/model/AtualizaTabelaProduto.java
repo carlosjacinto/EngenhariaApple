@@ -1,8 +1,9 @@
 package model;
 
+import java.util.NoSuchElementException;
+
 import javax.swing.table.DefaultTableModel;
 
-import view.ClienteView;
 import view.ProdutoView;
 
 public class AtualizaTabelaProduto implements Runnable {
@@ -24,6 +25,8 @@ public class AtualizaTabelaProduto implements Runnable {
 			}
 		} catch (InterruptedException e) {
 
+		}catch(NoSuchElementException e) {
+			System.out.println("Achou");
 		}
 	}
 

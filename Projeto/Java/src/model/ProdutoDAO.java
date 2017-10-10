@@ -20,8 +20,8 @@ public class ProdutoDAO {
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
-					"INSERT INTO Produto(nomeProduto, precoVendaProduto, descricaoProduto, dataCadastroProduto)VALUES ('"
-							+ p.getNomeProduto() + "','" + p.getPrecoVendaProduto() + "','" + p.getDescricaoProduto()+ "','" + p.getDataCadastroProduto() +"') ");
+					"INSERT INTO Produto(nomeProduto, precoVendaProduto, descricaoProduto, dataCadastroProduto, percLucro)VALUES ('"
+							+ p.getNomeProduto() + "','" + p.getPrecoVendaProduto() + "','" + p.getDescricaoProduto()+ "','" + p.getDataCadastroProduto()+ "','" + p.getPercentualLucro() +"') ");
 
 			if (p.getFotoProduto() != null) {
 				int codigo = buscaCodigoProduto(p.getNomeProduto());
@@ -78,6 +78,7 @@ public class ProdutoDAO {
 				p.setQtdEstoqueProduto(rs.getInt("qtdEstoqueProduto"));
 				p.setDescricaoProduto(rs.getString("descricaoProduto"));
 				p.setUltimaDataCompraProduto(rs.getDate("ultimaDataCompraProduto"));
+				p.setPercentualLucro(rs.getInt("percLucro"));
 			}
 			return p;
 		} catch (SQLException sqle) {
@@ -145,6 +146,23 @@ public class ProdutoDAO {
 		return false;
 	}
 
+	public int excluirFuncionario(int iid) {
+		conex = bd.Conectar();
+		int result = 0;
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "DELETE FROM funcionario where idFuncionario = "+iid;
+			result = stmt.executeUpdate(SQL);
+			
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+		} finally {
+			bd.Desconectar(conex);
+		}
+		return result;
+	}
+
+	
 	public String[][] listaProdutoArray(String campo) {
 		conex = bd.Conectar();
 		try {
@@ -159,12 +177,11 @@ public class ProdutoDAO {
 			String produtos[][] = new String[size][5];
 			int cont = 0;
 			while (rs.next()) {
-				System.out.println(rs.getString("nomeProduto"));
 				produtos[cont][1] = rs.getString("nomeProduto");
 				produtos[cont][0] = "" + rs.getInt("idProduto");
 				produtos[cont][2] = "" + rs.getLong("precoVendaProduto");
 				produtos[cont][3] = "" + rs.getLong("precoVendaProduto");
-				produtos[cont][4] = "" + rs.getDate("qtdEstoqueProduto");
+				produtos[cont][4] = "" + rs.getInt("qtdEstoqueProduto");
 				cont++;
 			}
 			rs.close();

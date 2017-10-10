@@ -12,6 +12,9 @@ import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
 import control.InputListenerEditarProduto;
+import model.Produto;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class EditarProdutoView extends JDialog {
 
@@ -23,6 +26,7 @@ public class EditarProdutoView extends JDialog {
 	private JPanel panelFoto;
 	private JButton btnPesquisarImagem;
 	InputListenerEditarProduto listener;
+	private Produto produto;
 	private JLabel lblNome;
 	private JTextField textNome;
 	private JLabel lblPrecoCompra;
@@ -37,6 +41,8 @@ public class EditarProdutoView extends JDialog {
 	private JTextField txtDataDoCadastro;
 	private JTextField textCodigo;
 	private JLabel lblCodigo;
+	private JLabel lblPercentuallucro;
+	private JSpinner spinner;
 
 	public static void main(String[] args) {
 		try {
@@ -57,10 +63,19 @@ public class EditarProdutoView extends JDialog {
 		initializeListeners();
 
 	}
+	
+	public EditarProdutoView(Produto produto) {
+		this.produto = produto;
+		listener = new InputListenerEditarProduto(this);
+		initialize();
+		initializeListeners();
+		
+
+	}
 
 	public void initialize() {
 		this.setModal(true);
-		setBounds(100, 100, 649, 500);
+		setBounds(100, 100, 649, 520);
 		setTitle("Edição de Produto");
 		setContentPane(getContentPanel());
 		
@@ -76,7 +91,7 @@ public class EditarProdutoView extends JDialog {
 	public JButton getbtnPesquisarImagem() {
 		if (btnPesquisarImagem == null) {
 			btnPesquisarImagem = new JButton("Pesquisar Imagem");
-			btnPesquisarImagem.setBounds(403, 362, 147, 23);
+			btnPesquisarImagem.setBounds(404, 371, 147, 23);
 		}
 		return btnPesquisarImagem;
 	}
@@ -109,6 +124,8 @@ public class EditarProdutoView extends JDialog {
 			contentPanel.add(getLblDataCadastro());
 			contentPanel.add(getLblCodigo());
 			contentPanel.add(getTextCodigo());
+			contentPanel.add(getLblPercentuallucro());
+			contentPanel.add(getSpinner());
 
 		}
 		return contentPanel;
@@ -117,7 +134,7 @@ public class EditarProdutoView extends JDialog {
 	public JPanel getpanelFoto() {
 		if (panelFoto == null) {
 			panelFoto = new JPanel();
-			panelFoto.setBounds(340, 70, 275, 281);
+			panelFoto.setBounds(339, 82, 275, 281);
 		}
 		return panelFoto;
 
@@ -128,6 +145,7 @@ public class EditarProdutoView extends JDialog {
 			textNome = new JTextField();
 			textNome.setBounds(30, 95, 281, 20);
 			textNome.setColumns(10);
+			textNome.setText(produto.getNomeProduto());
 		}
 		return textNome;
 	}
@@ -151,8 +169,10 @@ public class EditarProdutoView extends JDialog {
 	public JTextField getTextPrecoCompra() {
 		if (textPrecoCompra == null) {
 			textPrecoCompra = new JTextField();
+			textPrecoCompra.setEditable(false);
 			textPrecoCompra.setBounds(30, 151, 281, 20);
 			textPrecoCompra.setColumns(10);
+			textPrecoCompra.setText(produto.getPrecoCompraProduto()+"");
 		}
 		return textPrecoCompra;
 	}
@@ -160,7 +180,7 @@ public class EditarProdutoView extends JDialog {
 	public JLabel getLblPrecoVenda() {
 		if (lblPrecoVenda == null) {
 			lblPrecoVenda = new JLabel("Pre\u00E7o Venda (R$)");
-			lblPrecoVenda.setBounds(30, 182, 167, 14);
+			lblPrecoVenda.setBounds(30, 238, 167, 14);
 		}
 		return lblPrecoVenda;
 	}
@@ -168,8 +188,10 @@ public class EditarProdutoView extends JDialog {
 	public JTextField getTextPrecoVenda() {
 		if (textPrecoVenda == null) {
 			textPrecoVenda = new JTextField();
-			textPrecoVenda.setBounds(30, 207, 281, 20);
+			textPrecoVenda.setEditable(false);
+			textPrecoVenda.setBounds(30, 263, 281, 20);
 			textPrecoVenda.setColumns(10);
+			textPrecoVenda.setText(""+produto.getPrecoVendaProduto());
 		}
 		return textPrecoVenda;
 	}
@@ -177,7 +199,7 @@ public class EditarProdutoView extends JDialog {
 	public JLabel getLblDescricao() {
 		if (lblDescricao == null) {
 			lblDescricao = new JLabel("Descri\u00E7\u00E3o");
-			lblDescricao.setBounds(30, 238, 69, 14);
+			lblDescricao.setBounds(30, 294, 69, 14);
 		}
 		return lblDescricao;
 	}
@@ -185,7 +207,7 @@ public class EditarProdutoView extends JDialog {
 	public JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBounds(534, 427, 89, 23);
+			btnCancelar.setBounds(534, 442, 89, 23);
 		}
 		return btnCancelar;
 	}
@@ -193,7 +215,7 @@ public class EditarProdutoView extends JDialog {
 	public JButton getBtnGravar() {
 		if (btnGravar == null) {
 			btnGravar = new JButton("Gravar");
-			btnGravar.setBounds(435, 427, 89, 23);
+			btnGravar.setBounds(435, 442, 89, 23);
 		}
 		return btnGravar;
 	}
@@ -201,8 +223,10 @@ public class EditarProdutoView extends JDialog {
 	public JTextArea getTextDescricao() {
 		if (textDescricao == null) {
 			textDescricao = new JTextArea();
+			textDescricao.setLineWrap(true);
 			textDescricao.setBorder(UIManager.getBorder("TextField.border"));
-			textDescricao.setBounds(30, 263, 281, 154);
+			textDescricao.setBounds(30, 319, 281, 154);
+			textDescricao.setText(produto.getDescricaoProduto());
 		}
 		return textDescricao;
 	}
@@ -213,6 +237,7 @@ public class EditarProdutoView extends JDialog {
 			txtDataDoCadastro.setBounds(339, 38, 284, 20);
 			txtDataDoCadastro.setColumns(10);
 			txtDataDoCadastro.setEditable(false);
+			txtDataDoCadastro.setText(""+produto.getDataCadastroProduto());
 		}
 		return txtDataDoCadastro;
 	}
@@ -230,6 +255,7 @@ public class EditarProdutoView extends JDialog {
 			textCodigo = new JTextField();
 			textCodigo.setBounds(30, 37, 281, 22);
 			textCodigo.setEditable(false);
+			textCodigo.setText(""+produto.getIdProduto());
 		}
 		return textCodigo;
 	}
@@ -240,5 +266,21 @@ public class EditarProdutoView extends JDialog {
 			lblCodigo.setBounds(30, 12, 277, 14);
 		}
 		return lblCodigo;
+	}
+	private JLabel getLblPercentuallucro() {
+		if (lblPercentuallucro == null) {
+			lblPercentuallucro = new JLabel("Percentual Lucro");
+			lblPercentuallucro.setBounds(30, 182, 167, 14);
+		}
+		return lblPercentuallucro;
+	}
+	public JSpinner getSpinner() {
+		if (spinner == null) {
+			spinner = new JSpinner();
+			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+			spinner.setBounds(30, 207, 281, 20);
+			spinner.setValue(new Integer(produto.getPercentualLucro()));
+		}
+		return spinner;
 	}
 }

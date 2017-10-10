@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 import javax.swing.border.BevelBorder;
 
 import control.InputListenerCadastroProduto;
+import javax.swing.JSpinner;
 
 public class CadastroProdutoView extends JDialog {
 
@@ -26,12 +27,12 @@ public class CadastroProdutoView extends JDialog {
 	private JLabel lblNome;
 	private JTextField textNome;
 	private JLabel lblPrecoVenda;
-	private JTextField textPrecoVenda;
 	private JLabel lblDescricao;
 	private JButton btnCancelar;
 	private JButton btnGravar;
 	private JTextArea textDescricao;
 	private JLabel lblFoto;
+	private JSpinner spinner;
 
 	public static void main(String[] args) {
 		try {
@@ -82,7 +83,6 @@ public class CadastroProdutoView extends JDialog {
 			contentPanel.add(getLblNome());
 			contentPanel.add(getTextNome());
 			contentPanel.add(getLblPrecoVenda());
-			contentPanel.add(getTextPrecoVenda());
 			contentPanel.add(getLblDescricao());
 			contentPanel.add(getbtnPesquisarImagem());
 
@@ -91,6 +91,7 @@ public class CadastroProdutoView extends JDialog {
 			contentPanel.add(getBtnCancelar());
 			contentPanel.add(getBtnGravar());
 			contentPanel.add(getTextDescricao());
+			contentPanel.add(getSpinner());
 
 		}
 		return contentPanel;
@@ -124,25 +125,16 @@ public class CadastroProdutoView extends JDialog {
 
 	public JLabel getLblPrecoVenda() {
 		if (lblPrecoVenda == null) {
-			lblPrecoVenda = new JLabel("Pre\u00E7o Venda (R$)");
-			lblPrecoVenda.setBounds(30, 105, 167, 14);
+			lblPrecoVenda = new JLabel("Percentual de Lucro(%)");
+			lblPrecoVenda.setBounds(30, 104, 167, 14);
 		}
 		return lblPrecoVenda;
-	}
-
-	public JTextField getTextPrecoVenda() {
-		if (textPrecoVenda == null) {
-			textPrecoVenda = new JTextField();
-			textPrecoVenda.setBounds(30, 130, 281, 20);
-			textPrecoVenda.setColumns(10);
-		}
-		return textPrecoVenda;
 	}
 
 	public JLabel getLblDescricao() {
 		if (lblDescricao == null) {
 			lblDescricao = new JLabel("Descri\u00E7\u00E3o");
-			lblDescricao.setBounds(31, 172, 69, 14);
+			lblDescricao.setBounds(31, 171, 69, 14);
 		}
 		return lblDescricao;
 	}
@@ -168,7 +160,7 @@ public class CadastroProdutoView extends JDialog {
 			textDescricao = new JTextArea();
 			textDescricao.setLineWrap(true);
 			textDescricao.setBorder(UIManager.getBorder("TextField.border"));
-			textDescricao.setBounds(30, 197, 281, 154);
+			textDescricao.setBounds(30, 196, 281, 154);
 		}
 		return textDescricao;
 	}
@@ -178,5 +170,12 @@ public class CadastroProdutoView extends JDialog {
 			lblFoto.setBounds(348, 69, 275, 281);
 		}
 		return lblFoto;
+	}
+	public JSpinner getSpinner() {
+		if (spinner == null) {
+			spinner = new JSpinner();
+			spinner.setBounds(30, 129, 281, 20);
+		}
+		return spinner;
 	}
 }

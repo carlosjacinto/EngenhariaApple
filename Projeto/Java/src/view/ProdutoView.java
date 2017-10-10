@@ -2,9 +2,9 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.util.NoSuchElementException;
 
-import javax.swing.JButton;
+import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,10 +12,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.InputListenerProdutoView;
+import model.AtualizaTabelaProduto;
 import model.ProdutoDAO;
 
 public class ProdutoView extends JDialog {
@@ -28,27 +30,25 @@ public class ProdutoView extends JDialog {
 	private JPanel panel;
 	private JTable tableProduto;
 	private JTextField textBusca;
-	private JButton btnBuscarProduto;
-	private JButton btnNovoProduto;
+	private JLabel btnBuscarProduto;
+	private JLabel btnNovoProduto;
 	private JLabel lblBuscarPorNome;
 	private JScrollPane scrollBar;
+	private AtualizaTabelaProduto aT1;
+	private Thread t1;
 	private ProdutoDAO  produtoDAO = new ProdutoDAO();  
 	InputListenerProdutoView listener;
+	private JLabel btnExcluirProduto;
+	private JLabel btnEditarProduto;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					ProdutoView frame = new ProdutoView();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+		
+		ProdutoView frame = new ProdutoView();
+		frame.setVisible(true);
+				
 	}
 
 	/**
@@ -98,18 +98,22 @@ public class ProdutoView extends JDialog {
 		return textBusca;
 	}
 	
-	public JButton getBuscarButton() {
+	public JLabel getBuscarButton() {
 		if(btnBuscarProduto == null){
-			btnBuscarProduto = new JButton("Buscar");
-			btnBuscarProduto.setBounds(266, 472, 75, 23);
+			btnBuscarProduto = new JLabel();
+			btnBuscarProduto.setHorizontalAlignment(SwingConstants.CENTER);
+			btnBuscarProduto.setBounds(266, 472, 23, 23);
+			btnBuscarProduto.setIcon(new ImageIcon("Interno/search-icon.png"));
 		}
 		return btnBuscarProduto;
 	}
 	
-	public JButton getbtnNovoProduto() {
+	public JLabel getbtnNovoProduto() {
 		if(btnNovoProduto == null){
-			btnNovoProduto = new JButton("Novo Produto");
-			btnNovoProduto.setBounds(469, 472, 150, 23);
+			btnNovoProduto = new JLabel("");
+			btnNovoProduto.setHorizontalAlignment(SwingConstants.CENTER);
+			btnNovoProduto.setIcon(new ImageIcon("Interno/newProd.png"));
+			btnNovoProduto.setBounds(466, 422, 80, 80);
 		}
 		return btnNovoProduto;
 	}
@@ -132,6 +136,8 @@ public class ProdutoView extends JDialog {
 			panel.add(getbtnNovoProduto());	
 			panel.add(getTextBusca());		
 			panel.add(getlblBuscarPorNome());
+			panel.add(getBtnExcluirProduto());
+			panel.add(getBtnEditarProduto());
 		}
 		return panel;
 	}
@@ -150,6 +156,9 @@ public class ProdutoView extends JDialog {
 		getBuscarButton().addMouseListener(listener);
 		getbtnNovoProduto().addMouseListener(listener);
 		getTableProduto().addMouseListener(listener);
+		getBtnExcluirProduto().addMouseListener(listener);
+		getBtnEditarProduto().addMouseListener(listener);
+		this.addWindowListener(listener);
 	}
 	
 	public void initialize(){
@@ -161,7 +170,45 @@ public class ProdutoView extends JDialog {
 		setTitle("Produto");
 		
 		setContentPane(getContentPane());
+		getT1().start();
 		
-		
+	}
+	public Thread getT1() {
+		if(t1 == null) {
+			
+			try {
+				aT1 = new AtualizaTabelaProduto(this);
+				t1 = new Thread(aT1);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// TODO: handle exception
+				System.out.println(1);
+			}catch (NoSuchElementException e) {
+				// TODO: handle exception
+				System.out.println(2);
+			}
+		}
+		return t1;
+	}
+	
+	public void setBuscaAT1(String busca) {
+		aT1.setBusca(busca);
+	}
+	public JLabel getBtnExcluirProduto() {
+		if (btnExcluirProduto == null) {
+			btnExcluirProduto = new JLabel("");
+			btnExcluirProduto.setHorizontalAlignment(SwingConstants.CENTER);
+			btnExcluirProduto.setBounds(556, 422, 80, 80);
+			btnExcluirProduto.setIcon(new ImageIcon("Interno/deleteProd.png"));
+		}
+		return btnExcluirProduto;
+	}
+	public JLabel getBtnEditarProduto() {
+		if (btnEditarProduto == null) {
+			btnEditarProduto = new JLabel("");
+			btnEditarProduto.setHorizontalAlignment(SwingConstants.CENTER);
+			btnEditarProduto.setIcon(new ImageIcon("Interno/editProd.png"));
+			btnEditarProduto.setBounds(646, 422, 80, 80);
+		}
+		return btnEditarProduto;
 	}
 }
