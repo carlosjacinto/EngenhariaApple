@@ -520,12 +520,8 @@ public class EditarFuncionarioView extends JDialog {
 			lblFoto = new JLabel("");
 			lblFoto.setBounds(0, 0, 275, 281);
 			ImageIcon i = new ImageIcon("Media/Funcionario/" + func.getIdFuncionario() + ".png");
-			if (i.getImage()==null)
-				lblFoto.setIcon(new ImageIcon("Interno/default-avatar.png"));
-			else {
-				i.setImage(i.getImage().getScaledInstance(275, 281, 100));
-				lblFoto.setIcon(i);
-			}
+			i.setImage(i.getImage().getScaledInstance(275, 281, 100));
+			lblFoto.setIcon(i);
 		}
 		return lblFoto;
 	}

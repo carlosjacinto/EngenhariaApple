@@ -31,6 +31,9 @@ public class FuncionarioDAO {
 			if (f.getFoto() != null) {
 				int codigo = buscaCodigoFuncionario(f.getCpf());
 				CopiarImagemFuncionario(codigo, f.getFoto());
+			}else {
+				int codigo = buscaCodigoFuncionario(f.getCpf());
+				CopiarImagemFuncionario(codigo, "Interno/default-avatar.png");
 			}
 			System.out.println("deu bom");
 			return true;
