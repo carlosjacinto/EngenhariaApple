@@ -170,6 +170,9 @@ public class FuncionarioDAO {
 					+ f.getSenha() + "', salarioFunc='" + f.getSalario() + "', comissaoFunc='" + f.getComissao()
 					+ "', telefoneFunc='" + f.getTelefone() + "'  WHERE idFuncionario='" + f.getIdFuncionario() + "' ");
 			stmt.close();
+			if (f.getFoto() != null) {
+				CopiarImagemFuncionario(f.getIdFuncionario(), f.getFoto());
+			}
 			return true;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao alterar..." + sqle.getMessage());

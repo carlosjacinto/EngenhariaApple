@@ -383,10 +383,14 @@ public class EditarClienteView extends JDialog {
 		if (lblFoto == null) {
 			lblFoto = new JLabel("");
 			lblFoto.setBounds(0, 0, 275, 281);
-			System.out.println(clie.getIdCliente());
-			lblFoto.setIcon(new ImageIcon("Media/Cliente/" + clie.getIdCliente() + ".png"));
-			if (!(lblFoto == null))
+			
+			ImageIcon i = new ImageIcon("Media/Cliente/" + clie.getIdCliente() + ".png");
+			if (i.getImage()==null)
 				lblFoto.setIcon(new ImageIcon("Interno/default-avatar.png"));
+			else {
+				i.setImage(i.getImage().getScaledInstance(275, 281, 100));
+				lblFoto.setIcon(i);
+			}
 		}
 		return lblFoto;
 	}

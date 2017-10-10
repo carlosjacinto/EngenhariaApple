@@ -147,6 +147,9 @@ public class ClienteDAO {
 					+ c.getBairro() + "', cidadeCliente='" + c.getCidade() + "', dataNascCliente='" + c.getDataNascimento()
 					+ "', cepCliente ='" + c.getCep() + "', celularCliente='" + c.getCelular() + "', telefoneCliente='" + c.getTelefone() + "'  WHERE idCliente='" + c.getIdCliente() + "' ");
 			stmt.close();
+			if (c.getFoto() != null) {
+				CopiarImagemCliente(c.getIdCliente(), c.getFoto());
+			}
 			return true;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao alterar..." + sqle.getMessage());

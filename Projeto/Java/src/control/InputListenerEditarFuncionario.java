@@ -155,7 +155,8 @@ public class InputListenerEditarFuncionario implements MouseListener {
 			jFileChooser = new JFileChooser();
 			jFileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
 				public boolean accept(File f) {
-					return (f.getName().endsWith(".jpg") || f.getName().endsWith(".PNG")) || f.isDirectory();
+					return (f.getName().endsWith(".jpg") || f.getName().endsWith(".PNG"))
+							|| f.getName().endsWith(".png") || f.getName().endsWith(".JPG") || f.isDirectory();
 				}
 
 				public String getDescription() {
