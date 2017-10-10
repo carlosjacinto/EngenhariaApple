@@ -62,7 +62,7 @@ public class NotaEntradaView extends JDialog {
 	public JTable getTableNotaEntrada() {
 		if (tableNotaEntrada == null) {
 			String[][] notas = notaEntDAO.listaNotaEntradaArray("");
-			String[] colunas = { "Numero", "Nome", "CNPJ", "Total", "Funcionario", "Data do Cadastro" };
+			String[] colunas = { "Número", "Nome", "CNPJ", "Total", "Funcionário", "Data do Cadastro" };
 
 			DefaultTableModel model = new DefaultTableModel(notas, colunas) {
 				/**
@@ -122,8 +122,8 @@ public class NotaEntradaView extends JDialog {
 
 	public JLabel getlblBuscarPorNome() {
 		if (lblBuscarPorNome == null) {
-			lblBuscarPorNome = new JLabel("Buscar por NFE ou Código do Funcionário:");
-			lblBuscarPorNome.setBounds(58, 449, 185, 14);
+			lblBuscarPorNome = new JLabel("Buscar por NFE ou Nome do Funcion\u00E1rio:");
+			lblBuscarPorNome.setBounds(58, 449, 258, 14);
 		}
 		return lblBuscarPorNome;
 	}

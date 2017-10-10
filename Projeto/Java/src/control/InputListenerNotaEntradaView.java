@@ -29,7 +29,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 		// TODO Auto-generated method stub
 		if (e.getSource() == notaEntradaView.getBuscarButton()) {
 			String[][] notas = notaDAO.listaNotaEntradaArray(notaEntradaView.getTextBusca().getText());
-			String[] colunas = { "Numero", "Nome", "CNPJ", "Total", "Funcionario", "Data do Cadastro" };
+			String[] colunas = { "Número", "Nome", "CNPJ", "Total", "Funcionário", "Data do Cadastro" };
 
 			DefaultTableModel model = new DefaultTableModel(notas, colunas) {
 				/**

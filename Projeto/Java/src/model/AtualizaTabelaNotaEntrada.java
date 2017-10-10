@@ -30,7 +30,7 @@ public class AtualizaTabelaNotaEntrada implements Runnable{
 	private void atualizarTabelaNotaEntrada() {
 
 		String[][] funcs = clieDAO.listaNotaEntradaArray(busca);
-		String[] colunas = { "Numero", "Nome", "CNPJ", "Total", "Funcionario", "Data do Cadastro" };
+		String[] colunas = { "Número", "Nome", "CNPJ", "Total", "Funcionário", "Data do Cadastro" };
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
 
