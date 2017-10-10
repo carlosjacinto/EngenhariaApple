@@ -1,6 +1,6 @@
 package control;
 
-import view.FuncionarioView;
+import view.NotaEntradaView;
 
 public class Main {
 
@@ -10,6 +10,6 @@ public class Main {
 			com.birosoft.liquid.LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 		} catch (Exception e) {
 		}
-		new FuncionarioView().setVisible(true);
+		new NotaEntradaView().setVisible(true);
 	}
 }
