@@ -4,13 +4,13 @@ import javax.swing.table.DefaultTableModel;
 
 import view.FuncionarioView;
 
-public class AtualizaTabela implements Runnable {
+public class AtualizaTabelaFuncionario implements Runnable {
 
 	FuncionarioView funcionarioView;
 	FuncionarioDAO funcDAO = new FuncionarioDAO();
 	private String busca = "";
 
-	public AtualizaTabela(FuncionarioView funcionarioView) {
+	public AtualizaTabelaFuncionario(FuncionarioView funcionarioView) {
 		this.funcionarioView = funcionarioView;
 	}
 

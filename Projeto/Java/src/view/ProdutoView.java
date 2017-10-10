@@ -16,6 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.InputListenerProdutoView;
+import model.ProdutoDAO;
 
 public class ProdutoView extends JDialog {
 
@@ -31,6 +32,7 @@ public class ProdutoView extends JDialog {
 	private JButton btnNovoProduto;
 	private JLabel lblBuscarPorNome;
 	private JScrollPane scrollBar;
+	private ProdutoDAO  produtoDAO = new ProdutoDAO();  
 	InputListenerProdutoView listener;
 
 	/**
@@ -61,9 +63,7 @@ public class ProdutoView extends JDialog {
 	public JTable getTableProduto() {
 		if(tableProduto == null){
 			String[] colunas = {"id","Nome", "Preço de Venda(R$)", "Preço de Compra(R$)", "Quantidade"};
-			String[][] dados = {{"1","teste","teste","teste","teste"},
-					{"2","teste2","teste2","teste2","teste2"},
-					{"3","teste3","teste3","teste3","teste3"}};
+			String[][] dados = produtoDAO.listaProdutoArray("");
 			tableProduto = new JTable(new DefaultTableModel(dados,colunas) {
 				 /**
 				 * 

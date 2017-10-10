@@ -159,11 +159,12 @@ public class ProdutoDAO {
 			String produtos[][] = new String[size][5];
 			int cont = 0;
 			while (rs.next()) {
+				System.out.println(rs.getString("nomeProduto"));
 				produtos[cont][1] = rs.getString("nomeProduto");
 				produtos[cont][0] = "" + rs.getInt("idProduto");
 				produtos[cont][2] = "" + rs.getLong("precoVendaProduto");
-				produtos[cont][3] = "" + rs.getLong("qtdEstoqueProduto");
-				produtos[cont][4] = "" + rs.getDate("descricaoProduto");
+				produtos[cont][3] = "" + rs.getLong("precoVendaProduto");
+				produtos[cont][4] = "" + rs.getDate("qtdEstoqueProduto");
 				cont++;
 			}
 			rs.close();

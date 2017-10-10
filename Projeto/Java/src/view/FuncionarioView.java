@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.InputListenerFuncionarioView;
-import model.AtualizaTabela;
+import model.AtualizaTabelaFuncionario;
 import model.FuncionarioDAO;
 import javax.swing.ListSelectionModel;
 
@@ -36,7 +36,7 @@ public class FuncionarioView extends JDialog {
 	private JLabel lblBuscarPorNome;
 	private JScrollPane scrollBar;
 	InputListenerFuncionarioView listener;
-	private AtualizaTabela aT1;
+	private AtualizaTabelaFuncionario aT1;
 	private Thread t1;
 	private FuncionarioDAO funcDAO = new FuncionarioDAO();
 	private JLabel btnEditarFuncionario;
@@ -181,7 +181,7 @@ public class FuncionarioView extends JDialog {
 		if(t1 == null) {
 			
 			try {
-				aT1 = new AtualizaTabela(this);
+				aT1 = new AtualizaTabelaFuncionario(this);
 				t1 = new Thread(aT1);
 			} catch (ArrayIndexOutOfBoundsException e) {
 				// TODO: handle exception

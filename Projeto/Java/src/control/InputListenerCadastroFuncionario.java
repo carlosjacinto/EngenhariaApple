@@ -3,8 +3,11 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.sql.Date;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -162,8 +165,16 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 			getFunc().setFoto(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon = new ImageIcon(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon.setImage(imageIcon.getImage().getScaledInstance(275, 281, 100));
-			cadastroFuncionario.getLblFoto().setIcon(imageIcon);
-			System.out.println(getFunc().getFoto());
+			//cadastroFuncionario.getLblFoto().setIcon(imageIcon);
+			ImageIcon i = new ImageIcon("Interno/xxx.png");
+			cadastroFuncionario.getLblFoto().setIcon(i);
+			try {
+				ImageIO.read(new URL("./Interno/01.jpg"));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			//System.out.println(getFunc().getFoto());
 		}
 
 	}
