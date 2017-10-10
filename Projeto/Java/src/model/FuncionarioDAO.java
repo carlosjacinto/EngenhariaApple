@@ -31,6 +31,9 @@ public class FuncionarioDAO {
 			if (f.getFoto() != null) {
 				int codigo = buscaCodigoFuncionario(f.getCpf());
 				CopiarImagemFuncionario(codigo, f.getFoto());
+			}else {
+				int codigo = buscaCodigoFuncionario(f.getCpf());
+				CopiarImagemFuncionario(codigo, "Interno/default-avatar.png");
 			}
 			System.out.println("deu bom");
 			return true;
@@ -170,6 +173,9 @@ public class FuncionarioDAO {
 					+ f.getSenha() + "', salarioFunc='" + f.getSalario() + "', comissaoFunc='" + f.getComissao()
 					+ "', telefoneFunc='" + f.getTelefone() + "'  WHERE idFuncionario='" + f.getIdFuncionario() + "' ");
 			stmt.close();
+			if (f.getFoto() != null) {
+				CopiarImagemFuncionario(f.getIdFuncionario(), f.getFoto());
+			}
 			return true;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao alterar..." + sqle.getMessage());
