@@ -20,13 +20,11 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 	private ClienteDAO clieDAO = new ClienteDAO();
 
 	public InputListenerClienteView(ClienteView clienteView) {
-		// TODO Auto-generated constructor stub
 		this.clienteView = clienteView;
 	}
 
-	@Override
+
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
 		if (e.getSource() == clienteView.getBuscarButton()) {
 			String[][] clies = clieDAO.listaClienteArray(clienteView.getTextBusca().getText());
 			String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};

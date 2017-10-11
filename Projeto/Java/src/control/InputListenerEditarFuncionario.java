@@ -61,7 +61,6 @@ public class InputListenerEditarFuncionario implements MouseListener {
 	}
 
 	public void capturarDadosFunc() {
-		System.out.println("tete");
 		if (!(edicaoFuncionario.getTextNome().getText().equals("")
 				|| edicaoFuncionario.getTextSalario().getText().equals("")
 				|| edicaoFuncionario.getTextComissao().getText().equals("")
@@ -74,17 +73,14 @@ public class InputListenerEditarFuncionario implements MouseListener {
 				|| edicaoFuncionario.getTextCEP().getText().equals("")
 				|| edicaoFuncionario.getTextDataNascimento().getText().equals(""))) {
 
-			System.out.println("tete2");
 			if (edicaoFuncionario.getTextPassword1().getText().equals(edicaoFuncionario.getTextPassword2().getText())
 					&& !edicaoFuncionario.getTextPassword1().getText().equals("")) {
 
 				try {
 					getFunc().setSalario(Double.parseDouble(edicaoFuncionario.getTextSalario().getText()));
 					getFunc().setComissao(Double.parseDouble(edicaoFuncionario.getTextComissao().getText()));
-					getFunc().setTelefone(Long.parseLong(edicaoFuncionario.getTextTelefone().getText()));
-					getFunc().setCelular(Long.parseLong(edicaoFuncionario.getTextCelular().getText()));
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Valor Inválido!", null, JOptionPane.ERROR_MESSAGE);
+					} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Valor Inválido! (Salário ou Comissão)", null, JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				getFunc().setIdFuncionario(Integer.parseInt(edicaoFuncionario.getTextCodigo().getText()));
@@ -97,6 +93,9 @@ public class InputListenerEditarFuncionario implements MouseListener {
 				getFunc().setCidade(edicaoFuncionario.getTextCidade().getText());
 				getFunc().setCep(edicaoFuncionario.getTextCEP().getText());
 				getFunc().setSenha(edicaoFuncionario.getTextPassword1().getText());
+				getFunc().setTelefone(edicaoFuncionario.getTextTelefone().getText());
+				getFunc().setCelular(edicaoFuncionario.getTextCelular().getText());
+			
 
 				getFunc().setDataNascimento(edicaoFuncionario.getTextDataNascimento().getText());
 
@@ -107,10 +106,13 @@ public class InputListenerEditarFuncionario implements MouseListener {
 
 				if (!(imageIcon == null)) {
 
-					funcDAO.editarFuncionario(func);
-					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
-							JOptionPane.INFORMATION_MESSAGE);
-					edicaoFuncionario.dispose();
+					if (funcDAO.editarFuncionario(func)) {
+						JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						edicaoFuncionario.dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "Erro ao editar", "Erro", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 
 				else {
@@ -119,10 +121,13 @@ public class InputListenerEditarFuncionario implements MouseListener {
 							JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION) {
 
-						funcDAO.editarFuncionario(func);
-						JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
-								JOptionPane.DEFAULT_OPTION);
-						edicaoFuncionario.dispose();
+						if (funcDAO.editarFuncionario(func)) {
+							JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+									JOptionPane.INFORMATION_MESSAGE);
+							edicaoFuncionario.dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "Erro ao editar", "Erro", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			} else

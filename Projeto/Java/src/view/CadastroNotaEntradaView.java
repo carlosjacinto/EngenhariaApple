@@ -7,11 +7,17 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
 
 import control.InputListenerCadastroNotaEntrada;
+import model.NotaEntradaDAO;
+import java.awt.Component;
 
 public class CadastroNotaEntradaView extends JDialog {
 
@@ -34,6 +40,10 @@ public class CadastroNotaEntradaView extends JDialog {
 	private JTextField txtDataEmissao;
 	private JTextField textCodigo;
 	private JLabel lblCodigo;
+	private JTable tableNotaEntrada;
+	private JTextField textBusca;
+	private JScrollPane scrollBar;
+	private NotaEntradaDAO notaEntDAO = new NotaEntradaDAO();
 
 	public static void main(String[] args) {
 		try {
@@ -59,7 +69,7 @@ public class CadastroNotaEntradaView extends JDialog {
 
 	public void initialize() {
 		this.setModal(true);
-		setBounds(100, 100, 649, 294);
+		setBounds(100, 100, 649, 491);
 		setContentPane(getContentPanel());
 		setTitle("Cadastro de Nota de Entrada");
 
@@ -88,9 +98,44 @@ public class CadastroNotaEntradaView extends JDialog {
 			contentPanel.add(getTextCodigo());
 			contentPanel.add(getTextDataEmissao());
 			contentPanel.add(getLblDataEmissao());
+			
+			JScrollPane scrollPane = new JScrollPane((Component) null);
+			scrollPane.setBounds(30, 252, 668, 189);
+			contentPanel.add(scrollPane);
 
 		}
 		return contentPanel;
+	}
+	
+	public JScrollPane getScrollBar() {
+		if (scrollBar == null) {
+			scrollBar = new JScrollPane(getTableNotaEntrada());
+			scrollBar.setBounds(58, 52, 668, 359);
+		}
+		return scrollBar;
+	}
+	
+	public JTable getTableNotaEntrada() {
+		if (tableNotaEntrada == null) {
+			String[][] notas = notaEntDAO.listaNotaEntradaArray("");
+			String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total"};
+
+			DefaultTableModel model = new DefaultTableModel(notas, colunas) {
+				/**
+				* 
+				*/
+				private static final long serialVersionUID = -7018342759131611914L;
+				boolean[] canEdit = new boolean[] { false, false, false, false, false };
+
+				@Override
+				public boolean isCellEditable(int rowIndex, int columnIndex) {
+					return canEdit[columnIndex];
+				}
+			};
+			tableNotaEntrada = new JTable(model);
+			tableNotaEntrada.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return tableNotaEntrada;
 	}
 
 	private JLabel getLblNomeCliente() {

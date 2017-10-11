@@ -115,7 +115,7 @@ public class NotaEntradaView extends JDialog {
 			btnNovoNotaEntrada = new JLabel();
 			btnNovoNotaEntrada.setToolTipText("Nova Nota de Entrada");
 			btnNovoNotaEntrada.setBounds(466, 422, 80, 80);
-			btnNovoNotaEntrada.setIcon(new ImageIcon("Interno/new.png"));
+			btnNovoNotaEntrada.setIcon(new ImageIcon("Interno/newNota.png"));
 		}
 		return btnNovoNotaEntrada;
 	}
@@ -167,7 +167,7 @@ public class NotaEntradaView extends JDialog {
 			btnExcluirNotaEntrada = new JLabel("");
 			btnExcluirNotaEntrada.setToolTipText("Excluir Nota de Entrada");
 			btnExcluirNotaEntrada.setHorizontalAlignment(SwingConstants.CENTER);
-			btnExcluirNotaEntrada.setIcon(new ImageIcon("Interno/delete.png"));
+			btnExcluirNotaEntrada.setIcon(new ImageIcon("Interno/deleteNota.png"));
 			btnExcluirNotaEntrada.setBounds(556, 422, 80, 80);
 		}
 		return btnExcluirNotaEntrada;
@@ -199,7 +199,7 @@ public class NotaEntradaView extends JDialog {
 			btnEditarNotaEntrada = new JLabel("");
 			btnEditarNotaEntrada.setToolTipText("Editar Nota de Entrada");
 			btnEditarNotaEntrada.setHorizontalAlignment(SwingConstants.CENTER);
-			btnEditarNotaEntrada.setIcon(new ImageIcon("Interno/edit.png"));
+			btnEditarNotaEntrada.setIcon(new ImageIcon("Interno/editNota.png"));
 			btnEditarNotaEntrada.setBounds(646, 422, 80, 80);
 		}
 		return btnEditarNotaEntrada;

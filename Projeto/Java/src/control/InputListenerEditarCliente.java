@@ -91,20 +91,28 @@ public class InputListenerEditarCliente implements MouseListener {
 
 			if (!(imageIcon == null)) {
 
-				clieDAO.editarCliente(clie);
-				JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso", JOptionPane.DEFAULT_OPTION);
-				edicaoCliente.dispose();
+				if (clieDAO.editarCliente(clie)) {
+					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					edicaoCliente.dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Erro ao editar", "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+
 			}
 
 			else {
-				int result = JOptionPane.showConfirmDialog(null, "Deseja realizar a edição sem adicionar uma imagem?", "Cadastrar",
-						JOptionPane.YES_NO_OPTION);
+				int result = JOptionPane.showConfirmDialog(null, "Deseja realizar a edição sem adicionar uma imagem?",
+						"Cadastrar", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 
-					clieDAO.editarCliente(clie);
-					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
-							JOptionPane.DEFAULT_OPTION);
-					edicaoCliente.dispose();
+					if (clieDAO.editarCliente(clie)) {
+						JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						edicaoCliente.dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "Erro ao editar", "Erro", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 

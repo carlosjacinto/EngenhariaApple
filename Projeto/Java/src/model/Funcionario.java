@@ -17,8 +17,8 @@ public class Funcionario {
 	private String cidade;
 	private String cep;
 	private String dataNascimento;
-	private long telefone;
-	private long celular;
+	private String telefone;
+	private String celular;
 	private Date dataAdmissao;
 	private String senha;
 	private boolean administrador;
@@ -110,16 +110,16 @@ public class Funcionario {
 		this.cep = cep;
 	}
 	
-	public long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
-	public long getCelular() {
+	public String getCelular() {
 		return celular;
 	}
-	public void setCelular(long celular) {
+	public void setCelular(String celular) {
 		this.celular = celular;
 	}
 	public String getDataNascimento() {
