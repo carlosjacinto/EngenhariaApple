@@ -51,7 +51,7 @@ CREATE TABLE `compra` (
   `idCompra` int(11) NOT NULL AUTO_INCREMENT,
   `nomeFornecCompra` varchar(45) NOT NULL,
   `cnpjFornecCompra` varchar(45) NOT NULL,
-  `dataCompra` date NOT NULL,
+  `dataCompra` varchar(20) NOT NULL,
   `outrosCompra` float unsigned DEFAULT NULL,
   `valorTotalCompra` float unsigned NOT NULL,
   `chaveAcessoCompra` varchar(50) DEFAULT NULL,
