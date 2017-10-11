@@ -82,8 +82,8 @@ public class ClienteDAO {
 				c.setDataCadastro(rs.getDate("dataCadastro"));
 				c.setComplemento(rs.getString("compCliente"));
 				c.setDataNascimento(rs.getString("dataNascCliente"));
-				c.setTelefone(rs.getLong("telefoneCliente"));
-				c.setCelular(rs.getLong("celularCliente"));
+				c.setTelefone(rs.getString("telefoneCliente"));
+				c.setCelular(rs.getString("celularCliente"));
 				
 			}
 			return c;
@@ -175,8 +175,8 @@ public class ClienteDAO {
 			while (rs.next()) {
 				clientes[cont][1] = rs.getString("nomeCliente");
 				clientes[cont][0] = "" + rs.getInt("idCliente");
-				clientes[cont][2] = "" + rs.getLong("cpfCliente");
-				clientes[cont][4] = "" + rs.getLong("telefoneCliente");
+				clientes[cont][2] = "" + rs.getString("cpfCliente");
+				clientes[cont][4] = "" + rs.getString("telefoneCliente");
 				clientes[cont][5] = "" + rs.getString("dataNascCliente");
 				clientes[cont][3] = rs.getString("ruaCliente");
 				cont++;

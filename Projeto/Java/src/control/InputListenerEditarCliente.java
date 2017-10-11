@@ -71,12 +71,8 @@ public class InputListenerEditarCliente implements MouseListener {
 				|| edicaoCliente.getTextRua().getText().equals("")
 				|| edicaoCliente.getTextDataNascimento().getText().equals(""))) {
 
-			try {
-				getClie().setTelefone(Long.parseLong(edicaoCliente.getTextTelefone().getText()));
-				getClie().setCelular(Long.parseLong(edicaoCliente.getTextCelular().getText()));
-			} catch (NumberFormatException e) {
-				System.out.println("Valor Errado!");
-			}
+			getClie().setTelefone(edicaoCliente.getTextTelefone().getText());
+			getClie().setCelular(edicaoCliente.getTextCelular().getText());
 			getClie().setIdCliente(Integer.parseInt(edicaoCliente.getTextCodigo().getText()));
 			getClie().setCpf(edicaoCliente.getTextCPF().getText());
 			getClie().setNome(edicaoCliente.getTextNome().getText());

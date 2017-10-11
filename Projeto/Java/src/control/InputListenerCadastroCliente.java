@@ -78,12 +78,8 @@ public class InputListenerCadastroCliente implements MouseListener {
 				|| cadastroCliente.getTextRua().getText().equals("")
 				|| cadastroCliente.getTextDataNascimento().getText().equals(""))) {
 
-			try {
-				getClie().setTelefone(Long.parseLong(cadastroCliente.getTextTelefone().getText()));
-				getClie().setCelular(Long.parseLong(cadastroCliente.getTextCelular().getText()));
-			} catch (NumberFormatException e) {
-				System.out.println("Valor Errado!");
-			}
+			getClie().setTelefone(cadastroCliente.getTextTelefone().getText());
+			getClie().setCelular(cadastroCliente.getTextCelular().getText());
 
 			getClie().setCpf(cadastroCliente.getTextCPF().getText());
 			getClie().setNome(cadastroCliente.getTextNome().getText());

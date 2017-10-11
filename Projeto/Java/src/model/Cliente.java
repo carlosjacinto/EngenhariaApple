@@ -15,14 +15,14 @@ public class Cliente {
 	private String cidade;
 	private String cep;
 	private String dataNascimento;
-	private long telefone;
-	private long celular;
+	private String telefone;
+	private String celular;
 	private Date dataCadastro;
 	
-	public long getCelular() {
+	public String getCelular() {
 		return celular;
 	}
-	public void setCelular(long celular) {
+	public void setCelular(String celular) {
 		this.celular = celular;
 	}
 	public int getIdCliente() {
@@ -94,10 +94,10 @@ public class Cliente {
 		return dataCadastro;
 	}
 
-	public long getTelefone() {
+	public String getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(long telefone) {
+	public void setTelefone(String telefone) {
 		this.telefone = telefone;
 	}
 	public String getCep() {
