@@ -382,7 +382,7 @@ public class EditarClienteView extends JDialog {
 	public JLabel getLblFoto() {
 		if (lblFoto == null) {
 			lblFoto = new JLabel("");
-			lblFoto.setBounds(0, 0, 275, 281);
+			lblFoto.setBounds(348, 195, 275, 281);
 			
 			ImageIcon i = new ImageIcon("Media/Cliente/" + clie.getIdCliente() + ".png");
 			if (i.getImage()==null)

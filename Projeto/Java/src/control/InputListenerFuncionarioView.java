@@ -29,27 +29,7 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == funcionarioView.getBuscarButton()) {
-			String[][] funcs = funcDAO.listaFuncionarioArray(funcionarioView.getTextBusca().getText());
-			String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
-			
-			DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
-				 /**
-				 * 
-				 */
-				private static final long serialVersionUID = -7018342759131611914L;
-				boolean[] canEdit = new boolean []{  
-				            false, false, false, false,false,false
-				        };  
-				        @Override  
-				        public boolean isCellEditable(int rowIndex, int columnIndex) {  
-				            return canEdit [columnIndex];  
-				        }
-			};
-			funcionarioView.getTableFuncionario().setModel(model);
-			funcionarioView.repaint();
-			funcionarioView.revalidate();
-			funcionarioView.setBuscaAT1(funcionarioView.getTextBusca().getText());
-			
+			mudarTabela();
 			
 			//EditarFuncionarioView edicaoFuncionarioView = new EditarFuncionarioView();
 			//edicaoFuncionarioView.setVisible(true);
@@ -71,9 +51,35 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 				new EditarFuncionarioView(func).setVisible(true);
 			}else JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null,
 					JOptionPane.WARNING_MESSAGE);
+		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+			funcionarioView.getTextBusca().setText("");
+			mudarTabela();
 		}
 	}
 
+	public void mudarTabela() {
+		String[][] funcs = funcDAO.listaFuncionarioArray(funcionarioView.getTextBusca().getText());
+		String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
+		
+		DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
+			 /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7018342759131611914L;
+			boolean[] canEdit = new boolean []{  
+			            false, false, false, false,false,false
+			        };  
+			        @Override  
+			        public boolean isCellEditable(int rowIndex, int columnIndex) {  
+			            return canEdit [columnIndex];  
+			        }
+		};
+		funcionarioView.getTableFuncionario().setModel(model);
+		funcionarioView.repaint();
+		funcionarioView.revalidate();
+		funcionarioView.setBuscaAT1(funcionarioView.getTextBusca().getText());
+	}
+	
 	public void confirmarExclusao() {
 		// TODO Auto-generated method stub
 		int i = funcionarioView.getTableFuncionario().getSelectedRow();
@@ -104,6 +110,8 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
 		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit2x.png"));
+		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
 	}
@@ -119,6 +127,8 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit.png"));
+		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
 	}
@@ -134,6 +144,8 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit.png"));
+		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
 	}
@@ -149,6 +161,8 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
 		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit2x.png"));
+		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
 	}
@@ -162,12 +176,12 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	@Override
 	public void windowClosed(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+		funcionarioView.getT1().interrupt();
 	}
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		funcionarioView.getT1().interrupt();
+		
 	}
 
 	@Override

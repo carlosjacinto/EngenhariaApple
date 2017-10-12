@@ -98,7 +98,7 @@ public class InputListenerEditarCliente implements MouseListener {
 			}
 
 			else {
-				int result = JOptionPane.showConfirmDialog(null, "Deseja realizar a edição sem adicionar uma imagem?",
+				int result = JOptionPane.showConfirmDialog(null, "Deseja realizar a edição sem alterar a imagem?",
 						"Cadastrar", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 

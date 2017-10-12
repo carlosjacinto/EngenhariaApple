@@ -86,7 +86,7 @@ public class InputListenerEditarProduto implements MouseListener, ChangeListener
 
 			else {
 				int result = JOptionPane.showConfirmDialog(null,
-						"Deseja realizar a edição sem adicionar uma imagem?", "Cadastrar",
+						"Deseja realizar a edição sem alterar a imagem?", "Editar",
 						JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 

@@ -1,7 +1,7 @@
 package control;
 
 
-import view.NotaEntradaView;
+import view.Principal;
 
 
 public class Main {
@@ -14,6 +14,6 @@ public class Main {
 		}
 
 
-		new NotaEntradaView().setVisible(true);
+		new Principal().setVisible(true);
 	}
 }

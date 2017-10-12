@@ -135,7 +135,7 @@ public class ProdutoDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = conex.createStatement();
-			stmt.execute("UPDATE produto SET nomeProduto='" + p.getNomeProduto() + "', precoVendaProduto='" + p.getPrecoVendaProduto() + "', descricaoProduto='" + p.getDescricaoProduto() + "' ");
+			stmt.execute("UPDATE produto SET nomeProduto='" + p.getNomeProduto() + "', precoVendaProduto='" + p.getPrecoVendaProduto() + "', descricaoProduto='" + p.getDescricaoProduto() + "' where idProduto = "+p.getIdProduto());
 			stmt.close();
 			return true;
 		} catch (SQLException sqle) {

@@ -26,28 +26,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	public void mouseClicked(MouseEvent e) {
 		if (e.getSource() == clienteView.getBuscarButton()) {
-			String[][] clies = clieDAO.listaClienteArray(clienteView.getTextBusca().getText());
-			String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
-			
-			DefaultTableModel model = new DefaultTableModel(clies,colunas) {
-				 /**
-				 * 
-				 */
-				private static final long serialVersionUID = -7018342759131611914L;
-				boolean[] canEdit = new boolean []{  
-				            false, false, false, false,false,false
-				        };  
-				        @Override  
-				        public boolean isCellEditable(int rowIndex, int columnIndex) {  
-				            return canEdit [columnIndex];  
-				        }
-			};
-			clienteView.getTableCliente().setModel(model);
-			clienteView.repaint();
-			clienteView.revalidate();
-			clienteView.setBuscaAT1(clienteView.getTextBusca().getText());
-			
-			
+			mudarTabela();
 			//EditarClienteView edicaoClienteView = new EditarClienteView();
 			//edicaoClienteView.setVisible(true);
 		} else if ((e.getSource()) == clienteView.getbtnNovoCliente()) {
@@ -68,7 +47,33 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 				new EditarClienteView(clie).setVisible(true);
 			}else JOptionPane.showMessageDialog(null, "Selecione Um Cliente!", null,
 					JOptionPane.WARNING_MESSAGE);
+		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
+			clienteView.getTextBusca().setText("");
+			mudarTabela();
 		}
+	}
+	
+	public void mudarTabela() {
+		String[][] clies = clieDAO.listaClienteArray(clienteView.getTextBusca().getText());
+		String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
+		
+		DefaultTableModel model = new DefaultTableModel(clies,colunas) {
+			 /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7018342759131611914L;
+			boolean[] canEdit = new boolean []{  
+			            false, false, false, false,false,false
+			        };  
+			        @Override  
+			        public boolean isCellEditable(int rowIndex, int columnIndex) {  
+			            return canEdit [columnIndex];  
+			        }
+		};
+		clienteView.getTableCliente().setModel(model);
+		clienteView.repaint();
+		clienteView.revalidate();
+		clienteView.setBuscaAT1(clienteView.getTextBusca().getText());
 	}
 
 	public void confirmarExclusao() {
@@ -101,6 +106,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
 		}else if(e.getSource() == clienteView.getBtnEditarCliente()) {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit2x.png"));
+		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
+			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
 	}
@@ -116,6 +123,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		}else if(e.getSource() == clienteView.getBtnEditarCliente()) {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit.png"));
+		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
+			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
 	}
@@ -131,6 +140,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		}else if(e.getSource() == clienteView.getBtnEditarCliente()) {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit.png"));
+		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
+			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
 	}
@@ -146,6 +157,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
 		}else if(e.getSource() == clienteView.getBtnEditarCliente()) {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit2x.png"));
+		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
+			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
 	}

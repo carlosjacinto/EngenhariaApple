@@ -40,6 +40,7 @@ public class ProdutoView extends JDialog {
 	InputListenerProdutoView listener;
 	private JLabel btnExcluirProduto;
 	private JLabel btnEditarProduto;
+	private JLabel btnLimparBusca;
 
 	/**
 	 * Launch the application.
@@ -101,6 +102,7 @@ public class ProdutoView extends JDialog {
 	public JLabel getBuscarButton() {
 		if(btnBuscarProduto == null){
 			btnBuscarProduto = new JLabel();
+			btnBuscarProduto.setToolTipText("Buscar");
 			btnBuscarProduto.setHorizontalAlignment(SwingConstants.CENTER);
 			btnBuscarProduto.setBounds(266, 472, 23, 23);
 			btnBuscarProduto.setIcon(new ImageIcon("Interno/search-icon.png"));
@@ -111,6 +113,7 @@ public class ProdutoView extends JDialog {
 	public JLabel getbtnNovoProduto() {
 		if(btnNovoProduto == null){
 			btnNovoProduto = new JLabel("");
+			btnNovoProduto.setToolTipText("Cadastrar Produto");
 			btnNovoProduto.setHorizontalAlignment(SwingConstants.CENTER);
 			btnNovoProduto.setIcon(new ImageIcon("Interno/newProd.png"));
 			btnNovoProduto.setBounds(466, 422, 80, 80);
@@ -138,6 +141,7 @@ public class ProdutoView extends JDialog {
 			panel.add(getlblBuscarPorNome());
 			panel.add(getBtnExcluirProduto());
 			panel.add(getBtnEditarProduto());
+			panel.add(getBtnLimparBusca());
 		}
 		return panel;
 	}
@@ -158,6 +162,7 @@ public class ProdutoView extends JDialog {
 		getTableProduto().addMouseListener(listener);
 		getBtnExcluirProduto().addMouseListener(listener);
 		getBtnEditarProduto().addMouseListener(listener);
+		getBtnLimparBusca().addMouseListener(listener);
 		this.addWindowListener(listener);
 	}
 	
@@ -196,6 +201,7 @@ public class ProdutoView extends JDialog {
 	public JLabel getBtnExcluirProduto() {
 		if (btnExcluirProduto == null) {
 			btnExcluirProduto = new JLabel("");
+			btnExcluirProduto.setToolTipText("Excluir Produto");
 			btnExcluirProduto.setHorizontalAlignment(SwingConstants.CENTER);
 			btnExcluirProduto.setBounds(556, 422, 80, 80);
 			btnExcluirProduto.setIcon(new ImageIcon("Interno/deleteProd.png"));
@@ -205,10 +211,21 @@ public class ProdutoView extends JDialog {
 	public JLabel getBtnEditarProduto() {
 		if (btnEditarProduto == null) {
 			btnEditarProduto = new JLabel("");
+			btnEditarProduto.setToolTipText("Editar Produto");
 			btnEditarProduto.setHorizontalAlignment(SwingConstants.CENTER);
 			btnEditarProduto.setIcon(new ImageIcon("Interno/editProd.png"));
 			btnEditarProduto.setBounds(646, 422, 80, 80);
 		}
 		return btnEditarProduto;
+	}
+	public JLabel getBtnLimparBusca() {
+		if (btnLimparBusca == null) {
+			btnLimparBusca = new JLabel();
+			btnLimparBusca.setToolTipText("Limpar Busca");
+			btnLimparBusca.setHorizontalAlignment(SwingConstants.CENTER);
+			btnLimparBusca.setBounds(299, 472, 23, 23);
+			btnLimparBusca.setIcon(new ImageIcon("Interno/clean-search.png"));
+		}
+		return btnLimparBusca;
 	}
 }

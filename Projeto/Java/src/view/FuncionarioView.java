@@ -40,6 +40,7 @@ public class FuncionarioView extends JDialog {
 	private Thread t1;
 	private FuncionarioDAO funcDAO = new FuncionarioDAO();
 	private JLabel btnEditarFuncionario;
+	private JLabel btnLimparBusca;
 
 	/**
 	 * Launch the application.
@@ -138,6 +139,7 @@ public class FuncionarioView extends JDialog {
 		getTableFuncionario().addMouseListener(listener);
 		getbtnExcluirFuncionario().addMouseListener(listener);
 		getBtnEditarFuncionario().addMouseListener(listener);
+		getBtnLimparBusca().addMouseListener(listener);
 		this.addWindowListener(listener);
 	}
 	
@@ -163,6 +165,7 @@ public class FuncionarioView extends JDialog {
 		panel.add(getlblBuscarPorNome());
 		panel.add(getbtnExcluirFuncionario());
 		panel.add(getBtnEditarFuncionario());
+		panel.add(getBtnLimparBusca());
 		getT1().start();
 	}
 	
@@ -207,5 +210,16 @@ public class FuncionarioView extends JDialog {
 			btnEditarFuncionario.setBounds(646, 422, 80, 80);
 		}
 		return btnEditarFuncionario;
+	}
+	
+	public JLabel getBtnLimparBusca() {
+		if (btnLimparBusca == null) {
+			btnLimparBusca = new JLabel();
+			btnLimparBusca.setToolTipText("Limpar Busca");
+			btnLimparBusca.setHorizontalAlignment(SwingConstants.CENTER);
+			btnLimparBusca.setBounds(299, 472, 23, 23);
+			btnLimparBusca.setIcon(new ImageIcon("Interno/clean-search.png"));
+		}
+		return btnLimparBusca;
 	}
 }

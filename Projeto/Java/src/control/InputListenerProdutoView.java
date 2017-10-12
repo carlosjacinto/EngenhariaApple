@@ -28,27 +28,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 	public void mouseClicked(MouseEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == produtoView.getBuscarButton()) {
-			String[][] funcs = produtoDAO.listaProdutoArray(produtoView.getTextBusca().getText());
-			String[] colunas = {"id","Nome", "Preço de Venda(R$)", "Preço de Compra(R$)", "Quantidade"};
-			
-			DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
-				 /**
-				 * 
-				 */
-				private static final long serialVersionUID = -7018342759131611914L;
-				boolean[] canEdit = new boolean []{  
-				            false, false, false, false,false,false
-				        };  
-				        @Override  
-				        public boolean isCellEditable(int rowIndex, int columnIndex) {  
-				            return canEdit [columnIndex];  
-				        }
-			};
-			produtoView.getTableProduto().setModel(model);
-			produtoView.repaint();
-			produtoView.revalidate();
-			produtoView.setBuscaAT1(produtoView.getTextBusca().getText());
-			
+			mudarTabela();
 		}else if ((e.getSource()) == produtoView.getbtnNovoProduto()) {
 			new CadastroProdutoView().setVisible(true);
 		}else if(e.getSource() == produtoView.getTableProduto()) {
@@ -59,12 +39,37 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 				Produto produto = produtoDAO.RetornaProduto(Integer.parseInt(
 						produtoView.getTableProduto().getValueAt(
 								produtoView.getTableProduto().getSelectedRow(), 0).toString()));
-				produtoView.getT1().interrupt();
 				new EditarProdutoView(produto).setVisible(true);
 			}else JOptionPane.showMessageDialog(null,  "Selecione um Produto!", null,JOptionPane.WARNING_MESSAGE);
 		}else if(e.getSource() == produtoView.getBtnExcluirProduto()) {
 			confirmarExclusao();
+		}else if(e.getSource() == produtoView.getBtnLimparBusca()) {
+			produtoView.getTextBusca().setText("");
+			mudarTabela();
 		}
+	}
+	
+	public void mudarTabela() {
+		String[][] funcs = produtoDAO.listaProdutoArray(produtoView.getTextBusca().getText());
+		String[] colunas = {"id","Nome", "Preço de Venda(R$)", "Preço de Compra(R$)", "Quantidade"};
+		
+		DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
+			 /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7018342759131611914L;
+			boolean[] canEdit = new boolean []{  
+			            false, false, false, false,false,false
+			        };  
+			        @Override  
+			        public boolean isCellEditable(int rowIndex, int columnIndex) {  
+			            return canEdit [columnIndex];  
+			        }
+		};
+		produtoView.getTableProduto().setModel(model);
+		produtoView.repaint();
+		produtoView.revalidate();
+		produtoView.setBuscaAT1(produtoView.getTextBusca().getText());
 	}
 
 	@Override
@@ -78,6 +83,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 			produtoView.getBtnEditarProduto().setIcon(new ImageIcon("Interno/editProd2x.png"));
 		}else if(e.getSource() == produtoView.getBuscarButton()) {
 			produtoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
+		}else if(e.getSource() == produtoView.getBtnLimparBusca()) {
+			produtoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
 	}
@@ -93,6 +100,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 			produtoView.getBtnEditarProduto().setIcon(new ImageIcon("Interno/editProd.png"));
 		}else if(e.getSource() == produtoView.getBuscarButton()) {
 			produtoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
+		}else if(e.getSource() == produtoView.getBtnLimparBusca()) {
+			produtoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
 	}
@@ -108,6 +117,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 			produtoView.getBtnEditarProduto().setIcon(new ImageIcon("Interno/editProd.png"));
 		}else if(e.getSource() == produtoView.getBuscarButton()) {
 			produtoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
+		}else if(e.getSource() == produtoView.getBtnLimparBusca()) {
+			produtoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
 	}
@@ -123,6 +134,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 			produtoView.getBtnEditarProduto().setIcon(new ImageIcon("Interno/editProd2x.png"));
 		}else if(e.getSource() == produtoView.getBuscarButton()) {
 			produtoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
+		}else if(e.getSource() == produtoView.getBtnLimparBusca()) {
+			produtoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
 	}

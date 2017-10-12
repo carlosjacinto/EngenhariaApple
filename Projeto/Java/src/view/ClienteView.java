@@ -40,6 +40,7 @@ public class ClienteView extends JDialog {
 	private Thread t1;
 	private ClienteDAO clieDAO = new ClienteDAO();
 	private JLabel btnEditarCliente;
+	private JLabel btnLimparBusca;
 
 	/**
 	 * Launch the application.
@@ -137,6 +138,8 @@ public class ClienteView extends JDialog {
 		getTableCliente().addMouseListener(listener);
 		getbtnExcluirCliente().addMouseListener(listener);
 		getBtnEditarCliente().addMouseListener(listener);
+		getBtnLimparBusca().addMouseListener(listener);
+		this.addWindowListener(listener);
 		//TODO: this.addWindowListener(listener);
 	}
 
@@ -157,6 +160,7 @@ public class ClienteView extends JDialog {
 		panel.setLayout(null);
 		panel.add(getScrollBar());
 		panel.add(getBuscarButton());
+		panel.add(getBtnLimparBusca());
 		panel.add(getbtnNovoCliente());
 		panel.add(getTextBusca());
 		panel.add(getlblBuscarPorNome());
@@ -206,5 +210,16 @@ public class ClienteView extends JDialog {
 			btnEditarCliente.setBounds(646, 422, 80, 80);
 		}
 		return btnEditarCliente;
+	}
+	
+	public JLabel getBtnLimparBusca() {
+		if (btnLimparBusca == null) {
+			btnLimparBusca = new JLabel();
+			btnLimparBusca.setToolTipText("Limpar Busca");
+			btnLimparBusca.setHorizontalAlignment(SwingConstants.CENTER);
+			btnLimparBusca.setBounds(299, 472, 23, 23);
+			btnLimparBusca.setIcon(new ImageIcon("Interno/clean-search.png"));
+		}
+		return btnLimparBusca;
 	}
 }
