@@ -97,12 +97,12 @@ public class FuncionarioDAO {
 				func.setIdFuncionario(rs.getInt("idFuncionario"));
 				func.setCpf(rs.getString("cpfFunc"));
 				func.setDataNascimento(rs.getString("dataNascFunc"));
-				func.setTelefone(rs.getLong("telefoneFunc"));
+				func.setTelefone(rs.getString("telefoneFunc"));
 				func.setRua(rs.getString("ruaFunc"));
 				func.setBairro(rs.getString("bairroFunc"));
 				func.setCidade(rs.getString("cidadeFunc"));
 				func.setAdministrador(rs.getBoolean("administrador"));
-				func.setCelular(rs.getLong("celularFunc"));
+				func.setCelular(rs.getString("celularFunc"));
 				func.setCep(rs.getString("cepFunc"));
 				func.setComissao(rs.getDouble("comissaoFunc"));
 				func.setComplemento(rs.getString("compFunc"));
@@ -201,9 +201,9 @@ public class FuncionarioDAO {
 			while (rs.next()) {
 				funcs[cont][1] = rs.getString("nomeFunc");
 				funcs[cont][0] = "" + rs.getInt("idFuncionario");
-				funcs[cont][2] = "" + rs.getLong("cpfFunc");
-				funcs[cont][4] = "" + rs.getLong("telefoneFunc");
-				funcs[cont][5] = "" + rs.getString("dataNascFunc");
+				funcs[cont][2] = rs.getString("cpfFunc");
+				funcs[cont][4] = rs.getString("telefoneFunc");
+				funcs[cont][5] = rs.getString("dataNascFunc");
 				funcs[cont][3] = rs.getString("ruaFunc");
 				cont++;
 			}

@@ -66,8 +66,7 @@ public class InputListenerCadastroCliente implements MouseListener {
 
 	public void capturarDadosCliente() {
 		// TODO Auto-generated method stub
-		if (!(cadastroCliente.getTextNome().getText().equals("")
-				|| cadastroCliente.getTextCPF().getText().equals("")
+		if (!(cadastroCliente.getTextNome().getText().equals("") || cadastroCliente.getTextCPF().getText().equals("")
 				|| cadastroCliente.getTextTelefone().getText().equals("")
 				|| cadastroCliente.getTextCelular().getText().equals("")
 				|| cadastroCliente.getTextRua().getText().equals("")
@@ -79,12 +78,8 @@ public class InputListenerCadastroCliente implements MouseListener {
 				|| cadastroCliente.getTextRua().getText().equals("")
 				|| cadastroCliente.getTextDataNascimento().getText().equals(""))) {
 
-			try {
-				getClie().setTelefone(Long.parseLong(cadastroCliente.getTextTelefone().getText()));
-				getClie().setCelular(Long.parseLong(cadastroCliente.getTextCelular().getText()));
-			} catch (NumberFormatException e) {
-				System.out.println("Valor Errado!");
-			}
+			getClie().setTelefone(cadastroCliente.getTextTelefone().getText());
+			getClie().setCelular(cadastroCliente.getTextCelular().getText());
 
 			getClie().setCpf(cadastroCliente.getTextCPF().getText());
 			getClie().setNome(cadastroCliente.getTextNome().getText());
@@ -98,9 +93,6 @@ public class InputListenerCadastroCliente implements MouseListener {
 
 			getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
 
-	       
-
-
 			if (clieDAO.verificaCPF(clie.getCpf()))
 				JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
 						JOptionPane.ERROR_MESSAGE);
@@ -109,30 +101,32 @@ public class InputListenerCadastroCliente implements MouseListener {
 			else {
 				if (!(imageIcon == null)) {
 
-					clieDAO.gravarCliente(clie);
-					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
-							JOptionPane.DEFAULT_OPTION);
-					cadastroCliente.dispose();
-				}
-
-				else {
+					if (clieDAO.gravarCliente(clie)) {
+						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						cadastroCliente.dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
 					int result = JOptionPane.showConfirmDialog(null, "Deseja Realizar o Cadastro sem Imagem?",
 							"Cadastrar", JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION) {
 
-						clieDAO.gravarCliente(clie);
-						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
-								JOptionPane.DEFAULT_OPTION);
-						cadastroCliente.dispose();
+						if (clieDAO.gravarCliente(clie)) {
+							JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
+									JOptionPane.INFORMATION_MESSAGE);
+							cadastroCliente.dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				}
 			}
-	} else
-		JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
+		} else
+			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
 
-}
-
-					
+	}
 
 	public Cliente getClie() {
 		if (clie == null) {
@@ -158,7 +152,8 @@ public class InputListenerCadastroCliente implements MouseListener {
 			jFileChooser = new JFileChooser();
 			jFileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
 				public boolean accept(File f) {
-					return (f.getName().endsWith(".jpg") ||f.getName().endsWith(".JPG")|| f.getName().endsWith(".png")) || f.getName().endsWith(".png")|| f.isDirectory();
+					return (f.getName().endsWith(".jpg") || f.getName().endsWith(".JPG")
+							|| f.getName().endsWith(".png")) || f.getName().endsWith(".png") || f.isDirectory();
 				}
 
 				public String getDescription() {

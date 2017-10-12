@@ -3,7 +3,10 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
+
 import view.CadastroNotaEntradaView;
+import view.EscolheProdutoView;
 
 public class InputListenerCadastroNotaEntrada  implements MouseListener{
 	CadastroNotaEntradaView cadastroNotaEntrada;
@@ -21,31 +24,52 @@ public class InputListenerCadastroNotaEntrada  implements MouseListener{
 			cadastroNotaEntrada.dispose();
 		}else if ((e.getSource()) == cadastroNotaEntrada.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
+		}else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
+			System.out.println("botao add produto na tabela");
+		}else if (e.getSource() == cadastroNotaEntrada.getPesqProduto()) {
+			new EscolheProdutoView().setVisible(true);
 		}
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
+				if (e.getSource() == cadastroNotaEntrada.getPesqProduto()) {
+					cadastroNotaEntrada.getPesqProduto().setIcon(new ImageIcon("Interno/search-icon2x.png"));
+				} else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
+					cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add2x.png"));
+				} 
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == cadastroNotaEntrada.getPesqProduto()) {
+			cadastroNotaEntrada.getPesqProduto().setIcon(new ImageIcon("Interno/search-icon.png"));
+		} else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
+			cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add.png"));
+		} 
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		if (e.getSource() == cadastroNotaEntrada.getPesqProduto()) {
+			cadastroNotaEntrada.getPesqProduto().setIcon(new ImageIcon("Interno/search-icon.png"));
+		} else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
+			cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add.png"));
+		} 
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		
-		// TODO Auto-generated method stub
+		if (e.getSource() == cadastroNotaEntrada.getPesqProduto()) {
+			cadastroNotaEntrada.getPesqProduto().setIcon(new ImageIcon("Interno/search-icon2x.png"));
+		} else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
+			cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add2x.png"));
+		} 
 
 	}
 }

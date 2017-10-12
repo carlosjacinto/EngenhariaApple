@@ -78,7 +78,6 @@ public class InputListenerPrincipalFunc implements MouseListener {
 		}else if(e.getSource() == principalFunc.getBtNotaEntrada()) {
 			principalFunc.getBtNotaEntrada().setIcon(new ImageIcon("Interno/nota.png"));
 			new NotaEntradaView().setVisible(true);
-			//TODO implementar View NotaDeEntrada
 		}else if(e.getSource() == principalFunc.getBtSair()) {
 			principalFunc.getBtSair().setIcon(new ImageIcon("Interno/sair.png"));
 			principalFunc.dispose();
@@ -87,7 +86,7 @@ public class InputListenerPrincipalFunc implements MouseListener {
 		}else if(e.getSource() == principalFunc.getmntmPedidos()) {
 			new PedidoView().setVisible(true);
 		}else if(e.getSource() == principalFunc.getmntmNotaEntrada()) {
-			//TODO implementar View NotaDeEntrada
+			new NotaEntradaView().setVisible(true);
 		}  
 		
 	}

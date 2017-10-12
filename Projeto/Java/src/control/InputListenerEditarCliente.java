@@ -71,12 +71,8 @@ public class InputListenerEditarCliente implements MouseListener {
 				|| edicaoCliente.getTextRua().getText().equals("")
 				|| edicaoCliente.getTextDataNascimento().getText().equals(""))) {
 
-			try {
-				getClie().setTelefone(Long.parseLong(edicaoCliente.getTextTelefone().getText()));
-				getClie().setCelular(Long.parseLong(edicaoCliente.getTextCelular().getText()));
-			} catch (NumberFormatException e) {
-				System.out.println("Valor Errado!");
-			}
+			getClie().setTelefone(edicaoCliente.getTextTelefone().getText());
+			getClie().setCelular(edicaoCliente.getTextCelular().getText());
 			getClie().setIdCliente(Integer.parseInt(edicaoCliente.getTextCodigo().getText()));
 			getClie().setCpf(edicaoCliente.getTextCPF().getText());
 			getClie().setNome(edicaoCliente.getTextNome().getText());
@@ -91,20 +87,28 @@ public class InputListenerEditarCliente implements MouseListener {
 
 			if (!(imageIcon == null)) {
 
-				clieDAO.editarCliente(clie);
-				JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso", JOptionPane.DEFAULT_OPTION);
-				edicaoCliente.dispose();
+				if (clieDAO.editarCliente(clie)) {
+					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					edicaoCliente.dispose();
+				} else {
+					JOptionPane.showMessageDialog(null, "Erro ao editar", "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+
 			}
 
 			else {
-				int result = JOptionPane.showConfirmDialog(null, "Deseja realizar a edição sem adicionar uma imagem?", "Cadastrar",
-						JOptionPane.YES_NO_OPTION);
+				int result = JOptionPane.showConfirmDialog(null, "Deseja realizar a edição sem adicionar uma imagem?",
+						"Cadastrar", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 
-					clieDAO.editarCliente(clie);
-					JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
-							JOptionPane.DEFAULT_OPTION);
-					edicaoCliente.dispose();
+					if (clieDAO.editarCliente(clie)) {
+						JOptionPane.showMessageDialog(null, "Edição realizada com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						edicaoCliente.dispose();
+					} else {
+						JOptionPane.showMessageDialog(null, "Erro ao editar", "Erro", JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 

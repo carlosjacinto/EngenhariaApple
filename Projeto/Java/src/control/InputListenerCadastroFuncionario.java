@@ -3,11 +3,8 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.sql.Date;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -90,11 +87,8 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 				try {
 					getFunc().setSalario(Double.parseDouble(cadastroFuncionario.getTextSalario().getText()));
 					getFunc().setComissao(Double.parseDouble(cadastroFuncionario.getTextComissao().getText()));
-					getFunc().setTelefone(Long.parseLong(cadastroFuncionario.getTextTelefone().getText()));
-					getFunc().setCelular(Long.parseLong(cadastroFuncionario.getTextCelular().getText()));
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Valor Inválido!", null,
-							JOptionPane.ERROR_MESSAGE);
+					} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null, "Valor Inválido! (Salário ou Comissão)", null, JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 
@@ -109,10 +103,11 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 				getFunc().setDataAdmissao(new Date(System.currentTimeMillis()));
 				getFunc().setSenha(cadastroFuncionario.getTextPassword1().getText());
 
-				
-		        getFunc().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
-		       
-				
+				getFunc().setTelefone(cadastroFuncionario.getTextTelefone().getText());
+				getFunc().setCelular(cadastroFuncionario.getTextCelular().getText());
+
+				getFunc().setDataNascimento(cadastroFuncionario.getTextDataNascimento().getText());
+
 				if (cadastroFuncionario.getChckbxAdministrador().isSelected())
 					getFunc().setAdministrador(true);
 				else
@@ -126,10 +121,13 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 				else {
 					if (!(imageIcon == null)) {
 
-						funcDAO.gravarFuncionario(func);
-						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-						cadastroFuncionario.dispose();
+						if (funcDAO.gravarFuncionario(func)) {
+							JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
+									JOptionPane.INFORMATION_MESSAGE);
+							cadastroFuncionario.dispose();
+						} else {
+							JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
+						}
 					}
 
 					else {
@@ -137,10 +135,14 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 								"Cadastrar", JOptionPane.YES_NO_OPTION);
 						if (result == JOptionPane.YES_OPTION) {
 
-							funcDAO.gravarFuncionario(func);
-							JOptionPane.showMessageDialog(null, "Cadastrado com sucesso", "Sucesso",
-									JOptionPane.DEFAULT_OPTION);
-							cadastroFuncionario.dispose();
+							if (funcDAO.gravarFuncionario(func)) {
+								JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
+										JOptionPane.INFORMATION_MESSAGE);
+								cadastroFuncionario.dispose();
+							} else {
+								JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro",
+										JOptionPane.ERROR_MESSAGE);
+							}
 						}
 					}
 				}
@@ -166,7 +168,7 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 			imageIcon = new ImageIcon(getJFileChooser().getSelectedFile().getAbsolutePath());
 			imageIcon.setImage(imageIcon.getImage().getScaledInstance(275, 281, 100));
 			cadastroFuncionario.getLblFoto().setIcon(imageIcon);
-			//System.out.println(getFunc().getFoto());
+			// System.out.println(getFunc().getFoto());
 		}
 
 	}
@@ -176,7 +178,8 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 			jFileChooser = new JFileChooser();
 			jFileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
 				public boolean accept(File f) {
-					return (f.getName().endsWith(".jpg") ||f.getName().endsWith(".JPG") || f.getName().endsWith(".png"))|| f.getName().endsWith(".PNG")|| f.isDirectory();
+					return (f.getName().endsWith(".jpg") || f.getName().endsWith(".JPG")
+							|| f.getName().endsWith(".png")) || f.getName().endsWith(".PNG") || f.isDirectory();
 				}
 
 				public String getDescription() {
