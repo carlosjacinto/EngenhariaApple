@@ -62,6 +62,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 				produtoView.getT1().interrupt();
 				new EditarProdutoView(produto).setVisible(true);
 			}else JOptionPane.showMessageDialog(null,  "Selecione um Produto!", null,JOptionPane.WARNING_MESSAGE);
+		}else if(e.getSource() == produtoView.getBtnExcluirProduto()) {
+			confirmarExclusao();
 		}
 	}
 
@@ -165,6 +167,25 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void confirmarExclusao() {
+		// TODO Auto-generated method stub
+		int i = produtoView.getTableProduto().getSelectedRow();
+		if(i!=-1) {
+			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
+						+produtoView.getTableProduto().getValueAt(i, 1)+"?",
+					"Excluir", JOptionPane.YES_NO_OPTION);
+			if(result == JOptionPane.YES_OPTION) {
+				int sucesso = produtoDAO.excluirProduto(Integer.parseInt(produtoView.getTableProduto().getValueAt(i, 0).toString()));
+				
+				if(sucesso == 1)JOptionPane.showMessageDialog(null, "Produto Excluido!", null,
+						JOptionPane.INFORMATION_MESSAGE);
+				else JOptionPane.showMessageDialog(null, "Erro ao tentar excluir!", null,
+						JOptionPane.INFORMATION_MESSAGE);
+			}
+		}else JOptionPane.showMessageDialog(null, "Selecione Um Produto!", null,
+				JOptionPane.WARNING_MESSAGE);
 	}
 
 }

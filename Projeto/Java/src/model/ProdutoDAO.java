@@ -135,7 +135,7 @@ public class ProdutoDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = conex.createStatement();
-			stmt.execute("UPDATE funcionario SET nomeProduto='" + p.getNomeProduto() + "', precoVendaProduto='" + p.getPrecoVendaProduto() + "', descricaoProduto='" + p.getDescricaoProduto() + "' ");
+			stmt.execute("UPDATE produto SET nomeProduto='" + p.getNomeProduto() + "', precoVendaProduto='" + p.getPrecoVendaProduto() + "', descricaoProduto='" + p.getDescricaoProduto() + "' ");
 			stmt.close();
 			return true;
 		} catch (SQLException sqle) {
@@ -146,12 +146,12 @@ public class ProdutoDAO {
 		return false;
 	}
 
-	public int excluirFuncionario(int iid) {
+	public int excluirProduto(int iid) {
 		conex = bd.Conectar();
 		int result = 0;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM funcionario where idFuncionario = "+iid;
+			String SQL = "DELETE FROM produto where idProduto = "+iid;
 			result = stmt.executeUpdate(SQL);
 			
 		} catch (SQLException sqle) {
@@ -180,7 +180,7 @@ public class ProdutoDAO {
 				produtos[cont][1] = rs.getString("nomeProduto");
 				produtos[cont][0] = "" + rs.getInt("idProduto");
 				produtos[cont][2] = "" + rs.getLong("precoVendaProduto");
-				produtos[cont][3] = "" + rs.getLong("precoVendaProduto");
+				produtos[cont][3] = "" + rs.getLong("precoCompraProduto");
 				produtos[cont][4] = "" + rs.getInt("qtdEstoqueProduto");
 				cont++;
 			}

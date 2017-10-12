@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -15,6 +16,7 @@ import control.InputListenerEditarProduto;
 import model.Produto;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 
 public class EditarProdutoView extends JDialog {
 
@@ -43,6 +45,7 @@ public class EditarProdutoView extends JDialog {
 	private JLabel lblCodigo;
 	private JLabel lblPercentuallucro;
 	private JSpinner spinner;
+	private JLabel lblFoto;
 
 	public static void main(String[] args) {
 		try {
@@ -86,6 +89,7 @@ public class EditarProdutoView extends JDialog {
 		getBtnGravar().addMouseListener(listener);
 		getBtnCancelar().addMouseListener(listener);
 		getbtnPesquisarImagem().addMouseListener(listener);
+		getSpinner().addChangeListener(listener);
 	}
 
 	public JButton getbtnPesquisarImagem() {
@@ -135,9 +139,23 @@ public class EditarProdutoView extends JDialog {
 		if (panelFoto == null) {
 			panelFoto = new JPanel();
 			panelFoto.setBounds(339, 82, 275, 281);
+			panelFoto.setLayout(null);
+			
+			
+			panelFoto.add(getLblFoto());
 		}
 		return panelFoto;
 
+	}
+	
+	public JLabel getLblFoto() {
+		lblFoto = new JLabel("");
+		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFoto.setBounds(0, 0, 275, 281);
+		ImageIcon i = new ImageIcon("Media/Produto/"+produto.getIdProduto()+".png");
+		i.setImage(i.getImage().getScaledInstance(275, 281, 100));
+		lblFoto.setIcon(i);
+		return lblFoto;
 	}
 
 	public JTextField getTextNome() {
@@ -267,7 +285,7 @@ public class EditarProdutoView extends JDialog {
 		}
 		return lblCodigo;
 	}
-	private JLabel getLblPercentuallucro() {
+	public JLabel getLblPercentuallucro() {
 		if (lblPercentuallucro == null) {
 			lblPercentuallucro = new JLabel("Percentual Lucro");
 			lblPercentuallucro.setBounds(30, 182, 167, 14);
