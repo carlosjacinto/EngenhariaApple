@@ -81,6 +81,8 @@ public class CadastroNotaEntradaView extends JDialog {
 	public void initializeListeners() {
 		getBtnGravar().addMouseListener(listener);
 		getBtnCancelar().addMouseListener(listener);
+		getPesqProduto().addMouseListener(listener);
+		getLblAddProduto().addMouseListener(listener);
 	}
 
 	public void initialize() {

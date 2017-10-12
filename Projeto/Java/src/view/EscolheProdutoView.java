@@ -46,25 +46,25 @@ public class EscolheProdutoView extends JDialog {
 			buttonPane.setLayout(null);
 			{
 				JLabel lblBuscarPorNome = new JLabel("Buscar por nome ou c\u00F3digo:");
-				lblBuscarPorNome.setBounds(10, 22, 133, 14);
+				lblBuscarPorNome.setBounds(10, 22, 205, 14);
 				buttonPane.add(lblBuscarPorNome);
 			}
 			{
 				textField = new JTextField();
-				textField.setBounds(153, 19, 86, 20);
+				textField.setBounds(179, 19, 162, 20);
 				textField.setColumns(10);
 				buttonPane.add(textField);
 			}
 			{
 				JButton okButton = new JButton("Confirmar Sele\u00E7\u00E3o");
-				okButton.setBounds(376, 18, 119, 23);
+				okButton.setBounds(351, 18, 147, 23);
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancelar");
-				cancelButton.setBounds(535, 18, 75, 23);
+				cancelButton.setBounds(508, 18, 102, 23);
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
