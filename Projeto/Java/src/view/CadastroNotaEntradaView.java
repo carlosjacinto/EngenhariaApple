@@ -146,7 +146,7 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JLabel getPesqProduto() {
 		if (btnPesqProduto == null) {
 			btnPesqProduto = new JLabel();
-			btnPesqProduto.setBounds(576, 210, 39, 23);
+			btnPesqProduto.setBounds(577, 210, 29, 23);
 			btnPesqProduto.setToolTipText("Buscar Produto");
 			btnPesqProduto.setHorizontalAlignment(SwingConstants.CENTER);
 			btnPesqProduto.setIcon(new ImageIcon("Interno/search-icon.png"));
@@ -425,13 +425,13 @@ public class CadastroNotaEntradaView extends JDialog {
 		return textFieldChaveNFE;
 	}
 
-	private JLabel getLblAddProduto() {
+	public JLabel getLblAddProduto() {
 		if (lblAddProduto == null) {
 			lblAddProduto = new JLabel("");
-			lblAddProduto.setBounds(604, 210, 46, 31);
-			lblAddProduto.setToolTipText("Buscar Produto");
+			lblAddProduto.setBounds(604, 210, 36, 23);
+			lblAddProduto.setToolTipText("Adicionar Produto a Lista");
 			lblAddProduto.setHorizontalAlignment(SwingConstants.CENTER);
-			lblAddProduto.setIcon(new ImageIcon("Interno/search-icon.png"));
+			lblAddProduto.setIcon(new ImageIcon("Interno/add.png"));
 		}
 		return lblAddProduto;
 	}
