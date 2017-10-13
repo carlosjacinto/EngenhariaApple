@@ -31,6 +31,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 			mudarTabela();
 		}else if ((e.getSource()) == produtoView.getbtnNovoProduto()) {
 			new CadastroProdutoView().setVisible(true);
+			produtoView.getTextBusca().setText("");
+			mudarTabela();
 		}else if(e.getSource() == produtoView.getTableProduto()) {
 			
 		}else if(e.getSource() == produtoView.getBtnEditarProduto()) {
@@ -40,6 +42,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 						produtoView.getTableProduto().getValueAt(
 								produtoView.getTableProduto().getSelectedRow(), 0).toString()));
 				new EditarProdutoView(produto).setVisible(true);
+				produtoView.getTextBusca().setText("");
+				mudarTabela();
 			}else JOptionPane.showMessageDialog(null,  "Selecione um Produto!", null,JOptionPane.WARNING_MESSAGE);
 		}else if(e.getSource() == produtoView.getBtnExcluirProduto()) {
 			confirmarExclusao();

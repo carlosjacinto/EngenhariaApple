@@ -40,6 +40,7 @@ public class NotaEntradaView extends JDialog {
 	private Thread t1;
 	private NotaEntradaDAO notaEntDAO = new NotaEntradaDAO();
 	private JLabel btnEditarNotaEntrada;
+	private JLabel btnLimparBusca;
 
 	public static void main(String[] args) {
 		NotaEntradaView frame = new NotaEntradaView();
@@ -134,6 +135,7 @@ public class NotaEntradaView extends JDialog {
 		getTableNotaEntrada().addMouseListener(listener);
 		getbtnExcluirNotaEntrada().addMouseListener(listener);
 		getBtnEditarNotaEntrada().addMouseListener(listener);
+		getBtnLimparBusca().addMouseListener(listener);
 		this.addWindowListener(listener);
 	}
 
@@ -159,6 +161,7 @@ public class NotaEntradaView extends JDialog {
 		panel.add(getlblBuscarPorNome());
 		panel.add(getbtnExcluirNotaEntrada());
 		panel.add(getBtnEditarNotaEntrada());
+		panel.add(getBtnLimparBusca());
 		getT1().start();
 	}
 
@@ -203,5 +206,16 @@ public class NotaEntradaView extends JDialog {
 			btnEditarNotaEntrada.setBounds(646, 422, 80, 80);
 		}
 		return btnEditarNotaEntrada;
+	}
+	
+	public JLabel getBtnLimparBusca() {
+		if (btnLimparBusca == null) {
+			btnLimparBusca = new JLabel();
+			btnLimparBusca.setToolTipText("Limpar Busca");
+			btnLimparBusca.setHorizontalAlignment(SwingConstants.CENTER);
+			btnLimparBusca.setBounds(299, 472, 23, 23);
+			btnLimparBusca.setIcon(new ImageIcon("Interno/clean-search.png"));
+		}
+		return btnLimparBusca;
 	}
 }

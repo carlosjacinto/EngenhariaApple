@@ -8,7 +8,7 @@ public class AtualizaTabelaNotaEntrada implements Runnable{
 
 
 	NotaEntradaView notaEntradaView;
-	NotaEntradaDAO clieDAO = new NotaEntradaDAO();
+	NotaEntradaDAO notaEntradaDAO = new NotaEntradaDAO();
 	private String busca = "";
 
 	public AtualizaTabelaNotaEntrada(NotaEntradaView notaEntradaView) {
@@ -29,7 +29,7 @@ public class AtualizaTabelaNotaEntrada implements Runnable{
 
 	private void atualizarTabelaNotaEntrada() {
 
-		String[][] funcs = clieDAO.listaNotaEntradaArray(busca);
+		String[][] funcs = notaEntradaDAO.listaNotaEntradaArray(busca);
 		String[] colunas = { "Número", "Nome", "CNPJ", "Total", "Funcionário", "Data do Cadastro" };
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {

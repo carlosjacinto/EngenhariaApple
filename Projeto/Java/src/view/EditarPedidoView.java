@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 
 import control.InputListenerEditarPedido;
+import model.Pedido;
 
 public class EditarPedidoView extends JDialog {
 
@@ -33,6 +34,7 @@ public class EditarPedidoView extends JDialog {
 	private JLabel lblPreoTotalr;
 	private JTextField textPreco;
 	private JSpinner spinnerQtde;
+	private Pedido pedido;
 
 	public static void main(String[] args) {
 		try {
@@ -50,7 +52,12 @@ public class EditarPedidoView extends JDialog {
 		initializeListeners();
 
 	}
-
+	public EditarPedidoView(Pedido pedido) {
+		this.pedido = pedido;
+		listener = new InputListenerEditarPedido(this);
+		initialize();
+		initializeListeners();
+	}
 	public void initializeListeners() {
 		getBtnGravar().addMouseListener(listener);
 		getBtnCancelar().addMouseListener(listener);

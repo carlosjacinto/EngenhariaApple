@@ -38,6 +38,8 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			System.out.println("Botão Novo Clicado");
 			cadastroFuncionarioView = new CadastroFuncionarioView();
 			cadastroFuncionarioView.setVisible(true);
+			funcionarioView.getTextBusca().setText("");
+			mudarTabela();
 		} else if (e.getSource() == funcionarioView.getTableFuncionario()) {
 			//String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
 			//Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
@@ -49,6 +51,8 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 				String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
 				Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
 				new EditarFuncionarioView(func).setVisible(true);
+				funcionarioView.getTextBusca().setText("");
+				mudarTabela();
 			}else JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null,
 					JOptionPane.WARNING_MESSAGE);
 		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {

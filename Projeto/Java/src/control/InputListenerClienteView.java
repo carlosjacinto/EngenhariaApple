@@ -31,9 +31,10 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			//edicaoClienteView.setVisible(true);
 		} else if ((e.getSource()) == clienteView.getbtnNovoCliente()) {
 			CadastroClienteView cadastroClienteView;
-			System.out.println("Botão Novo Clicado");
 			cadastroClienteView = new CadastroClienteView();
 			cadastroClienteView.setVisible(true);
+			clienteView.getTextBusca().setText("");
+			mudarTabela();
 		} else if (e.getSource() == clienteView.getTableCliente()) {
 			//String id = (clienteView.getTableCliente().getModel().getValueAt(clienteView.getTableCliente().getSelectedRow(), 0).toString());
 			//Cliente clie = clieDAO.RetornaCliente(Integer.parseInt(id));
@@ -45,6 +46,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 				String id = (clienteView.getTableCliente().getModel().getValueAt(clienteView.getTableCliente().getSelectedRow(), 0).toString());
 				Cliente clie = clieDAO.RetornaCliente(Integer.parseInt(id));
 				new EditarClienteView(clie).setVisible(true);
+				clienteView.getTextBusca().setText("");
+				mudarTabela();
 			}else JOptionPane.showMessageDialog(null, "Selecione Um Cliente!", null,
 					JOptionPane.WARNING_MESSAGE);
 		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
@@ -77,7 +80,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 	}
 
 	public void confirmarExclusao() {
-		// TODO Auto-generated method stub
+		
 		int i = clienteView.getTableCliente().getSelectedRow();
 		if(i!=-1) {
 			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
@@ -97,7 +100,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		if(e.getSource() == clienteView.getbtnExcluirCliente()) {
 			clienteView.getbtnExcluirCliente().setIcon(new ImageIcon("Interno/delete2x.png"));
 		}else if(e.getSource() == clienteView.getbtnNovoCliente()) {
@@ -114,7 +117,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		if(e.getSource() == clienteView.getbtnExcluirCliente()) {
 			clienteView.getbtnExcluirCliente().setIcon(new ImageIcon("Interno/delete.png"));
 		}else if(e.getSource() == clienteView.getbtnNovoCliente()) {
@@ -131,7 +134,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		if(e.getSource() == clienteView.getbtnExcluirCliente()) {
 			clienteView.getbtnExcluirCliente().setIcon(new ImageIcon("Interno/delete.png"));
 		}else if(e.getSource() == clienteView.getbtnNovoCliente()) {
@@ -148,7 +151,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
 		if(e.getSource() == clienteView.getbtnExcluirCliente()) {
 			clienteView.getbtnExcluirCliente().setIcon(new ImageIcon("Interno/delete2x.png"));
 		}else if(e.getSource() == clienteView.getbtnNovoCliente()) {
@@ -165,13 +168,13 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
@@ -182,24 +185,24 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

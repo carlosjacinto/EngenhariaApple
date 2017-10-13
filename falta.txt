@@ -1,4 +1,4 @@
 colocar botao sair e limpar nas view principais modulos
 modulo venda crud completo
 modulo compra 
-EDICAO DE FUNCIONARIO COM FOTO
+troca foto do pedido
