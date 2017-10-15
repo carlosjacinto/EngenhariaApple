@@ -217,6 +217,35 @@ public class FuncionarioDAO {
 			bd.Desconectar(conex);
 		}
 	}
+	
+	public String[] buscarNomeeId() {
+		conex = bd.Conectar();
+		String funcionarios[];
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT idFuncionario,nomeFunc FROM Funcionario";
+			ResultSet rs = stmt.executeQuery(SQL);
+			rs.last();
+			int size = rs.getRow();
+			rs.beforeFirst();
+
+			funcionarios = new String[size];
+			int cont = 0;
+			while (rs.next()) {
+				funcionarios[cont] = rs.getInt("idFuncionario")+"-"+rs.getString("nomeFunc");
+				cont++;
+			}
+			rs.close();
+			stmt.close();
+			return funcionarios;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao listar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	
 }
 
 /*

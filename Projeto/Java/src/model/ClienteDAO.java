@@ -208,4 +208,32 @@ public class ClienteDAO {
 		return result;
 	}
 	
+	public String[] buscarNomeeId() {
+		conex = bd.Conectar();
+		String clientes[];
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT idCliente,nomeCliente FROM Cliente";
+			ResultSet rs = stmt.executeQuery(SQL);
+			rs.last();
+			int size = rs.getRow();
+			rs.beforeFirst();
+
+			clientes = new String[size];
+			int cont = 0;
+			while (rs.next()) {
+				clientes[cont] = rs.getInt("idCliente")+"-"+rs.getString("nomeCliente");
+				cont++;
+			}
+			rs.close();
+			stmt.close();
+			return clientes;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao listar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	
 }

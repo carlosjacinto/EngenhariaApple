@@ -161,6 +161,28 @@ public class ProdutoDAO {
 		}
 		return result;
 	}
+	
+	public double buscarPrecoVenda(int iid) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT precoVendaProduto FROM Produto WHERE idProduto = " + iid;
+			ResultSet rs = stmt.executeQuery(SQL);
+
+			double precoVenda = 0;
+			while (rs.next()) {
+				precoVenda = rs.getDouble("precoVendaProduto");
+			}
+			rs.close();
+			stmt.close();
+			return precoVenda;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao listar..." + sqle.getMessage());
+			return 0;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
 
 	
 	public String[][] listaProdutoArray(String campo) {
@@ -194,4 +216,33 @@ public class ProdutoDAO {
 			bd.Desconectar(conex);
 		}
 	}
+	
+	public String[] buscarNomeeId() {
+		conex = bd.Conectar();
+		String produtos[];
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT idProduto,nomeProduto FROM Produto";
+			ResultSet rs = stmt.executeQuery(SQL);
+			rs.last();
+			int size = rs.getRow();
+			rs.beforeFirst();
+
+			produtos = new String[size];
+			int cont = 0;
+			while (rs.next()) {
+				produtos[cont] = rs.getInt("idProduto")+"-"+rs.getString("nomeProduto");
+				cont++;
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao listar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	
 }
