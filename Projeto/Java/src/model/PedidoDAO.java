@@ -20,7 +20,7 @@ public class PedidoDAO {
 
 			Statement stmt = conex.createStatement();
 			stmt.execute(
-					"INSERT INTO funcionario(Cliente_idCliente, Funcionario_idFuncionario, dataPedido, valorTotal)VALUES ('"
+					"INSERT INTO pedido(Cliente_idCliente, Funcionario_idFuncionario, dataPedido, valorTotal)VALUES ('"
 							+ p.getIdCliente() + "','" + p.getIdFuncionario() + "','" + p.getDataPed() + "','"
 							+ p.getPrecoPed() + "') ");
 
@@ -37,11 +37,32 @@ public class PedidoDAO {
 			}
 			return codigo;
 		} catch (SQLException sqle) {
-			System.out.println("Erro ao inserir..." + sqle.getMessage());
+			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
 			return codigo;
 		} finally {
 			bd.Desconectar(conex);
 
+		}
+
+	}
+
+	public boolean gravarProdutosPed(Pedido p, int codigo) {
+		conex = bd.Conectar();
+
+		try {
+			Statement stmt = conex.createStatement();
+			// for (;;) {
+
+			stmt.execute(
+					"INSERT INTO pedido_has_produto(Pedido_idPedido, Produto_idProduto, qtdVenda, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
+							+ codigo + "','" +  "') ");
+			// }
+			return true;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao inserir produtos..." + sqle.getMessage());
+			return false;
+		} finally {
+			bd.Desconectar(conex);
 		}
 
 	}

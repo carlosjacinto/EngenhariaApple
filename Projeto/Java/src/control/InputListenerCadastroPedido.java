@@ -126,10 +126,11 @@ public class InputListenerCadastroPedido implements MouseListener {
 			
 
 				getPedido().setDataPed(new Date(System.currentTimeMillis()));
-		
-					if (pedDAO.gravarPedido(ped) >= 0) {
+				int cod = pedDAO.gravarPedido(ped);
+					if ( cod >= 0 /* &&  pelo menos 1 item */) {
 						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
+						pedDAO.gravarProdutosPed(ped, cod);
 						cadastroPedido.dispose();
 
 					} else {
