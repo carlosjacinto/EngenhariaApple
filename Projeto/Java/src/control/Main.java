@@ -1,7 +1,7 @@
 package control;
 
 
-import view.Principal;
+import view.PedidoView;
 
 
 public class Main {
@@ -14,6 +14,6 @@ public class Main {
 		}
 
 
-		new Principal().setVisible(true);
+		new PedidoView().setVisible(true);
 	}
 }

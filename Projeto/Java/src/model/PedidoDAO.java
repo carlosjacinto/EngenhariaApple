@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -12,18 +13,35 @@ public class PedidoDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
 
-	public boolean gravarPedido(Pedido c) {
+	public int gravarPedido(Pedido p) {
 		conex = bd.Conectar();
+		int codigo = -1;
 		try {
+
 			Statement stmt = conex.createStatement();
-			stmt.execute("");
-			System.out.println("deu bom");
-			return true;
+			stmt.execute(
+					"INSERT INTO funcionario(Cliente_idCliente, Funcionario_idFuncionario, dataPedido, valorTotal)VALUES ('"
+							+ p.getIdCliente() + "','" + p.getIdFuncionario() + "','" + p.getDataPed() + "','"
+							+ p.getPrecoPed() + "') ");
+
+			System.out.println("deu bom gravar");
+
+			ResultSet rs = stmt.executeQuery("SELECT MAX(idPedido), dataPedido FROM PEDIDO");
+			Date datac = null;
+			while (rs.next()) {
+				datac = rs.getDate("dataPedido");
+
+				if (datac.equals(p.getDataPed()))
+					codigo = rs.getInt("idPedido");
+
+			}
+			return codigo;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir..." + sqle.getMessage());
-			return false;
+			return codigo;
 		} finally {
 			bd.Desconectar(conex);
+
 		}
 
 	}
@@ -55,7 +73,7 @@ public class PedidoDAO {
 
 	public String[][] listaPedidoArray(String campo) {
 		conex = bd.Conectar();
-		int size =0;
+		int size = 0;
 		String pedidos[][] = new String[size][6];
 
 		bd.Desconectar(conex);
