@@ -52,8 +52,12 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 		}else if(e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getTextBusca().setText("");
 			mudarTabela();
+		}else if(e.getSource() == pedidoView.getbtnExcluirPedido()) {
+			confirmarExclusao();
 		}
 	}
+	
+	
 
 	public void mudarTabela() {
 		String[][] pedidos = pedioDAO.listaPedidoArray(pedidoView.getTextBusca().getText());

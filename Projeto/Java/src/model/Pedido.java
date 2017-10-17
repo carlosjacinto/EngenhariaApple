@@ -4,8 +4,8 @@ import java.sql.Date;
 
 public class Pedido {
 	private int idPedido;
-	private Cliente idCliente;
-	private Funcionario idFuncionario;
+	private int idCliente;
+	private int idFuncionario;
 	private Date dataPed;
 	private float precoPed;
 
@@ -17,19 +17,19 @@ public class Pedido {
 		this.idPedido = idPedido;
 	}
 
-	public Cliente getIdCliente() {
+	public int getIdCliente() {
 		return idCliente;
 	}
 
-	public void setIdCliente(Cliente idCliente) {
+	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
 	}
 
-	public Funcionario getIdFuncionario() {
+	public int getIdFuncionario() {
 		return idFuncionario;
 	}
 
-	public void setIdFuncionario(Funcionario idFuncionario) {
+	public void setIdFuncionario(int idFuncionario) {
 		this.idFuncionario = idFuncionario;
 	}
 

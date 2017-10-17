@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,32 +12,40 @@ public class PedidoDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
 
-	public int gravarPedido(Pedido p) {
+	public boolean gravarPedido(Pedido p, String[][] produtos) {
 		conex = bd.Conectar();
 		int codigo = -1;
 		try {
 
 			Statement stmt = conex.createStatement();
 			stmt.execute(
-					"INSERT INTO pedido(Cliente_idCliente, Funcionario_idFuncionario, dataPedido, valorTotal)VALUES ('"
+					"INSERT INTO pedido(Cliente_idCliente, Funcionario_idFuncionario, dataPedido, valorTotalPedido)VALUES ('"
 							+ p.getIdCliente() + "','" + p.getIdFuncionario() + "','" + p.getDataPed() + "','"
 							+ p.getPrecoPed() + "') ");
 
-			System.out.println("deu bom gravar");
+			System.out.println("deu bom gravar cabeçalho");
 
-			ResultSet rs = stmt.executeQuery("SELECT MAX(idPedido), dataPedido FROM PEDIDO");
-			Date datac = null;
-			while (rs.next()) {
-				datac = rs.getDate("dataPedido");
-
-				if (datac.equals(p.getDataPed()))
-					codigo = rs.getInt("idPedido");
-
+			ResultSet rs = stmt.executeQuery("SELECT MAX(idPedido) FROM PEDIDO");
+			while(rs.next()) {
+				codigo = rs.getInt("MAX(idPedido)");
 			}
-			return codigo;
+	
+
+			System.out.println(codigo);
+			for (int i = 0; i < produtos.length; i++) {
+
+				stmt.execute(
+						"INSERT INTO pedido_has_produto(Pedido_idPedido, Produto_idProduto, qtdVenda, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
+								+ codigo + "','" + Integer.parseInt(produtos[i][0]) + "','"
+								+ Integer.parseInt(produtos[i][2]) + "','" + Integer.parseInt(produtos[i][2]) + "','"
+								+ Double.parseDouble(produtos[i][3]) / Integer.parseInt(produtos[i][2]) + "','"
+								+ Double.parseDouble(produtos[i][3]) + "') ");
+			}
+			System.out.println("deu bom gravar produtos");
+			return true;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
-			return codigo;
+			return false;
 		} finally {
 			bd.Desconectar(conex);
 
@@ -51,12 +58,7 @@ public class PedidoDAO {
 
 		try {
 			Statement stmt = conex.createStatement();
-			// for (;;) {
 
-			stmt.execute(
-					"INSERT INTO pedido_has_produto(Pedido_idPedido, Produto_idProduto, qtdVenda, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
-							+ codigo + "','" +  "') ");
-			// }
 			return true;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir produtos..." + sqle.getMessage());
@@ -94,8 +96,31 @@ public class PedidoDAO {
 
 	public String[][] listaPedidoArray(String campo) {
 		conex = bd.Conectar();
-		int size = 0;
-		String pedidos[][] = new String[size][6];
+		String pedidos[][] = null;
+		
+		Statement stmt;
+		try {
+			stmt = conex.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT idPedido, nomeCliente,cpfCliente,nomeFunc,dataPedido,valorTotalPedido FROM PEDIDO INNER JOIN CLIENTE ON Cliente_idCliente = idCliente INNER JOIN FUNCIONARIO ON Funcionario_idFuncionario = idFuncionario where idPedido like '%"+ campo+"%' or nomeCliente like '%"+campo+"%' order by idPedido"); 
+			int cont = 0;
+			rs.last();
+			pedidos = new String[rs.getRow()-1][6];
+			rs.first();
+			while(rs.next()) {
+				pedidos[cont][0] = ""+rs.getInt("idPedido");
+				pedidos[cont][1] = rs.getString("nomeCliente");
+				pedidos[cont][2] = rs.getString("cpfCliente");
+				pedidos[cont][4] = rs.getString("nomeFunc");
+				pedidos[cont][5] = rs.getDate("dataPedido")+"";
+				pedidos[cont][3] = rs.getFloat("valorTotalPedido")+"";
+				cont++;
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		bd.Desconectar(conex);
 		return pedidos;
@@ -106,8 +131,11 @@ public class PedidoDAO {
 		int result = 0;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM pedido where idPedido = " + iid;
+			String SQL = "DELETE FROM pedido_has_produto where Pedido_idPedido = "+iid;
 			result = stmt.executeUpdate(SQL);
+			SQL = "DELETE FROM pedido where idPedido = " + iid;
+			result = stmt.executeUpdate(SQL);
+			
 
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());

@@ -51,57 +51,60 @@ public class InputListenerCadastroPedido implements MouseListener {
 			if (!cadastroPedido.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(cadastroPedido.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) cadastroPedido.getComboBoxProduto().getSelectedItem()).split("-");
-				double precoVenda = produtoDAO.buscarPrecoVenda(Integer.parseInt(produto[0]));
-				double precoProdutos = qtd * precoVenda;
-				String[] p = { produto[0], produto[1], qtd + "", precoProdutos + "" };
-				if (getDados() == null) {
-					dados = new String[1][4];
-					dados[0][0] = p[0];
-					dados[0][1] = p[1];
-					dados[0][2] = p[2];
-					dados[0][3] = p[3];
+				if(produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto()>=qtd) {
+					double precoVenda = produtoDAO.buscarPrecoVenda(Integer.parseInt(produto[0]));
+					double precoProdutos = qtd * precoVenda;
+					String[] p = { produto[0], produto[1], qtd + "", precoProdutos + "" };
+					if (getDados() == null) {
+						dados = new String[1][4];
+						dados[0][0] = p[0];
+						dados[0][1] = p[1];
+						dados[0][2] = p[2];
+						dados[0][3] = p[3];
 
-				} else {
-					int i = dados.length;
-					String[][] aux = new String[i + 1][4];
-					for (int j = 0; j < i; j++) {
-						aux[j][0] = dados[j][0];
-						aux[j][1] = dados[j][1];
-						aux[j][2] = dados[j][2];
-						aux[j][3] = dados[j][3];
-					}
-					aux[i][0] = p[0];
-					aux[i][1] = p[1];
-					aux[i][2] = p[2];
-					aux[i][3] = p[3];
-					dados = new String[i + 1][4];
-					for (int j = 0; j <= i; j++) {
-						dados[j][0] = aux[j][0];
-						dados[j][1] = aux[j][1];
-						dados[j][2] = aux[j][2];
-						dados[j][3] = aux[j][3];
-					}
+					} else {
+						int i = dados.length;
+						String[][] aux = new String[i + 1][4];
+						for (int j = 0; j < i; j++) {
+							aux[j][0] = dados[j][0];
+							aux[j][1] = dados[j][1];
+							aux[j][2] = dados[j][2];
+							aux[j][3] = dados[j][3];
+						}
+						aux[i][0] = p[0];
+						aux[i][1] = p[1];
+						aux[i][2] = p[2];
+						aux[i][3] = p[3];
+						dados = new String[i + 1][4];
+						for (int j = 0; j <= i; j++) {
+							dados[j][0] = aux[j][0];
+							dados[j][1] = aux[j][1];
+							dados[j][2] = aux[j][2];
+							dados[j][3] = aux[j][3];
+						}
 
+					}
+					String[] colunas = { "id", "Nome", "Quantidade", "Preço(R$)" };
+
+					DefaultTableModel model = new DefaultTableModel(dados, colunas) {
+						/**
+						* 
+						*/
+						private static final long serialVersionUID = -7018342759131611914L;
+						boolean[] canEdit = new boolean[] { false, false, false, false };
+
+						@Override
+						public boolean isCellEditable(int rowIndex, int columnIndex) {
+							return canEdit[columnIndex];
+						}
+					};
+					cadastroPedido.getTableFuncionario().setModel(model);
+					cadastroPedido.repaint();
+					cadastroPedido.revalidate();
+					valorTotal += precoProdutos;
+					cadastroPedido.getTextPreco().setText(valorTotal + "");
 				}
-				String[] colunas = { "id", "Nome", "Quantidade", "Preço(R$)" };
-
-				DefaultTableModel model = new DefaultTableModel(dados, colunas) {
-					/**
-					* 
-					*/
-					private static final long serialVersionUID = -7018342759131611914L;
-					boolean[] canEdit = new boolean[] { false, false, false, false };
-
-					@Override
-					public boolean isCellEditable(int rowIndex, int columnIndex) {
-						return canEdit[columnIndex];
-					}
-				};
-				cadastroPedido.getTableFuncionario().setModel(model);
-				cadastroPedido.repaint();
-				cadastroPedido.revalidate();
-				valorTotal += precoProdutos;
-				cadastroPedido.getTextPreco().setText(valorTotal + "");
+				
 			}
 
 		}
@@ -112,30 +115,29 @@ public class InputListenerCadastroPedido implements MouseListener {
 		if (!(cadastroPedido.getTextPreco().getText().equals("") 
 				)){
 		
-
-				try {
-					getPedido().setPrecoPed(Float.parseFloat(cadastroPedido.getTextPreco().getText()));
-				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(null, "Valor Inválido! (Valor total do pedido)", null,
-							JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-
-				//getPedido().setIdCliente();
-				//getPedido().setIdFuncionario(cadastroPedido.getTextNome().getText());
+				String[] funcionario = cadastroPedido.getComboBoxFuncionario().getSelectedItem().toString().split("-");
+				String[] cliente = cadastroPedido.getComboBoxCliente().getSelectedItem().toString().split("-");
+				
+				getPedido().setIdCliente(Integer.parseInt(cliente[0]));
+				getPedido().setIdFuncionario(Integer.parseInt(funcionario[0]));
+				
+				getPedido().setPrecoPed(Float.parseFloat(cadastroPedido.getTextPreco().getText()));
 			
 
 				getPedido().setDataPed(new Date(System.currentTimeMillis()));
-				int cod = pedDAO.gravarPedido(ped);
-					if ( cod >= 0 /* &&  pelo menos 1 item */) {
+				if(dados != null && dados.length>0) {
+					if ( pedDAO.gravarPedido(getPedido(),dados)) {
 						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
-						pedDAO.gravarProdutosPed(ped, cod);
 						cadastroPedido.dispose();
 
 					} else {
 						JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
 					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto ao pedido!", "Erro",
+							JOptionPane.ERROR_MESSAGE);
+				}
 
 				}
 	}

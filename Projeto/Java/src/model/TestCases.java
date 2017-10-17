@@ -1,4 +1,4 @@
-package test;
+package model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,9 +9,6 @@ import static org.junit.Assert.fail;
 import java.sql.Date;
 
 import org.junit.Test;
-
-import model.Cliente;
-import model.ClienteDAO;
 
 public class TestCases {
 
