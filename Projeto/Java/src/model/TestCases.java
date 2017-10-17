@@ -1,11 +1,8 @@
-package test;
+package model;
 
 import static org.junit.Assert.*;
 import java.sql.Date;
 import org.junit.Test;
-
-import model.Cliente;
-import model.ClienteDAO;
 
 public class TestCases {
 	

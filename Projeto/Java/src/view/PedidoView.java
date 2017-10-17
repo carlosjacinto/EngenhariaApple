@@ -63,7 +63,7 @@ public class PedidoView extends JDialog {
 	public JTable getTablePedido() {
 		if (tablePedido == null) {
 			String[][] notas = pedidoDAO.listaPedidoArray("");
-			String[] colunas = { "Número", "Nome", "CPF", "Total", "Funcionário", "Data do Cadastro" };
+			String[] colunas = { "Número", "Cliente", "CPF", "Total", "Funcionário", "Data do Cadastro" };
 
 			DefaultTableModel model = new DefaultTableModel(notas, colunas) {
 				/**
