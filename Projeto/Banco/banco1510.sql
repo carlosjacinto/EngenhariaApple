@@ -23,25 +23,25 @@ DROP TABLE IF EXISTS `cliente`;
 CREATE TABLE `cliente` (
   `idCliente` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `nomeCliente` varchar(200) NOT NULL,
-  `cpfCliente` bigint(20) unsigned NOT NULL,
-  `celularCliente` varchar(20) DEFAULT NULL,
+  `cpfCliente` varchar(20) NOT NULL,
+  `celularCliente` varchar(30) DEFAULT NULL,
   `ruaCliente` varchar(100) DEFAULT NULL,
   `compCliente` varchar(20) DEFAULT NULL,
   `numeroCliente` varchar(10) DEFAULT NULL,
   `bairroCliente` varchar(45) DEFAULT NULL,
   `cidadeCliente` varchar(45) DEFAULT NULL,
-  `cepCliente` bigint(20) DEFAULT NULL,
+  `cepCliente` varchar(20) DEFAULT NULL,
   `dataNascCliente` varchar(20) DEFAULT NULL,
   `dataCadastro` date DEFAULT NULL,
-  `telefoneCliente` varchar(20) DEFAULT NULL,
+  `telefoneCliente` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`idCliente`),
   UNIQUE KEY `cpfCliente_UNIQUE` (`cpfCliente`),
   UNIQUE KEY `idCliente_UNIQUE` (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cliente` */
 
-insert  into `cliente`(`idCliente`,`nomeCliente`,`cpfCliente`,`celularCliente`,`ruaCliente`,`compCliente`,`numeroCliente`,`bairroCliente`,`cidadeCliente`,`cepCliente`,`dataNascCliente`,`dataCadastro`,`telefoneCliente`) values (8,'1',11542601606,'1','1','1','1','1','1',11,'11/11/1111','2017-10-09','1'),(9,'1',13161894650,'1','1','1','1','1','1',1,'11/11/1111','2017-10-10','1');
+insert  into `cliente`(`idCliente`,`nomeCliente`,`cpfCliente`,`celularCliente`,`ruaCliente`,`compCliente`,`numeroCliente`,`bairroCliente`,`cidadeCliente`,`cepCliente`,`dataNascCliente`,`dataCadastro`,`telefoneCliente`) values (9,'1','13161894650','1','1','1','1','1','1','1','11/11/1111','2017-10-10','1'),(11,'etset edicao','11542601606','1','1','1','1','1','1','1','11/11/1111','2017-10-11','1'),(12,'1','09431550610','1','1','1','1','1','1','1','11/11/1111','2017-10-11','1');
 
 /*Table structure for table `compra` */
 
@@ -51,7 +51,7 @@ CREATE TABLE `compra` (
   `idCompra` int(11) NOT NULL AUTO_INCREMENT,
   `nomeFornecCompra` varchar(45) NOT NULL,
   `cnpjFornecCompra` varchar(45) NOT NULL,
-  `dataCompra` date NOT NULL,
+  `dataCompra` varchar(20) NOT NULL,
   `outrosCompra` float unsigned DEFAULT NULL,
   `valorTotalCompra` float unsigned NOT NULL,
   `chaveAcessoCompra` varchar(50) DEFAULT NULL,
@@ -120,49 +120,20 @@ CREATE TABLE `funcionario` (
   `bairroFunc` varchar(45) DEFAULT NULL,
   `cidadeFunc` varchar(45) DEFAULT NULL,
   `dataNascFunc` varchar(20) DEFAULT NULL,
-  `telefoneFunc` varchar(20) DEFAULT NULL,
-  `celularFunc` varchar(20) DEFAULT NULL,
+  `telefoneFunc` varchar(30) DEFAULT NULL,
+  `celularFunc` varchar(30) DEFAULT NULL,
   `dataAdmissaoFunc` date DEFAULT NULL,
-  `cepFunc` bigint(20) unsigned DEFAULT NULL,
+  `cepFunc` varchar(20) DEFAULT NULL,
   `senhaFunc` varchar(20) DEFAULT NULL,
   `administrador` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`idFuncionario`),
   UNIQUE KEY `idFuncionario_UNIQUE` (`idFuncionario`),
   UNIQUE KEY `cpfFunc_UNIQUE` (`cpfFunc`)
-) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 /*Data for the table `funcionario` */
 
-insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30',1,'1',1),(2,'1',1,1,'2','1','1','1','1','1','2017-09-25','1','1','2017-09-25',1,'2',0),(45,'1',1,1,'11542601606','1','1','1','1','1','11/11/1111','1','1','2017-10-10',1,'1',1),(46,'1',1,1,'13161894650','1','1','1','1','1','11/11/1111','1','1','2017-10-10',1,'1',0);
-
-/*Table structure for table `gerente` */
-
-DROP TABLE IF EXISTS `gerente`;
-
-CREATE TABLE `gerente` (
-  `idGerente` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nomeGerente` varchar(200) NOT NULL,
-  `fotoGerente` varchar(100) DEFAULT NULL,
-  `salarioGerente` float unsigned NOT NULL,
-  `comissaoGerente` float unsigned NOT NULL,
-  `cpfGerente` bigint(20) unsigned NOT NULL,
-  `ruaGerente` varchar(100) DEFAULT NULL,
-  `compGerente` varchar(20) DEFAULT NULL,
-  `numeroGerente` varchar(10) DEFAULT NULL,
-  `bairroGerente` varchar(45) DEFAULT NULL,
-  `cidadeGerente` varchar(45) NOT NULL,
-  `dataNascGerente` date NOT NULL,
-  `telefoneGerente` varchar(20) DEFAULT NULL,
-  `celularGerente` varchar(20) DEFAULT NULL,
-  `dataAdmissaoGerente` date NOT NULL,
-  `cepGerente` bigint(20) unsigned NOT NULL,
-  `senhaGerente` varchar(20) NOT NULL,
-  PRIMARY KEY (`idGerente`),
-  UNIQUE KEY `idFuncionario_UNIQUE` (`idGerente`),
-  UNIQUE KEY `cpfFunc_UNIQUE` (`cpfGerente`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-/*Data for the table `gerente` */
+insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30','1','1',1),(2,'teste edicao',1,1,'2','1','1','1','1','1','  /  /    ','1','1','2017-09-25','1','2',0),(46,'1',1,1,'13161894650','1','1','1','1','1','11/11/1111','1','1','2017-10-10','1','1',0),(47,'Carlos Henrique',9999999,10,'11542601606','rua qualquer','comp qualquer','0','bairro qualquer','cidade qualquer','11/11/1111','(35)3333-3333','(35)99999-9999','2017-10-11','37552-184','123456789',1);
 
 /*Table structure for table `pedido` */
 
@@ -172,8 +143,8 @@ CREATE TABLE `pedido` (
   `idPedido` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Cliente_idCliente` int(10) unsigned NOT NULL,
   `Funcionario_idFuncionario` int(10) unsigned NOT NULL,
-  `dataPed` date NOT NULL,
-  `precoPed` float unsigned NOT NULL,
+  `dataPedido` date NOT NULL,
+  `valorTotalPedido` float unsigned NOT NULL,
   PRIMARY KEY (`idPedido`),
   UNIQUE KEY `idPedido_UNIQUE` (`idPedido`),
   KEY `fk_Pedido_Cliente_idx` (`Cliente_idCliente`),
@@ -193,7 +164,8 @@ CREATE TABLE `pedido_has_produto` (
   `Produto_idProduto` int(10) unsigned NOT NULL,
   `qtdVenda` int(10) unsigned NOT NULL DEFAULT '0',
   `qtdControle` int(10) unsigned NOT NULL DEFAULT '0',
-  `precoUnitPed` float NOT NULL,
+  `precoUnitItem` float unsigned NOT NULL,
+  `precoTotalItem` float unsigned NOT NULL,
   PRIMARY KEY (`Pedido_idPedido`,`Produto_idProduto`),
   KEY `fk_Pedido_has_Produto_Produto1_idx` (`Produto_idProduto`),
   KEY `fk_Pedido_has_Produto_Pedido1_idx` (`Pedido_idPedido`),
