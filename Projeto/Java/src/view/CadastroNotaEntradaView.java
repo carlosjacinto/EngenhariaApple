@@ -19,17 +19,19 @@ import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
 
 import control.InputListenerCadastroNotaEntrada;
+import model.FuncionarioDAO;
 import model.NotaEntradaDAO;
+import model.ProdutoDAO;
 
 public class CadastroNotaEntradaView extends JDialog {
 
 	private static final long serialVersionUID = 967851639105823465L;
 	InputListenerCadastroNotaEntrada listener;
+	private JTable tableProduto;
 	private JPanel contentPanel;
 	private JLabel lblFuncionario;
 	private JButton btnCancelar;
 	private JButton btnGravar;
-	private JLabel btnPesqProduto;
 	private JComboBox<Object> comboBoxFuncionario;
 	private JLabel labelCodigoProduto;
 	private JLabel lblQuantidade;
@@ -43,10 +45,9 @@ public class CadastroNotaEntradaView extends JDialog {
 	private JTable tableNotaEntrada;
 	private JScrollPane scrollPane;
 	private NotaEntradaDAO notaEntDAO = new NotaEntradaDAO();
-	private JTextField textCodigoProduto;
+	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+	ProdutoDAO produtoDAO = new ProdutoDAO();
 	private JTextField textPrecoCustoUnit;
-	private JTextField textFieldNomeProduto;
-	private JLabel lblNomeProduto;
 	private JSeparator separator;
 	private JLabel lblPrecoCustoUnit;
 	private JLabel lblCNPJ;
@@ -60,6 +61,7 @@ public class CadastroNotaEntradaView extends JDialog {
 	private JLabel lblNewLabel;
 	private JTextField textFieldChaveNFE;
 	private JLabel lblAddProduto;
+	private JComboBox comboBoxProduto;
 
 	public static void main(String[] args) {
 		try {
@@ -81,8 +83,30 @@ public class CadastroNotaEntradaView extends JDialog {
 	public void initializeListeners() {
 		getBtnGravar().addMouseListener(listener);
 		getBtnCancelar().addMouseListener(listener);
-		getPesqProduto().addMouseListener(listener);
 		getLblAddProduto().addMouseListener(listener);
+	}
+
+	public JTable getTableFuncionario() {
+		if (tableProduto == null) {
+			String[] colunas = { "id", "Nome", "Quantidade", "Preço(R$)" };
+			String[][] dados = null;
+
+			DefaultTableModel model = new DefaultTableModel(dados, colunas) {
+				/**
+				* 
+				*/
+				private static final long serialVersionUID = -7018342759131611914L;
+				boolean[] canEdit = new boolean[] { false, false, false, false };
+
+				@Override
+				public boolean isCellEditable(int rowIndex, int columnIndex) {
+					return canEdit[columnIndex];
+				}
+			};
+			tableProduto = new JTable(model);
+			tableProduto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return tableProduto;
 	}
 
 	public void initialize() {
@@ -113,13 +137,9 @@ public class CadastroNotaEntradaView extends JDialog {
 			contentPanel.add(getTextDataEmissao());
 			contentPanel.add(getLblDataEmissao());
 			contentPanel.add(getLblPrecoCustoUnit());
-			contentPanel.add(getPesqProduto());
-			contentPanel.add(getLblNomeProduto());
 			contentPanel.add(getSeparator());
-			contentPanel.add(getTextCodigoProduto());
 			contentPanel.add(getTextPrecoCustoUnit());
 			contentPanel.add(getScrollBar());
-			contentPanel.add(getTextNomeProduto());
 			contentPanel.add(getLblCNPJ());
 			contentPanel.add(getTextFieldCNPJ());
 			contentPanel.add(getLblNomeFornec());
@@ -131,29 +151,10 @@ public class CadastroNotaEntradaView extends JDialog {
 			contentPanel.add(getLblNewLabel());
 			contentPanel.add(getTextFieldChaveNFE());
 			contentPanel.add(getLblAddProduto());
+			contentPanel.add(getComboBoxProduto());
+
 		}
 		return contentPanel;
-	}
-
-	public JTextField getTextNomeProduto() {
-		if (textFieldNomeProduto == null) {
-			textFieldNomeProduto = new JTextField();
-			textFieldNomeProduto.setBounds(126, 213, 216, 20);
-			textFieldNomeProduto.setColumns(10);
-			textFieldNomeProduto.setEditable(false);
-		}
-		return textFieldNomeProduto;
-	}
-
-	public JLabel getPesqProduto() {
-		if (btnPesqProduto == null) {
-			btnPesqProduto = new JLabel();
-			btnPesqProduto.setBounds(577, 210, 29, 23);
-			btnPesqProduto.setToolTipText("Buscar Produto");
-			btnPesqProduto.setHorizontalAlignment(SwingConstants.CENTER);
-			btnPesqProduto.setIcon(new ImageIcon("Interno/search-icon.png"));
-		}
-		return btnPesqProduto;
 	}
 
 	public JTextField getTextPrecoCustoUnit() {
@@ -163,16 +164,6 @@ public class CadastroNotaEntradaView extends JDialog {
 			textPrecoCustoUnit.setColumns(10);
 		}
 		return textPrecoCustoUnit;
-	}
-
-	public JTextField getTextCodigoProduto() {
-		if (textCodigoProduto == null) {
-			textCodigoProduto = new JTextField();
-			textCodigoProduto.setBounds(30, 213, 86, 20);
-			textCodigoProduto.setColumns(10);
-			textCodigoProduto.setEditable(false);
-		}
-		return textCodigoProduto;
 	}
 
 	public JLabel getLblPrecoCustoUnit() {
@@ -189,14 +180,6 @@ public class CadastroNotaEntradaView extends JDialog {
 			separator.setBounds(30, 175, 593, 2);
 		}
 		return separator;
-	}
-
-	public JLabel getLblNomeProduto() {
-		if (lblNomeProduto == null) {
-			lblNomeProduto = new JLabel("Nome do Produto");
-			lblNomeProduto.setBounds(126, 188, 165, 14);
-		}
-		return lblNomeProduto;
 	}
 
 	public JScrollPane getScrollBar() {
@@ -256,16 +239,17 @@ public class CadastroNotaEntradaView extends JDialog {
 
 	public JComboBox<Object> getComboBoxFuncionario() {
 		if (comboBoxFuncionario == null) {
-			comboBoxFuncionario = new JComboBox<Object>();
-			comboBoxFuncionario.setBounds(183, 96, 276, 20);
+			String funcionarios[] = funcionarioDAO.buscarNomeeId();
+			comboBoxFuncionario = new JComboBox<Object>(funcionarios);
+			comboBoxFuncionario.setBounds(183, 96, 281, 20);
 		}
 		return comboBoxFuncionario;
 	}
 
 	public JLabel getLabelCodigoProduto() {
 		if (labelCodigoProduto == null) {
-			labelCodigoProduto = new JLabel("C\u00F3digo");
-			labelCodigoProduto.setBounds(30, 188, 75, 14);
+			labelCodigoProduto = new JLabel("C\u00F3digo - Nome do Produto");
+			labelCodigoProduto.setBounds(30, 188, 312, 14);
 		}
 		return labelCodigoProduto;
 	}
@@ -382,7 +366,7 @@ public class CadastroNotaEntradaView extends JDialog {
 		return lblValorTotalProd;
 	}
 
-	private JTextField getTextFieldVTotalProd() {
+	public JTextField getTextFieldVTotalProd() {
 		if (textFieldVTotalProd == null) {
 			textFieldVTotalProd = new JTextField();
 			textFieldVTotalProd.setBounds(474, 96, 149, 20);
@@ -430,7 +414,7 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JLabel getLblAddProduto() {
 		if (lblAddProduto == null) {
 			lblAddProduto = new JLabel("");
-			lblAddProduto.setBounds(604, 210, 36, 23);
+			lblAddProduto.setBounds(577, 202, 63, 39);
 			lblAddProduto.setToolTipText("Adicionar Produto a Lista");
 			lblAddProduto.setHorizontalAlignment(SwingConstants.CENTER);
 			lblAddProduto.setIcon(new ImageIcon("Interno/add.png"));
@@ -438,4 +422,12 @@ public class CadastroNotaEntradaView extends JDialog {
 		return lblAddProduto;
 	}
 
+	public JComboBox<Object> getComboBoxProduto() {
+		if (comboBoxProduto == null) {
+			String produtos[] = produtoDAO.buscarNomeeId();
+			comboBoxProduto = new JComboBox<Object>(produtos);
+			comboBoxProduto.setBounds(30, 213, 312, 20);
+		}
+		return comboBoxProduto;
+	}
 }
