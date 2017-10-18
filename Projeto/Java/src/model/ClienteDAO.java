@@ -238,17 +238,18 @@ public class ClienteDAO {
 	
 	public boolean PermitirExclusaoCliente(int iid) {
 		conex = bd.Conectar();
-		int result = 0;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM  where idCliente = "+iid;
-			result = stmt.executeUpdate(SQL);
+			String SQL = "SELECT COUNT(*) FROM pedido WHERE Cliente_idCliente = "+iid;
+			ResultSet rs = stmt.executeQuery(SQL);
+			rs.next();
+			if(rs.getInt("count(*)")!=0) return false;
 			
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 		} finally {
 			bd.Desconectar(conex);
 		}
-		return result;
+		return true;
 	}
 }

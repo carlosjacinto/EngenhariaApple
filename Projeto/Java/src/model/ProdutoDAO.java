@@ -245,4 +245,24 @@ public class ProdutoDAO {
 		}
 	}
 	
+	public boolean PermitirExclusaoProduto(int iid) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM pedido_has_produto WHERE Produto_idProduto = "+iid);
+			rs.next();
+			if(rs.getInt("count(*)")!=0) return false;
+			
+			rs = stmt.executeQuery("SELECT COUNT(*) FROM compra_has_produto WHERE Produto_idProduto = "+iid);
+			rs.next();
+			if(rs.getInt("count(*)")!=0) return false;
+			
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+		} finally {
+			bd.Desconectar(conex);
+		}
+		return true;
+	}
+	
 }

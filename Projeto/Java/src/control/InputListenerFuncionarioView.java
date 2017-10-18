@@ -18,7 +18,6 @@ import view.FuncionarioView;
 public class InputListenerFuncionarioView implements MouseListener, WindowListener {
 	FuncionarioView funcionarioView;
 	private FuncionarioDAO funcDAO = new FuncionarioDAO();
-	
 
 	public InputListenerFuncionarioView(FuncionarioView funcionarioView) {
 		// TODO Auto-generated constructor stub
@@ -30,9 +29,9 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 		// TODO Auto-generated method stub
 		if (e.getSource() == funcionarioView.getBuscarButton()) {
 			mudarTabela();
-			
-			//EditarFuncionarioView edicaoFuncionarioView = new EditarFuncionarioView();
-			//edicaoFuncionarioView.setVisible(true);
+
+			// EditarFuncionarioView edicaoFuncionarioView = new EditarFuncionarioView();
+			// edicaoFuncionarioView.setVisible(true);
 		} else if ((e.getSource()) == funcionarioView.getbtnNovoFuncionario()) {
 			CadastroFuncionarioView cadastroFuncionarioView;
 			System.out.println("Botão Novo Clicado");
@@ -41,21 +40,24 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			funcionarioView.getTextBusca().setText("");
 			mudarTabela();
 		} else if (e.getSource() == funcionarioView.getTableFuncionario()) {
-			//String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
-			//Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
-			//new EditarFuncionarioView(func).setVisible(true);
-		}else if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+			// String id =
+			// (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(),
+			// 0).toString());
+			// Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
+			// new EditarFuncionarioView(func).setVisible(true);
+		} else if (e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
 			confirmarExclusao();
-		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
-			if(funcionarioView.getTableFuncionario().getSelectedRow()!=-1) {
-				String id = (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
+		} else if (e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+			if (funcionarioView.getTableFuncionario().getSelectedRow() != -1) {
+				String id = (funcionarioView.getTableFuncionario().getModel()
+						.getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
 				Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
 				new EditarFuncionarioView(func).setVisible(true);
 				funcionarioView.getTextBusca().setText("");
 				mudarTabela();
-			}else JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null,
-					JOptionPane.WARNING_MESSAGE);
-		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+			} else
+				JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null, JOptionPane.WARNING_MESSAGE);
+		} else if (e.getSource() == funcionarioView.getBtnLimparBusca()) {
 			funcionarioView.getTextBusca().setText("");
 			mudarTabela();
 		}
@@ -63,58 +65,66 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 
 	public void mudarTabela() {
 		String[][] funcs = funcDAO.listaFuncionarioArray(funcionarioView.getTextBusca().getText());
-		String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
-		
-		DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
-			 /**
-			 * 
-			 */
+		String[] colunas = { "id", "Nome", "CPF", "Endereço", "Telefone", "Nascimento" };
+
+		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
+			/**
+			* 
+			*/
 			private static final long serialVersionUID = -7018342759131611914L;
-			boolean[] canEdit = new boolean []{  
-			            false, false, false, false,false,false
-			        };  
-			        @Override  
-			        public boolean isCellEditable(int rowIndex, int columnIndex) {  
-			            return canEdit [columnIndex];  
-			        }
+			boolean[] canEdit = new boolean[] { false, false, false, false, false, false };
+
+			@Override
+			public boolean isCellEditable(int rowIndex, int columnIndex) {
+				return canEdit[columnIndex];
+			}
 		};
 		funcionarioView.getTableFuncionario().setModel(model);
 		funcionarioView.repaint();
 		funcionarioView.revalidate();
 		funcionarioView.setBuscaAT1(funcionarioView.getTextBusca().getText());
 	}
-	
+
 	public void confirmarExclusao() {
 		// TODO Auto-generated method stub
 		int i = funcionarioView.getTableFuncionario().getSelectedRow();
-		if(i!=-1) {
-			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
-						+funcionarioView.getTableFuncionario().getValueAt(i, 1)+"?",
-					"Excluir", JOptionPane.YES_NO_OPTION);
-			if(result == JOptionPane.YES_OPTION) {
-				int sucesso = funcDAO.excluirFuncionario(Integer.parseInt(funcionarioView.getTableFuncionario().getValueAt(i, 0).toString()));
-				
-				if(sucesso == 1)JOptionPane.showMessageDialog(null, "Funcionário Excluido!", null,
-						JOptionPane.INFORMATION_MESSAGE);
-				else JOptionPane.showMessageDialog(null, "Erro ao tentar excluir!", null,
-						JOptionPane.INFORMATION_MESSAGE);
-			}
-		}else JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null,
-				JOptionPane.WARNING_MESSAGE);
+		if (i != -1) {
+			if (funcDAO.PermitirExclusaoFuncionario(
+					Integer.parseInt(funcionarioView.getTableFuncionario().getValueAt(i, 0).toString()))) {
+
+				int result = JOptionPane.showConfirmDialog(null,
+						"Tem certeza que quer excluir " + funcionarioView.getTableFuncionario().getValueAt(i, 1) + "?",
+						"Excluir", JOptionPane.YES_NO_OPTION);
+				if (result == JOptionPane.YES_OPTION) {
+					int sucesso = funcDAO.excluirFuncionario(
+							Integer.parseInt(funcionarioView.getTableFuncionario().getValueAt(i, 0).toString()));
+
+					if (sucesso == 1)
+						JOptionPane.showMessageDialog(null, "Funcionário Excluido!", null,
+								JOptionPane.INFORMATION_MESSAGE);
+					else
+						JOptionPane.showMessageDialog(null, "Erro ao tentar excluir!", null,
+								JOptionPane.INFORMATION_MESSAGE);
+				}
+			} else
+				JOptionPane.showMessageDialog(null, "Funcionário realizou Compra e/ou Venda de produtos!", "Não foi possivel deletar",
+						JOptionPane.WARNING_MESSAGE);
+		} else
+			JOptionPane.showMessageDialog(null, "Selecione Um Funcionário!", null, JOptionPane.WARNING_MESSAGE);
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+		if (e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
 			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete2x.png"));
-		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
 			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new2x.png"));
-		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+		} else if (e.getSource() == funcionarioView.getBuscarButton()) {
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
-		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit2x.png"));
-		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+		} else if (e.getSource() == funcionarioView.getBtnLimparBusca()) {
 			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
@@ -123,15 +133,15 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+		if (e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
 			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete.png"));
-		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
 			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new.png"));
-		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+		} else if (e.getSource() == funcionarioView.getBuscarButton()) {
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
-		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit.png"));
-		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+		} else if (e.getSource() == funcionarioView.getBtnLimparBusca()) {
 			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
@@ -140,15 +150,15 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+		if (e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
 			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete.png"));
-		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
 			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new.png"));
-		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+		} else if (e.getSource() == funcionarioView.getBuscarButton()) {
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
-		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit.png"));
-		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+		} else if (e.getSource() == funcionarioView.getBtnLimparBusca()) {
 			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
@@ -157,15 +167,15 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
+		if (e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
 			funcionarioView.getbtnExcluirFuncionario().setIcon(new ImageIcon("Interno/delete2x.png"));
-		}else if(e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getbtnNovoFuncionario()) {
 			funcionarioView.getbtnNovoFuncionario().setIcon(new ImageIcon("Interno/new2x.png"));
-		}else if(e.getSource() == funcionarioView.getBuscarButton()) {
+		} else if (e.getSource() == funcionarioView.getBuscarButton()) {
 			funcionarioView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
-		}else if(e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
+		} else if (e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
 			funcionarioView.getBtnEditarFuncionario().setIcon(new ImageIcon("Interno/edit2x.png"));
-		}else if(e.getSource() == funcionarioView.getBtnLimparBusca()) {
+		} else if (e.getSource() == funcionarioView.getBtnLimparBusca()) {
 			funcionarioView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
@@ -174,7 +184,7 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	@Override
 	public void windowActivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -185,13 +195,13 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		
+
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -202,13 +212,13 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	@Override
 	public void windowIconified(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
