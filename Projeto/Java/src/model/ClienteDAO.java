@@ -236,4 +236,19 @@ public class ClienteDAO {
 		}
 	}
 	
+	public boolean PermitirExclusaoCliente(int iid) {
+		conex = bd.Conectar();
+		int result = 0;
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM  where idCliente = "+iid;
+			result = stmt.executeUpdate(SQL);
+			
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+		} finally {
+			bd.Desconectar(conex);
+		}
+		return result;
+	}
 }
