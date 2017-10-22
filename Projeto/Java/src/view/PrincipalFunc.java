@@ -42,6 +42,9 @@ public class PrincipalFunc extends JFrame {
 	private JLabel setaBaixo;
 	private JLabel label_1;
 	InputListenerPrincipalFunc listener;
+	private JLabel btnDesligar;
+	private JMenuItem mntmSair;
+	private JMenuItem mntmDesligar;
 
 	/**
 	 * Launch the application.
@@ -85,6 +88,7 @@ public class PrincipalFunc extends JFrame {
 			panel_1.add(getSetaBaixo());
 			panel_1.add(getSetaCima());
 			panel_1.add(getLabel_1());
+			panel_1.add(getBtnDesligar());
 		}
 		
 		return panel_1;
@@ -120,6 +124,8 @@ public class PrincipalFunc extends JFrame {
 			mnCadastros.add(getmntmCliente());
 			mnCadastros.add(getmntmPedidos());
 			mnCadastros.add(getmntmNotaEntrada());
+			mnCadastros.add(getmntmSair());
+			mnCadastros.add(getmntmDesligar());
 		}
 		
 		return mnCadastros;
@@ -170,11 +176,14 @@ public class PrincipalFunc extends JFrame {
 		getBtPedido().addMouseListener(listener);
 		getBtNotaEntrada().addMouseListener(listener);
 		getBtSair().addMouseListener(listener);
+		getBtnDesligar().addMouseListener(listener);
 		getSetaCima().addMouseListener(listener);
 		getSetaBaixo().addMouseListener(listener);
 		getmntmCliente().addMouseListener(listener);
 		getmntmPedidos().addMouseListener(listener);
 		getmntmNotaEntrada().addMouseListener(listener);
+		getmntmDesligar().addMouseListener(listener);
+		getmntmSair().addMouseListener(listener);
 		
 	}
 
@@ -192,6 +201,7 @@ public class PrincipalFunc extends JFrame {
 		getBtPedido().setVisible(false);
 		getBtNotaEntrada().setVisible(false);
 		getBtSair().setVisible(false);
+		getBtnDesligar().setVisible(false);
 	}
 	
 	public JLabel getBtCliente() {
@@ -284,4 +294,29 @@ public class PrincipalFunc extends JFrame {
 		return label_1;
 	}
 	
+	
+	
+	public JLabel getBtnDesligar() {
+		if (btnDesligar == null) {
+			btnDesligar = new JLabel("");
+			btnDesligar.setIcon(new ImageIcon("Interno/desligar.png"));
+			btnDesligar.setBounds(587, 568, 100, 100);
+		}
+		return btnDesligar;
+	}
+	public JMenuItem getmntmSair() {
+		if (mntmSair == null) {
+			mntmSair = new JMenuItem("Sair da sessão do Usuário");
+		}
+		return mntmSair;
+	}
+	
+	public JMenuItem getmntmDesligar() {
+		if (mntmDesligar == null) {
+			mntmDesligar = new JMenuItem("Desligar o programa");
+		}
+		return mntmDesligar;
+	}
+	
+
 }

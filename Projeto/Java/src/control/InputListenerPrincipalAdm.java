@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 
 import view.FuncionarioView;
+import view.LoginView;
 import view.PrincipalAdm;
 import view.ProdutoView;
 
@@ -25,6 +26,7 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getBtFunc().setVisible(true);
 			principalAdm.getBtSair().setVisible(true);
 			principalAdm.getSetaBaixo().setVisible(true);
+			principalAdm.getBtDesligar().setVisible(true);
 		}else if(e.getSource() == principalAdm.getSetaBaixo()) {
 			principalAdm.getSetaCima().setVisible(true);
 			principalAdm.getBarraAtalhos().setVisible(false);
@@ -32,6 +34,7 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getBtFunc().setVisible(false);
 			principalAdm.getBtSair().setVisible(false);
 			principalAdm.getSetaBaixo().setVisible(false);
+			principalAdm.getBtDesligar().setVisible(false);
 		}
 		
 	}
@@ -44,7 +47,9 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getBtProd().setIcon(new ImageIcon("Interno/prod2x.png"));
 		}else if(e.getSource() == principalAdm.getBtSair()) {
 			principalAdm.getBtSair().setIcon(new ImageIcon("Interno/sair2x.png"));
-		} 
+		} else if(e.getSource() == principalAdm.getBtDesligar()) {
+			principalAdm.getBtDesligar().setIcon(new ImageIcon("Interno/desligar2x.png"));
+		}
 		
 	}
 
@@ -56,7 +61,9 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getBtProd().setIcon(new ImageIcon("Interno/prod.png"));
 		}else if(e.getSource() == principalAdm.getBtSair()) {
 			principalAdm.getBtSair().setIcon(new ImageIcon("Interno/sair.png"));
-		} 
+		} else if(e.getSource() == principalAdm.getBtDesligar()) {
+			principalAdm.getBtDesligar().setIcon(new ImageIcon("Interno/desligar.png"));
+		}
 		
 	}
 
@@ -71,13 +78,20 @@ public class InputListenerPrincipalAdm implements MouseListener {
 		}else if(e.getSource() == principalAdm.getBtSair()) {
 			principalAdm.getBtSair().setIcon(new ImageIcon("Interno/sair.png"));
 			principalAdm.dispose();
+			new LoginView().setVisible(true);
 		}else if(e.getSource() == principalAdm.getmntmFuncionario()) {
 			new FuncionarioView().setVisible(true);
 		}else if(e.getSource() == principalAdm.getmntmProdutos()) {
 			new ProdutoView().setVisible(true);
 		}else if(e.getSource() == principalAdm.getmntmSair()) {
 			principalAdm.dispose();
-		}  
+			new LoginView().setVisible(true);
+		}  else if(e.getSource() == principalAdm.getBtDesligar()) {
+			principalAdm.getBtDesligar().setIcon(new ImageIcon("Interno/desligar.png"));
+			principalAdm.dispose();
+		}else if(e.getSource() == principalAdm.getmntmDesligar()) {
+			principalAdm.dispose();
+		}
 		
 	}
 
@@ -89,7 +103,9 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getBtProd().setIcon(new ImageIcon("Interno/prod2x.png"));
 		}else if(e.getSource() == principalAdm.getBtSair()) {
 			principalAdm.getBtSair().setIcon(new ImageIcon("Interno/sair2x.png"));
-		} 
+		} else if(e.getSource() == principalAdm.getBtDesligar()) {
+			principalAdm.getBtDesligar().setIcon(new ImageIcon("Interno/desligar2x.png"));
+		}
 		
 	}
 

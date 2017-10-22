@@ -1,6 +1,9 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.net.URL;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,9 +17,7 @@ import model.Contador;
 
 public class Principal extends JFrame {
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = -6110345484380030496L;
 	private JPanel contentPane;
 	private JLabel lblFundo;
