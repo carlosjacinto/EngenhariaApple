@@ -83,6 +83,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 		
 		int i = clienteView.getTableCliente().getSelectedRow();
 		if(i!=-1) {
+			if(clieDAO.PermitirExclusaoCliente(Integer.parseInt(clienteView.getTableCliente().getValueAt(i, 0).toString()))){
 			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
 						+clienteView.getTableCliente().getValueAt(i, 1)+"?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
@@ -94,6 +95,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 				else JOptionPane.showMessageDialog(null, "Erro ao tentar excluir!", null,
 						JOptionPane.INFORMATION_MESSAGE);
 			}
+			}else JOptionPane.showMessageDialog(null, "Cliente possui pedido!", "Não foi possivel deletar",
+					JOptionPane.WARNING_MESSAGE);
 		}else JOptionPane.showMessageDialog(null, "Selecione Um Cliente!", null,
 				JOptionPane.WARNING_MESSAGE);
 	}

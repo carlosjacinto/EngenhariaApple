@@ -18,11 +18,6 @@ import control.InputListenerPrincipalAdm;
 
 public class PrincipalAdm extends JFrame {
 
-	/**
-	 * 
-	 */
-	
-
 	private static final long serialVersionUID = 6375324782041802229L;
 	private JPanel contentPane;
 	private JLabel btFunc;
@@ -40,7 +35,9 @@ public class PrincipalAdm extends JFrame {
 	private JLabel setaCima;
 	private JLabel setaBaixo;
 	private JLabel label_1;
+	private JLabel btnDesligar;
 	InputListenerPrincipalAdm listener;
+	private JMenuItem mntmDesligar;
 
 	/**
 	 * Launch the application.
@@ -64,18 +61,18 @@ public class PrincipalAdm extends JFrame {
 	public PrincipalAdm() {
 		listener = new InputListenerPrincipalAdm(this);
 		initialize();
-		initializeListeners();	
-		
+		initializeListeners();
+
 	}
-	
+
 	public JPanel getpanel_1() {
-		if(panel_1 == null) {
+		if (panel_1 == null) {
 			panel_1 = new JPanel();
 			panel_1.setForeground(Color.WHITE);
 			panel_1.setBackground(Color.WHITE);
 			panel_1.setBounds(0, 0, 1360, 680);
-			panel_1.setLayout(null);	
-			
+			panel_1.setLayout(null);
+
 			panel_1.add(getBtFunc());
 			panel_1.add(getBtProd());
 			panel_1.add(getBtSair());
@@ -83,96 +80,102 @@ public class PrincipalAdm extends JFrame {
 			panel_1.add(getSetaBaixo());
 			panel_1.add(getSetaCima());
 			panel_1.add(getLabel_1());
+			panel_1.add(getBtDesligar());
 		}
-		
+
 		return panel_1;
 	}
-	
+
 	public JPanel getContentPane() {
-		if(contentPane == null) {
+		if (contentPane == null) {
 			contentPane = new JPanel();
 			contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-			
+
 			contentPane.setLayout(null);
-			
+
 			contentPane.add(getpanel_1());
 		}
-		
+
 		return contentPane;
 	}
-	
+
 	public JMenuBar getmenuBar() {
-		if(menuBar == null) {
+		if (menuBar == null) {
 			menuBar = new JMenuBar();
 			menuBar.add(getmnCadastros());
 			menuBar.add(getmnRelatorios());
 			menuBar.add(getmnSobre());
 		}
-		
+
 		return menuBar;
 	}
-	
+
 	public JMenu getmnCadastros() {
-		if(mnCadastros == null) {
+		if (mnCadastros == null) {
 			mnCadastros = new JMenu("Cadastros");
 			mnCadastros.add(getmntmFuncionario());
 			mnCadastros.add(getmntmProdutos());
 			mnCadastros.add(getmntmSair());
+			mnCadastros.add(getmntmDesligar());
 		}
-		
+
 		return mnCadastros;
 	}
-	
+
 	public JMenu getmnRelatorios() {
-		if(mnRelatorios == null) {
+		if (mnRelatorios == null) {
 			mnRelatorios = new JMenu("Relatórios");
 		}
-		
+
 		return mnRelatorios;
 	}
-	
+
 	public JMenu getmnSobre() {
-		if(mnSobre == null) {
+		if (mnSobre == null) {
 			mnSobre = new JMenu("Sobre");
 		}
-		
+
 		return mnSobre;
 	}
-	
+
 	public JMenuItem getmntmFuncionario() {
-		if(mntmFuncionario == null) {
+		if (mntmFuncionario == null) {
 			mntmFuncionario = new JMenuItem("Funcionário");
 		}
-		
+
 		return mntmFuncionario;
 	}
-	
+
 	public JMenuItem getmntmProdutos() {
-		if(mntmProdutos == null) {
+		if (mntmProdutos == null) {
 			mntmProdutos = new JMenuItem("Produtos");
 		}
-		
+
 		return mntmProdutos;
 	}
-	
+
 	public JMenuItem getmntmSair() {
-		if(mntmSair == null) {
-			mntmSair = new JMenuItem("Sair");
+		if (mntmSair == null) {
+			mntmSair = new JMenuItem("Sair da sessão do Usuário");
 		}
-		
+
 		return mntmSair;
 	}
+
 	
+
 	public void initializeListeners() {
 		getBtFunc().addMouseListener(listener);
 		getBtProd().addMouseListener(listener);
 		getBtSair().addMouseListener(listener);
+		getBtDesligar().addMouseListener(listener);
 		getSetaCima().addMouseListener(listener);
 		getSetaBaixo().addMouseListener(listener);
 		getmntmFuncionario().addMouseListener(listener);
 		getmntmProdutos().addMouseListener(listener);
 		getmntmSair().addMouseListener(listener);
-		
+		getmntmDesligar().addMouseListener(listener);
+
 	}
 
 	public void initialize() {
@@ -183,15 +186,16 @@ public class PrincipalAdm extends JFrame {
 		setTitle("Menu Administrador");
 		setJMenuBar(getmenuBar());
 		setContentPane(getContentPane());
-		
+
 		getBarraAtalhos().setVisible(false);
 		getBtFunc().setVisible(false);
 		getBtProd().setVisible(false);
 		getBtSair().setVisible(false);
+		getBtDesligar().setVisible(false);
 	}
-	
+
 	public JLabel getBtFunc() {
-		if(btFunc == null) {
+		if (btFunc == null) {
 			btFunc = new JLabel("");
 			btFunc.setToolTipText("Cadastrar Funcion\u00E1rio");
 			btFunc.setHorizontalAlignment(SwingConstants.CENTER);
@@ -200,71 +204,90 @@ public class PrincipalAdm extends JFrame {
 		}
 		return btFunc;
 	}
-	
+
 	public JLabel getBtProd() {
-		if(btProd == null) {
+		if (btProd == null) {
 			btProd = new JLabel("");
 			btProd.setToolTipText("Cadastrar Produto");
 			btProd.setHorizontalAlignment(SwingConstants.CENTER);
 			btProd.setIcon(new ImageIcon("Interno/prod.png"));
 			btProd.setBounds(317, 568, 100, 100);
-			
+
 		}
 		return btProd;
 	}
-	
+
 	public JLabel getBtSair() {
-		if(btSair == null) {
+		if (btSair == null) {
 			btSair = new JLabel("");
-			btSair.setToolTipText("Sair");
+			btSair.setToolTipText("Sair da sessão do Usuário");
 			btSair.setBackground(SystemColor.menu);
 			btSair.setHorizontalAlignment(SwingConstants.CENTER);
 			btSair.setIcon(new ImageIcon("Interno/sair.png"));
 			btSair.setBounds(407, 568, 100, 100);
-			
+
 		}
 		return btSair;
 	}
-	
+
+	public JLabel getBtDesligar() {
+		if (btnDesligar == null) {
+			btnDesligar = new JLabel("");
+			btnDesligar.setToolTipText("Desligar o programa");
+			btnDesligar.setBackground(SystemColor.menu);
+			btnDesligar.setHorizontalAlignment(SwingConstants.CENTER);
+			btnDesligar.setIcon(new ImageIcon("Interno/desligar.png"));
+			btnDesligar.setBounds(497, 568, 100, 100);
+		}
+		return btnDesligar;
+	}
+
 	public JLabel getBarraAtalhos() {
-		if(barraAtalhos == null) {
+		if (barraAtalhos == null) {
 			barraAtalhos = new JLabel("");
 			barraAtalhos.setIcon(new ImageIcon("Interno/barra.png"));
 			barraAtalhos.setBounds(178, 605, 1000, 75);
-			
+
 		}
 		return barraAtalhos;
 	}
-	
+
 	public JLabel getSetaCima() {
-		if(setaCima == null) {
+		if (setaCima == null) {
 			setaCima = new JLabel("");
 			setaCima.setIcon(new ImageIcon("Interno/Seta_Para_Cima.png"));
 			setaCima.setBounds(665, 660, 30, 19);
-			
+
 		}
 		return setaCima;
 	}
-	
+
 	public JLabel getSetaBaixo() {
-		if(setaBaixo == null) {
+		if (setaBaixo == null) {
 			setaBaixo = new JLabel("");
 			setaBaixo.setVisible(false);
 			setaBaixo.setIcon(new ImageIcon("Interno/Seta_Para_Baixo.png"));
 			setaBaixo.setBounds(665, 595, 30, 19);
-			
+
 		}
 		return setaBaixo;
 	}
-	
+
 	public JLabel getLabel_1() {
-		if(label_1 == null) {
+		if (label_1 == null) {
 			label_1 = new JLabel("");
 			label_1.setIcon(new ImageIcon("Interno/background.png"));
 			label_1.setBounds(0, 0, 1360, 680);
 		}
-		
+
 		return label_1;
+	}
+	
+	public JMenuItem getmntmDesligar() {
+		if (mntmDesligar == null) {
+			mntmDesligar = new JMenuItem("Desligar o programa");
+		}
+		return mntmDesligar;
 	}
 	
 }

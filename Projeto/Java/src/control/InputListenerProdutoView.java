@@ -20,13 +20,13 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 	private ProdutoDAO produtoDAO = new ProdutoDAO();
 
 	public InputListenerProdutoView(ProdutoView produtoView) {
-		// TODO Auto-generated constructor stub
+
 		this.produtoView = produtoView;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
 		if (e.getSource() == produtoView.getBuscarButton()) {
 			mudarTabela();
 		}else if ((e.getSource()) == produtoView.getbtnNovoProduto()) {
@@ -78,7 +78,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
 		if(e.getSource() == produtoView.getbtnNovoProduto()) {
 			produtoView.getbtnNovoProduto().setIcon(new ImageIcon("Interno/newProd2x.png"));
 		}else if(e.getSource() == produtoView.getBtnExcluirProduto()) {
@@ -95,7 +95,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
 		if(e.getSource() == produtoView.getbtnNovoProduto()) {
 			produtoView.getbtnNovoProduto().setIcon(new ImageIcon("Interno/newProd.png"));
 		}else if(e.getSource() == produtoView.getBtnExcluirProduto()) {
@@ -112,7 +112,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
 		if(e.getSource() == produtoView.getbtnNovoProduto()) {
 			produtoView.getbtnNovoProduto().setIcon(new ImageIcon("Interno/newProd.png"));
 		}else if(e.getSource() == produtoView.getBtnExcluirProduto()) {
@@ -129,7 +129,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
+	
 		if(e.getSource() == produtoView.getbtnNovoProduto()) {
 			produtoView.getbtnNovoProduto().setIcon(new ImageIcon("Interno/newProd2x.png"));
 		}else if(e.getSource() == produtoView.getBtnExcluirProduto()) {
@@ -146,7 +146,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
@@ -158,38 +158,40 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		// TODO Auto-generated method stub
+	
 		
 	}
 	
 	public void confirmarExclusao() {
-		// TODO Auto-generated method stub
+	
 		int i = produtoView.getTableProduto().getSelectedRow();
 		if(i!=-1) {
+			if(produtoDAO.PermitirExclusaoProduto(Integer.parseInt(produtoView.getTableProduto().getValueAt(i, 0).toString()))) {
+			
 			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
 						+produtoView.getTableProduto().getValueAt(i, 1)+"?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
@@ -201,6 +203,8 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 				else JOptionPane.showMessageDialog(null, "Erro ao tentar excluir!", null,
 						JOptionPane.INFORMATION_MESSAGE);
 			}
+		}else JOptionPane.showMessageDialog(null, "Produto possui Compra e/ou Venda!", "Não foi possivel deletar",
+				JOptionPane.WARNING_MESSAGE);
 		}else JOptionPane.showMessageDialog(null, "Selecione Um Produto!", null,
 				JOptionPane.WARNING_MESSAGE);
 	}

@@ -17,21 +17,23 @@ public class FuncionarioDAO {
 
 	public boolean gravarFuncionario(Funcionario f) {
 		conex = bd.Conectar();
-		int adm=0;
-		if(f.isAdministrador()) adm=1;
+		int adm = 0;
+		if (f.isAdministrador())
+			adm = 1;
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
 					"INSERT INTO funcionario(nomeFunc, ruaFunc, compFunc, numeroFunc, bairroFunc, cidadeFunc, dataNascFunc, dataAdmissaoFunc, cepFunc, senhaFunc, telefoneFunc, celularFunc, cpfFunc, salarioFunc, comissaoFunc, administrador)VALUES ('"
 							+ f.getNome() + "','" + f.getRua() + "','" + f.getComplemento() + "','" + f.getNumero()
 							+ "','" + f.getBairro() + "','" + f.getCidade() + "','" + f.getDataNascimento() + "','"
-							+ f.getDataAdmissao() + "','" + f.getCep() + "','" + f.getSenha() + "','" + f.getTelefone() + "','" + f.getCelular() + "','" + f.getCpf() + "','"
-							+ f.getSalario() + "','" + f.getComissao() + "','" + adm +"') ");
+							+ f.getDataAdmissao() + "','" + f.getCep() + "','" + f.getSenha() + "','" + f.getTelefone()
+							+ "','" + f.getCelular() + "','" + f.getCpf() + "','" + f.getSalario() + "','"
+							+ f.getComissao() + "','" + adm + "') ");
 
 			if (f.getFoto() != null) {
 				int codigo = buscaCodigoFuncionario(f.getCpf());
 				CopiarImagemFuncionario(codigo, f.getFoto());
-			}else {
+			} else {
 				int codigo = buscaCodigoFuncionario(f.getCpf());
 				CopiarImagemFuncionario(codigo, "Interno/default-avatar.png");
 			}
@@ -68,15 +70,15 @@ public class FuncionarioDAO {
 		}
 		return 0;
 	}
-	
+
 	public int excluirFuncionario(int iid) {
 		conex = bd.Conectar();
 		int result = 0;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM funcionario where idFuncionario = "+iid;
+			String SQL = "DELETE FROM funcionario where idFuncionario = " + iid;
 			result = stmt.executeUpdate(SQL);
-			
+
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 		} finally {
@@ -89,7 +91,7 @@ public class FuncionarioDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM funcionario where idFuncionario = "+iid;
+			String SQL = "SELECT * FROM funcionario where idFuncionario = " + iid;
 			ResultSet rs = stmt.executeQuery(SQL);
 			Funcionario func = new Funcionario();
 			while (rs.next()) {
@@ -119,6 +121,7 @@ public class FuncionarioDAO {
 			bd.Desconectar(conex);
 		}
 	}
+
 	public boolean verificaCPF(String CPF) {
 		conex = bd.Conectar();
 		try {
@@ -217,7 +220,7 @@ public class FuncionarioDAO {
 			bd.Desconectar(conex);
 		}
 	}
-	
+
 	public String[] buscarNomeeId() {
 		conex = bd.Conectar();
 		String funcionarios[];
@@ -232,7 +235,7 @@ public class FuncionarioDAO {
 			funcionarios = new String[size];
 			int cont = 0;
 			while (rs.next()) {
-				funcionarios[cont] = rs.getInt("idFuncionario")+"-"+rs.getString("nomeFunc");
+				funcionarios[cont] = rs.getInt("idFuncionario") + "-" + rs.getString("nomeFunc");
 				cont++;
 			}
 			rs.close();
@@ -245,79 +248,27 @@ public class FuncionarioDAO {
 			bd.Desconectar(conex);
 		}
 	}
-	
-}
 
-/*
-public ArrayList<Funcionario> buscaCPFNomeFuncionario(String campo) {
-	conex = bd.Conectar();
+	public boolean PermitirExclusaoFuncionario(int iid) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			ResultSet rs = stmt
+					.executeQuery("SELECT COUNT(*) FROM pedido WHERE Funcionario_idFuncionario = " + iid);
+			rs.next();
+			if (rs.getInt("count(*)") != 0)
+				return false;
 
-	try {
-		Statement stmt = (Statement) conex.createStatement();
-		String SQL = "SELECT * FROM funcionario WHERE nomeFunc LIKE '%" + campo + "%' OR cpfFunc LIKE '" + campo
-				+ "'";
-		ResultSet rs = stmt.executeQuery(SQL);
-		ArrayList<Funcionario> funcs = new ArrayList<>();
-		Funcionario func = new Funcionario();
-		while (rs.next()) {
-			func.setNome(rs.getString("nomeFunc"));
-			func.setIdFuncionario(rs.getInt("idFuncionario"));
-			func.setCpf(rs.getString("cpfFunc"));
-			func.setDataNascimento(rs.getDate("dataNascFunc"));
-			func.setTelefone(rs.getLong("telefoneFunc"));
-			func.setRua(rs.getString("ruaFunc"));
-			funcs.add(func);
+			rs = stmt.executeQuery("SELECT COUNT(*) FROM compra WHERE idFuncCompra = " + iid);
+			rs.next();
+			if (rs.getInt("count(*)") != 0)
+				return false;
 
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+		} finally {
+			bd.Desconectar(conex);
 		}
-		rs.close();
-		stmt.close();
-		return funcs;
-	} catch (SQLException sqle) {
-		System.out.println("Erro ao consultar..." + sqle.getMessage());
-		return null;
-	} finally {
-		bd.Desconectar(conex);
+		return true;
 	}
 }
-
-public ArrayList<Funcionario> listaFuncionario() {
-	conex = bd.Conectar();
-
-	try {
-		Statement stmt = (Statement) conex.createStatement();
-		String SQL = "SELECT * FROM funcionario";
-		ResultSet rs = stmt.executeQuery(SQL);
-		ArrayList<Funcionario> funcs = new ArrayList<>();
-		Funcionario func = new Funcionario();
-		while (rs.next()) {
-			func.setNome(rs.getString("nomeFunc"));
-			func.setIdFuncionario(rs.getInt("idFuncionario"));
-			func.setCpf(rs.getString("cpfFunc"));
-			func.setDataNascimento(rs.getDate("dataNascFunc"));
-			func.setTelefone(rs.getLong("telefoneFunc"));
-			func.setRua(rs.getString("ruaFunc"));
-			func.setBairro(rs.getString("bairroFunc"));
-			func.setCidade(rs.getString("cidadeFunc"));
-			func.setAdministrador(rs.getBoolean("administrador"));
-			func.setCelular(rs.getLong("celularFunc"));
-			func.setCep(rs.getString("cepFunc"));
-			func.setComissao(rs.getDouble("comissaoFunc"));
-			func.setComplemento(rs.getString("compFunc"));
-			func.setAdmissao(rs.getDate("dataAdmissao"));
-			func.setFoto(rs.getString("fotoFunc"));
-			func.setNumero(rs.getString("numeroFunc"));
-			func.setSalario(rs.getDouble("salarioFunc"));
-			func.setSenha(rs.getString("senhaFunc"));
-			funcs.add(func);
-		}
-		rs.close();
-		stmt.close();
-		return funcs;
-	} catch (SQLException sqle) {
-		System.out.println("Erro ao consultar..." + sqle.getMessage());
-		return null;
-	} finally {
-		bd.Desconectar(conex);
-	}
-}
-*/
