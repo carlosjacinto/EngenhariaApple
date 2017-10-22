@@ -45,11 +45,6 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			cadastroNotaEntrada.dispose();
 		} else if ((e.getSource()) == cadastroNotaEntrada.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
-<<<<<<< HEAD
-		}else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
-			System.out.println("botao add produto na tabela");
-		}else if (e.getSource() == cadastroNotaEntrada.getPesqProduto()) {
-=======
 			capturarDadosNotaEntrada();
 		} else if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
 			
@@ -97,7 +92,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 						* 
 						*/
 						private static final long serialVersionUID = -7018342759131611914L;
-						boolean[] canEdit = new boolean[] { false, false, false, false };
+						boolean[] canEdit = new boolean[] { false, false, false, false, false };
 
 						@Override
 						public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -173,8 +168,6 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto a nota!", "Erro",
 						JOptionPane.ERROR_MESSAGE);
 			}
-
->>>>>>> e2fba6dd849c653fa9cf40f3d071aaa82348fe93
 		}
 	}
 

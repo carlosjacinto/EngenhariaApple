@@ -3,3 +3,4 @@ modulo venda crud completo
 modulo compra 
 troca foto do pedido
 botao sair func/adm nao aparece
+tratar letra outros nfe

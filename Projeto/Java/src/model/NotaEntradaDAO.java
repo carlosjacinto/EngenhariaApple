@@ -20,14 +20,14 @@ public class NotaEntradaDAO {
 					"INSERT INTO Compra(numeroNFECompra, nomeFornecCompra, cnpjFornecCompra, dataCompra, outrosCompra, valorTotalCompra, chaveAcessoCompra, dataEntradaCompra, idFuncCompra)VALUES ('"
 							+ c.getNumeroNota() + "','" + c.getFornecedor() + "','" + c.getCnpj() + "','"
 							+ c.getDataCompra() + "','" + c.getOutros() + "','" + c.getTotal() + "','"
-							+ c.getChaveAcesso() + "','" + c.getDataEntrada() +  "','" + c.getIdFuncionario()+"') ");
+							+ c.getChaveAcesso() + "','" + c.getDataEntrada() + "','" + c.getIdFuncionario() + "') ");
 			System.out.println("deu bom gravar cabeçalho");
 
 			ResultSet rs = stmt.executeQuery("SELECT MAX(idCompra) FROM Compra");
-			while(rs.next()) {
+			while (rs.next()) {
 				codigo = rs.getInt("MAX(idCompra)");
 			}
-	
+
 			for (int i = 0; i < produtos.length; i++) {
 
 				stmt.execute(
@@ -60,7 +60,7 @@ public class NotaEntradaDAO {
 				nota = rs.getInt("numeroNFECompra");
 				cnpj = rs.getString("cnpjFornecCompra");
 
-				if (c.getNumeroNota()==nota && c.getCnpj().toLowerCase().equals(cnpj.toLowerCase())) {
+				if (c.getNumeroNota() == nota && c.getCnpj().toLowerCase().equals(cnpj.toLowerCase())) {
 					return true;
 				}
 			}
@@ -72,13 +72,13 @@ public class NotaEntradaDAO {
 		}
 		return false;
 	}
-	
+
 	public String[][] listaNotaEntradaArray(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM compra WHERE numeroNFECompra LIKE '%" + campo + "%' OR idFuncCompra LIKE '%" + campo
-					+ "%'";
+			String SQL = "SELECT * FROM compra WHERE numeroNFECompra LIKE '%" + campo + "%' OR idFuncCompra LIKE '%"
+					+ campo + "%'";
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.last();
 			int size = rs.getRow();
@@ -105,12 +105,12 @@ public class NotaEntradaDAO {
 			bd.Desconectar(conex);
 		}
 	}
-	
+
 	public NotaEntrada RetornaNotaEntrada(int iid) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM compra where idCompra = "+iid;
+			String SQL = "SELECT * FROM compra where idCompra = " + iid;
 			ResultSet rs = stmt.executeQuery(SQL);
 			NotaEntrada nota = new NotaEntrada();
 			while (rs.next()) {
@@ -124,7 +124,7 @@ public class NotaEntradaDAO {
 				nota.setChaveAcesso(rs.getString("chaveAcessoCompra"));
 				nota.setDataEntrada(rs.getDate("dataEntradaCompra"));
 				nota.setIdFuncionario(rs.getInt("idFuncCompra"));
-			
+
 			}
 			return nota;
 		} catch (SQLException sqle) {
@@ -134,20 +134,54 @@ public class NotaEntradaDAO {
 			bd.Desconectar(conex);
 		}
 	}
-	
+
 	public int excluirNotaEntrada(int iid) {
 		conex = bd.Conectar();
 		int result = 0;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM compra where idCompra = "+iid;
+			String SQL = "DELETE FROM compra where idCompra = " + iid;
 			result = stmt.executeUpdate(SQL);
-			
+
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 		} finally {
 			bd.Desconectar(conex);
 		}
 		return result;
+	}
+
+	public String[][] retornaProdutosNota(int iid){
+		conex = bd.Conectar();
+		String produtos[][] = null;
+		/*System.out.println(iid);
+		
+		Statement stmt;
+		try {
+			stmt = conex.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT Produto_idProduto, nomeProduto,qtdVenda,precoTotalItem from pedido_has_produto inner join Produto on Produto_idProduto = idProduto where Pedido_idPedido = "+iid); 
+			int cont = 0;
+			rs.last();
+			produtos = new String[rs.getRow()][4];
+			System.out.println(rs.getRow());
+			rs.beforeFirst();
+			while(rs.next()) {
+				produtos[cont][0] = ""+rs.getInt("Produto_idProduto");
+				produtos[cont][1] = rs.getString("nomeProduto");
+				System.out.println(produtos[cont][1]);
+				produtos[cont][2] = ""+rs.getInt("qtdVenda");
+				produtos[cont][3] = ""+rs.getDouble("precoTotalItem");
+				cont++;
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		bd.Desconectar(conex);
+		*/
+		return produtos;
 	}
 }
