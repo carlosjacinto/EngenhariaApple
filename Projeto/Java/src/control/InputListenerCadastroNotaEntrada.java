@@ -2,8 +2,10 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.Date;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import model.NotaEntrada;
@@ -43,7 +45,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			cadastroNotaEntrada.dispose();
 		} else if ((e.getSource()) == cadastroNotaEntrada.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
-		} else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
+		} else if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
 			if (!cadastroNotaEntrada.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(cadastroNotaEntrada.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) cadastroNotaEntrada.getComboBoxProduto().getSelectedItem()).split("-");
@@ -107,36 +109,72 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 		}
 	}
 
+	public void capturarDadosPedido() {
+
+		if (!(cadastroNotaEntrada.getTextCodigo().getText().equals("")
+				|| cadastroNotaEntrada.getTextFieldVTotalProd().getText().equals("")
+				|| cadastroNotaEntrada.getTextFieldOutrosCustos().getText().equals("")
+				|| cadastroNotaEntrada.getTextFieldCNPJ().getText().equals("")
+				|| cadastroNotaEntrada.getTextFieldNomeFornec().getText().equals("")
+				|| cadastroNotaEntrada.getTextDataEmissao().getText().equals("")		 
+				)) {
+
+			String[] funcionario = cadastroNotaEntrada.getComboBoxFuncionario().getSelectedItem().toString().split("-");
+			getNotaEntrada().setIdFuncionario(Integer.parseInt(funcionario[0]));
+			getNotaEntrada().setIdCompra(Integer.parseInt(cadastroNotaEntrada.getTextCodigo().getText()));
+			getNotaEntrada().setDataEntrada(new Date(System.currentTimeMillis()));
+			getNotaEntrada().setChaveAcesso(cadastroNotaEntrada.getTextFieldChaveNFE().getText());
+			getNotaEntrada().setCnpj(cadastroNotaEntrada.getTextFieldCNPJ().getText());
+			getNotaEntrada().setTotal(Float.parseFloat((cadastroNotaEntrada.getTextFieldVTotalProd().getText())));
+			getNotaEntrada().setOutros(Float.parseFloat((cadastroNotaEntrada.getTextFieldVTotalProd().getText())));
+			if (dados != null && dados.length > 0) {
+				if (notaDAO.gravarCompra(getNotaEntrada(), dados)) {
+					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
+							JOptionPane.INFORMATION_MESSAGE);
+					cadastroNotaEntrada.dispose();
+
+				} else {
+					JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto ao pedido!", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+	}
+
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
-			cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add2x.png"));
+
+		if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
+			cadastroNotaEntrada.getBtnAddProduto().setIcon(new ImageIcon("Interno/add2x.png"));
 		}
 
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
-			cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add.png"));
+
+		if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
+			cadastroNotaEntrada.getBtnAddProduto().setIcon(new ImageIcon("Interno/add.png"));
 		}
 
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
-			cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add.png"));
+
+		if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
+			cadastroNotaEntrada.getBtnAddProduto().setIcon(new ImageIcon("Interno/add.png"));
 		}
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-
-		if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
-			cadastroNotaEntrada.getLblAddProduto().setIcon(new ImageIcon("Interno/add2x.png"));
+		if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
+			cadastroNotaEntrada.getBtnAddProduto().setIcon(new ImageIcon("Interno/add2x.png"));
 		}
 
 	}

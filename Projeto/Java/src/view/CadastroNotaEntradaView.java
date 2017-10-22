@@ -36,30 +36,30 @@ public class CadastroNotaEntradaView extends JDialog {
 	private JLabel labelCodigoProduto;
 	private JLabel lblQuantidade;
 	private JLabel lblPreoTotalr;
-	private JTextField textTotalNota;
+	public JTextField textTotalNota;
 	private JSpinner spinnerQtde;
 	private JLabel lblDataEmissao;
-	private JTextField txtDataEmissao;
-	private JTextField textCodigo;
+	public JTextField txtDataEmissao;
+	public JTextField textCodigo;
 	private JLabel lblNumNFE;
 	private JTable tableNotaEntrada;
 	private JScrollPane scrollPane;
 	private NotaEntradaDAO notaEntDAO = new NotaEntradaDAO();
 	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	ProdutoDAO produtoDAO = new ProdutoDAO();
-	private JTextField textPrecoCustoUnit;
+	public JTextField textPrecoCustoUnit;
 	private JSeparator separator;
 	private JLabel lblPrecoCustoUnit;
 	private JLabel lblCNPJ;
-	private JTextField textFieldCNPJ;
+	public JTextField textFieldCNPJ;
 	private JLabel lblNomeFornec;
-	private JTextField textFieldNomeFornec;
+	public JTextField textFieldNomeFornec;
 	private JLabel lblValorTotalProd;
-	private JTextField textFieldVTotalProd;
-	private JTextField textFieldOutrosCustos;
+	public JTextField textFieldVTotalProd;
+	public JTextField textFieldOutrosCustos;
 	private JLabel lblOutrosCustos;
 	private JLabel lblNewLabel;
-	private JTextField textFieldChaveNFE;
+	public JTextField textFieldChaveNFE;
 	private JLabel lblAddProduto;
 	private JComboBox comboBoxProduto;
 
@@ -83,7 +83,7 @@ public class CadastroNotaEntradaView extends JDialog {
 	public void initializeListeners() {
 		getBtnGravar().addMouseListener(listener);
 		getBtnCancelar().addMouseListener(listener);
-		getLblAddProduto().addMouseListener(listener);
+		getBtnAddProduto().addMouseListener(listener);
 	}
 
 	public JTable getTableFuncionario() {
@@ -150,7 +150,7 @@ public class CadastroNotaEntradaView extends JDialog {
 			contentPanel.add(getLblOutrosCustos());
 			contentPanel.add(getLblNewLabel());
 			contentPanel.add(getTextFieldChaveNFE());
-			contentPanel.add(getLblAddProduto());
+			contentPanel.add(getBtnAddProduto());
 			contentPanel.add(getComboBoxProduto());
 
 		}
@@ -275,6 +275,7 @@ public class CadastroNotaEntradaView extends JDialog {
 			textTotalNota = new JTextField();
 			textTotalNota.setEditable(true);
 			textTotalNota.setBounds(474, 144, 152, 20);
+			//textTotalNota.setText((double)(getTextFieldOutrosCustos()+getTextFieldVTotalProd())+"");
 			textTotalNota.setColumns(10);
 			textTotalNota.setEditable(false);
 		}
@@ -332,7 +333,7 @@ public class CadastroNotaEntradaView extends JDialog {
 		return lblCNPJ;
 	}
 
-	private JTextField getTextFieldCNPJ() {
+	public JTextField getTextFieldCNPJ() {
 		if (textFieldCNPJ == null) {
 			textFieldCNPJ = new JTextField();
 			textFieldCNPJ.setBounds(30, 95, 141, 20);
@@ -349,7 +350,7 @@ public class CadastroNotaEntradaView extends JDialog {
 		return lblNomeFornec;
 	}
 
-	private JTextField getTextFieldNomeFornec() {
+	public JTextField getTextFieldNomeFornec() {
 		if (textFieldNomeFornec == null) {
 			textFieldNomeFornec = new JTextField();
 			textFieldNomeFornec.setBounds(30, 144, 261, 20);
@@ -370,17 +371,19 @@ public class CadastroNotaEntradaView extends JDialog {
 		if (textFieldVTotalProd == null) {
 			textFieldVTotalProd = new JTextField();
 			textFieldVTotalProd.setBounds(474, 96, 149, 20);
+			textFieldVTotalProd.setText("0");
 			textFieldVTotalProd.setColumns(10);
 			textFieldVTotalProd.setEditable(false);
 		}
 		return textFieldVTotalProd;
 	}
 
-	private JTextField getTextFieldOutrosCustos() {
+	public JTextField getTextFieldOutrosCustos() {
 		if (textFieldOutrosCustos == null) {
 			textFieldOutrosCustos = new JTextField();
 			textFieldOutrosCustos.setBounds(474, 38, 149, 20);
 			textFieldOutrosCustos.setColumns(10);
+			textFieldOutrosCustos.setText("0");
 			textFieldOutrosCustos.setEditable(true);
 		}
 		return textFieldOutrosCustos;
@@ -402,7 +405,7 @@ public class CadastroNotaEntradaView extends JDialog {
 		return lblNewLabel;
 	}
 
-	private JTextField getTextFieldChaveNFE() {
+	public JTextField getTextFieldChaveNFE() {
 		if (textFieldChaveNFE == null) {
 			textFieldChaveNFE = new JTextField();
 			textFieldChaveNFE.setBounds(183, 38, 276, 20);
@@ -411,7 +414,7 @@ public class CadastroNotaEntradaView extends JDialog {
 		return textFieldChaveNFE;
 	}
 
-	public JLabel getLblAddProduto() {
+	public JLabel getBtnAddProduto() {
 		if (lblAddProduto == null) {
 			lblAddProduto = new JLabel("");
 			lblAddProduto.setBounds(577, 202, 63, 39);

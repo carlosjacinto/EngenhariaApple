@@ -11,7 +11,7 @@ public class NotaEntradaDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
 
-	public boolean gravarCompra(NotaEntrada c) {
+	public boolean gravarCompra(NotaEntrada c, String[][] produtos) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = conex.createStatement();
