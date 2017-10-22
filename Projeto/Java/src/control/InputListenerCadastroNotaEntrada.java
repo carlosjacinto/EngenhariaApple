@@ -45,88 +45,116 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			cadastroNotaEntrada.dispose();
 		} else if ((e.getSource()) == cadastroNotaEntrada.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
+			capturarDadosNotaEntrada();
 		} else if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
+			
 			if (!cadastroNotaEntrada.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(cadastroNotaEntrada.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) cadastroNotaEntrada.getComboBoxProduto().getSelectedItem()).split("-");
-				if (produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto() >= qtd) {
-					double precoCompra = Integer.parseInt(cadastroNotaEntrada.getTextPrecoCustoUnit().getText());
-					double precoProdutos = qtd * precoCompra;
-					String[] p = { produto[0], produto[1], precoCompra + "", qtd + "", precoProdutos + "" };
-					if (getDados() == null) {
-						dados = new String[1][5];
-						dados[0][0] = p[0];
-						dados[0][1] = p[1];
-						dados[0][2] = p[2];
-						dados[0][3] = p[3];
-						dados[0][3] = p[4];
+				double precoCompra = Integer.parseInt(cadastroNotaEntrada.getTextPrecoCustoUnit().getText());
+				System.out.println("preco unit" + precoCompra);
+				double precoProdutos = qtd * precoCompra;
+				String[] p = { produto[0], produto[1], precoCompra + "", qtd + "", precoProdutos + "" };
+				if (getDados() == null) {
+					dados = new String[1][5];
+					dados[0][0] = p[0];
+					dados[0][1] = p[1];
+					dados[0][2] = p[2];
+					dados[0][3] = p[3];
+					dados[0][3] = p[4];
 
-					} else {
-						int i = dados.length;
-						String[][] aux = new String[i + 1][5];
-						for (int j = 0; j < i; j++) {
-							aux[j][0] = dados[j][0];
-							aux[j][1] = dados[j][1];
-							aux[j][2] = dados[j][2];
-							aux[j][3] = dados[j][3];
-							aux[j][4] = dados[j][4];
-						}
-						aux[i][0] = p[0];
-						aux[i][1] = p[1];
-						aux[i][2] = p[2];
-						aux[i][3] = p[3];
-						aux[i][4] = p[4];
-						dados = new String[i + 1][5];
-						for (int j = 0; j <= i; j++) {
-							dados[j][0] = aux[j][0];
-							dados[j][1] = aux[j][1];
-							dados[j][2] = aux[j][2];
-							dados[j][3] = aux[j][3];
-							dados[j][4] = aux[j][4];
-						}
-						String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total" };
-						DefaultTableModel model = new DefaultTableModel(dados, colunas) {
-							/**
-							* 
-							*/
-							private static final long serialVersionUID = -7018342759131611914L;
-							boolean[] canEdit = new boolean[] { false, false, false, false };
-
-							@Override
-							public boolean isCellEditable(int rowIndex, int columnIndex) {
-								return canEdit[columnIndex];
-							}
-						};
-						cadastroNotaEntrada.getTableFuncionario().setModel(model);
-						cadastroNotaEntrada.repaint();
-						cadastroNotaEntrada.revalidate();
-						valorTotal += precoProdutos;
-						cadastroNotaEntrada.getTextFieldVTotalProd().setText(valorTotal + "");
+				} else {
+					int i = dados.length;
+					String[][] aux = new String[i + 1][5];
+					for (int j = 0; j < i; j++) {
+						aux[j][0] = dados[j][0];
+						aux[j][1] = dados[j][1];
+						aux[j][2] = dados[j][2];
+						aux[j][3] = dados[j][3];
+						aux[j][4] = dados[j][4];
 					}
+					aux[i][0] = p[0];
+					aux[i][1] = p[1];
+					aux[i][2] = p[2];
+					aux[i][3] = p[3];
+					aux[i][4] = p[4];
+					dados = new String[i + 1][5];
+					for (int j = 0; j <= i; j++) {
+						dados[j][0] = aux[j][0];
+						dados[j][1] = aux[j][1];
+						dados[j][2] = aux[j][2];
+						dados[j][3] = aux[j][3];
+						dados[j][4] = aux[j][4];
+					}
+					String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total" };
+					DefaultTableModel model = new DefaultTableModel(dados, colunas) {
+						/**
+						* 
+						*/
+						private static final long serialVersionUID = -7018342759131611914L;
+						boolean[] canEdit = new boolean[] { false, false, false, false };
 
+						@Override
+						public boolean isCellEditable(int rowIndex, int columnIndex) {
+							return canEdit[columnIndex];
+						}
+					};
+					cadastroNotaEntrada.getTableFuncionario().setModel(model);
+					cadastroNotaEntrada.repaint();
+					cadastroNotaEntrada.revalidate();
+					valorTotal += precoProdutos;
+					cadastroNotaEntrada.getTextFieldVTotalProd().setText(valorTotal + "");
+					cadastroNotaEntrada.getTextTotalNota().setText(
+							(valorTotal + Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText())))
+									+ "");
 				}
+
 			}
 		}
 	}
 
-	public void capturarDadosPedido() {
-
+	public void capturarDadosNotaEntrada() {
+		cadastroNotaEntrada.getTextTotalNota()
+				.setText((Float.parseFloat(cadastroNotaEntrada.getTextFieldVTotalProd().getText())
+						+ Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText()))) + "");
 		if (!(cadastroNotaEntrada.getTextCodigo().getText().equals("")
 				|| cadastroNotaEntrada.getTextFieldVTotalProd().getText().equals("")
 				|| cadastroNotaEntrada.getTextFieldOutrosCustos().getText().equals("")
 				|| cadastroNotaEntrada.getTextFieldCNPJ().getText().equals("")
 				|| cadastroNotaEntrada.getTextFieldNomeFornec().getText().equals("")
-				|| cadastroNotaEntrada.getTextDataEmissao().getText().equals("")		 
-				)) {
+				|| cadastroNotaEntrada.getTextDataEmissao().getText().equals(""))) {
 
 			String[] funcionario = cadastroNotaEntrada.getComboBoxFuncionario().getSelectedItem().toString().split("-");
 			getNotaEntrada().setIdFuncionario(Integer.parseInt(funcionario[0]));
-			getNotaEntrada().setIdCompra(Integer.parseInt(cadastroNotaEntrada.getTextCodigo().getText()));
+			getNotaEntrada().setNumeroNota(Integer.parseInt(cadastroNotaEntrada.getTextCodigo().getText()));
 			getNotaEntrada().setDataEntrada(new Date(System.currentTimeMillis()));
 			getNotaEntrada().setChaveAcesso(cadastroNotaEntrada.getTextFieldChaveNFE().getText());
 			getNotaEntrada().setCnpj(cadastroNotaEntrada.getTextFieldCNPJ().getText());
 			getNotaEntrada().setTotal(Float.parseFloat((cadastroNotaEntrada.getTextFieldVTotalProd().getText())));
-			getNotaEntrada().setOutros(Float.parseFloat((cadastroNotaEntrada.getTextFieldVTotalProd().getText())));
+			getNotaEntrada().setOutros(Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText())));
+			getNotaEntrada().setFornecedor(cadastroNotaEntrada.getTextFieldNomeFornec().getText());
+			getNotaEntrada().setDataCompra(cadastroNotaEntrada.getTextDataEmissao().getText());
+
+			int tam = cadastroNotaEntrada.getTextFieldChaveNFE().getText().length();
+			System.out.println(tam);
+			if (!(tam == 44 || tam == 0)) {
+				JOptionPane.showMessageDialog(null, "Chave de Acesso deve possuir 44 digitos. Deixe em branco ou digite-a corretamente.",
+						"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			if (notaDAO.VerificaCompra(getNotaEntrada())) {
+				JOptionPane.showMessageDialog(null, "Essa nota já consta em nossa base de dados",
+						"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
+			if (Integer.parseInt(cadastroNotaEntrada.getTextCodigo().getText()) < 0) {
+				JOptionPane.showMessageDialog(null, "Número da NFE está incorreto", "Erro ao preencher campo",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+
 			if (dados != null && dados.length > 0) {
 				if (notaDAO.gravarCompra(getNotaEntrada(), dados)) {
 					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
@@ -137,7 +165,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 					JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
-				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto ao pedido!", "Erro",
+				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto a nota!", "Erro",
 						JOptionPane.ERROR_MESSAGE);
 			}
 

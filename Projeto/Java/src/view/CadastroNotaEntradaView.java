@@ -1,11 +1,13 @@
 package view;
 
 import java.awt.Color;
+import java.text.ParseException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,10 +19,10 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import control.InputListenerCadastroNotaEntrada;
 import model.FuncionarioDAO;
-import model.NotaEntradaDAO;
 import model.ProdutoDAO;
 
 public class CadastroNotaEntradaView extends JDialog {
@@ -36,32 +38,31 @@ public class CadastroNotaEntradaView extends JDialog {
 	private JLabel labelCodigoProduto;
 	private JLabel lblQuantidade;
 	private JLabel lblPreoTotalr;
-	public JTextField textTotalNota;
+	private JTextField textTotalNota;
 	private JSpinner spinnerQtde;
 	private JLabel lblDataEmissao;
-	public JTextField txtDataEmissao;
-	public JTextField textCodigo;
+	private JFormattedTextField txtDataEmissao;
+	private JTextField textCodigo;
 	private JLabel lblNumNFE;
 	private JTable tableNotaEntrada;
 	private JScrollPane scrollPane;
-	private NotaEntradaDAO notaEntDAO = new NotaEntradaDAO();
 	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	ProdutoDAO produtoDAO = new ProdutoDAO();
-	public JTextField textPrecoCustoUnit;
+	private JTextField textPrecoCustoUnit;
 	private JSeparator separator;
 	private JLabel lblPrecoCustoUnit;
 	private JLabel lblCNPJ;
-	public JTextField textFieldCNPJ;
+	private JTextField textFieldCNPJ;
 	private JLabel lblNomeFornec;
-	public JTextField textFieldNomeFornec;
+	private JTextField textFieldNomeFornec;
 	private JLabel lblValorTotalProd;
-	public JTextField textFieldVTotalProd;
-	public JTextField textFieldOutrosCustos;
+	private JTextField textFieldVTotalProd;
+	private JTextField textFieldOutrosCustos;
 	private JLabel lblOutrosCustos;
 	private JLabel lblNewLabel;
-	public JTextField textFieldChaveNFE;
+	private JTextField textFieldChaveNFE;
 	private JLabel lblAddProduto;
-	private JComboBox comboBoxProduto;
+	private JComboBox<Object> comboBoxProduto;
 
 	public static void main(String[] args) {
 		try {
@@ -275,7 +276,7 @@ public class CadastroNotaEntradaView extends JDialog {
 			textTotalNota = new JTextField();
 			textTotalNota.setEditable(true);
 			textTotalNota.setBounds(474, 144, 152, 20);
-			//textTotalNota.setText((double)(getTextFieldOutrosCustos()+getTextFieldVTotalProd())+"");
+			textTotalNota.setText("0");
 			textTotalNota.setColumns(10);
 			textTotalNota.setEditable(false);
 		}
@@ -294,6 +295,7 @@ public class CadastroNotaEntradaView extends JDialog {
 		if (textCodigo == null) {
 			textCodigo = new JTextField();
 			textCodigo.setBounds(30, 37, 141, 22);
+			textCodigo.setColumns(10);
 			textCodigo.setEditable(true);
 		}
 		return textCodigo;
@@ -307,9 +309,14 @@ public class CadastroNotaEntradaView extends JDialog {
 		return lblNumNFE;
 	}
 
-	public JTextField getTextDataEmissao() {
+	public JFormattedTextField getTextDataEmissao() {
 		if (txtDataEmissao == null) {
-			txtDataEmissao = new JTextField();
+			try {
+				txtDataEmissao = new JFormattedTextField(new MaskFormatter("##/##/####"));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			txtDataEmissao.setValue(null);
 			txtDataEmissao.setBounds(310, 144, 149, 20);
 			txtDataEmissao.setColumns(10);
 			txtDataEmissao.setEditable(true);
@@ -319,7 +326,7 @@ public class CadastroNotaEntradaView extends JDialog {
 
 	public JLabel getLblDataEmissao() {
 		if (lblDataEmissao == null) {
-			lblDataEmissao = new JLabel("Data de Emissao da NFe");
+			lblDataEmissao = new JLabel("Data de Emissão da NFe");
 			lblDataEmissao.setBounds(313, 127, 165, 14);
 		}
 		return lblDataEmissao;
@@ -383,7 +390,6 @@ public class CadastroNotaEntradaView extends JDialog {
 			textFieldOutrosCustos = new JTextField();
 			textFieldOutrosCustos.setBounds(474, 38, 149, 20);
 			textFieldOutrosCustos.setColumns(10);
-			textFieldOutrosCustos.setText("0");
 			textFieldOutrosCustos.setEditable(true);
 		}
 		return textFieldOutrosCustos;

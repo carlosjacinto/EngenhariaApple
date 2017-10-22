@@ -13,6 +13,7 @@ public class NotaEntradaDAO {
 
 	public boolean gravarCompra(NotaEntrada c, String[][] produtos) {
 		conex = bd.Conectar();
+		int codigo = -1;
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
@@ -20,7 +21,23 @@ public class NotaEntradaDAO {
 							+ c.getNumeroNota() + "','" + c.getFornecedor() + "','" + c.getCnpj() + "','"
 							+ c.getDataCompra() + "','" + c.getOutros() + "','" + c.getTotal() + "','"
 							+ c.getChaveAcesso() + "','" + c.getDataEntrada() +  "','" + c.getIdFuncionario()+"') ");
-			System.out.println("deu bom");
+			System.out.println("deu bom gravar cabeçalho");
+
+			ResultSet rs = stmt.executeQuery("SELECT MAX(idCompra) FROM Compra");
+			while(rs.next()) {
+				codigo = rs.getInt("MAX(idCompra)");
+			}
+	
+			for (int i = 0; i < produtos.length; i++) {
+
+				stmt.execute(
+						"INSERT INTO compra_has_produto(Compra_idCompra, Produto_idProduto, qtdCompra, qtdControle, precoCompra, precoTotalItem)VALUES ('"
+								+ codigo + "','" + Integer.parseInt(produtos[i][0]) + "','"
+								+ Integer.parseInt(produtos[i][2]) + "','" + Integer.parseInt(produtos[i][2]) + "','"
+								+ Double.parseDouble(produtos[i][3]) / Integer.parseInt(produtos[i][2]) + "','"
+								+ Double.parseDouble(produtos[i][3]) + "') ");
+			}
+			System.out.println("deu bom gravar produtos");
 			return true;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir..." + sqle.getMessage());
@@ -31,25 +48,25 @@ public class NotaEntradaDAO {
 
 	}
 
-	public boolean VerificaCompra(int nota, String scnpj) {
+	public boolean VerificaCompra(NotaEntrada c) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
 			String SQL = "SELECT * FROM compra";
 			ResultSet rs = stmt.executeQuery(SQL);
-			int n;
+			int nota;
 			String cnpj;
 			while (rs.next()) {
-				n = rs.getInt("numeroNFECompra");
+				nota = rs.getInt("numeroNFECompra");
 				cnpj = rs.getString("cnpjFornecCompra");
 
-				if (n==nota && scnpj.toLowerCase().equals(cnpj.toLowerCase())) {
-					return false;
+				if (c.getNumeroNota()==nota && c.getCnpj().toLowerCase().equals(cnpj.toLowerCase())) {
+					return true;
 				}
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
-			return false;
+			return true;
 		} finally {
 			bd.Desconectar(conex);
 		}
