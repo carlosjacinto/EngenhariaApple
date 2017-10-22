@@ -299,6 +299,7 @@ public class PrincipalFunc extends JFrame {
 	public JLabel getBtnDesligar() {
 		if (btnDesligar == null) {
 			btnDesligar = new JLabel("");
+			btnDesligar.setToolTipText("Desligar");
 			btnDesligar.setIcon(new ImageIcon("Interno/desligar.png"));
 			btnDesligar.setBounds(587, 568, 100, 100);
 		}
