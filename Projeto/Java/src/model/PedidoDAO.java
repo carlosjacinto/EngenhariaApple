@@ -53,22 +53,6 @@ public class PedidoDAO {
 
 	}
 
-	public boolean gravarProdutosPed(Pedido p, int codigo) {
-		conex = bd.Conectar();
-
-		try {
-			Statement stmt = conex.createStatement();
-
-			return true;
-		} catch (SQLException sqle) {
-			System.out.println("Erro ao inserir produtos..." + sqle.getMessage());
-			return false;
-		} finally {
-			bd.Desconectar(conex);
-		}
-
-	}
-
 	public boolean VerificaPedido(int nota, String scnpj) {
 		conex = bd.Conectar();
 
@@ -83,7 +67,11 @@ public class PedidoDAO {
 			ResultSet rs = stmt.executeQuery(SQL);
 			Pedido nota = new Pedido();
 			while (rs.next()) {
-
+				nota.setDataPed(rs.getDate("dataPedido"));
+				nota.setIdCliente(rs.getInt("Cliente_idCliente"));
+				nota.setIdFuncionario(rs.getInt("Funcionario_idFuncionario"));
+				nota.setIdPedido(rs.getInt("idPedido"));
+				nota.setPrecoPed(rs.getInt("valorTotalPedido"));
 			}
 			return nota;
 		} catch (SQLException sqle) {
@@ -92,6 +80,39 @@ public class PedidoDAO {
 		} finally {
 			bd.Desconectar(conex);
 		}
+	}
+	
+	public String[][] retornaProdutosPed(int iid){
+		conex = bd.Conectar();
+		String produtos[][] = null;
+		System.out.println(iid);
+		
+		Statement stmt;
+		try {
+			stmt = conex.createStatement();
+			ResultSet rs = stmt.executeQuery("SELECT Produto_idProduto, nomeProduto,qtdVenda,precoTotalItem from pedido_has_produto inner join Produto on Produto_idProduto = idProduto where Pedido_idPedido = "+iid); 
+			int cont = 0;
+			rs.last();
+			produtos = new String[rs.getRow()][4];
+			System.out.println(rs.getRow());
+			rs.beforeFirst();
+			while(rs.next()) {
+				produtos[cont][0] = ""+rs.getInt("Produto_idProduto");
+				produtos[cont][1] = rs.getString("nomeProduto");
+				System.out.println(produtos[cont][1]);
+				produtos[cont][2] = ""+rs.getInt("qtdVenda");
+				produtos[cont][3] = ""+rs.getDouble("precoTotalItem");
+				cont++;
+			}
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		bd.Desconectar(conex);
+		return produtos;
 	}
 
 	public String[][] listaPedidoArray(String campo) {
@@ -104,8 +125,8 @@ public class PedidoDAO {
 			ResultSet rs = stmt.executeQuery("SELECT idPedido, nomeCliente,cpfCliente,nomeFunc,dataPedido,valorTotalPedido FROM PEDIDO INNER JOIN CLIENTE ON Cliente_idCliente = idCliente INNER JOIN FUNCIONARIO ON Funcionario_idFuncionario = idFuncionario where idPedido like '%"+ campo+"%' or nomeCliente like '%"+campo+"%' order by idPedido"); 
 			int cont = 0;
 			rs.last();
-			pedidos = new String[rs.getRow()-1][6];
-			rs.first();
+			pedidos = new String[rs.getRow()][6];
+			rs.beforeFirst();
 			while(rs.next()) {
 				pedidos[cont][0] = ""+rs.getInt("idPedido");
 				pedidos[cont][1] = rs.getString("nomeCliente");

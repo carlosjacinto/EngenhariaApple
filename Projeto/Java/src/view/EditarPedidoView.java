@@ -2,17 +2,30 @@ package view;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
 
 import control.InputListenerEditarPedido;
+import model.Cliente;
+import model.ClienteDAO;
+import model.Funcionario;
+import model.FuncionarioDAO;
 import model.Pedido;
+import model.PedidoDAO;
+import model.ProdutoDAO;
 
 public class EditarPedidoView extends JDialog {
 
@@ -22,6 +35,7 @@ public class EditarPedidoView extends JDialog {
 	private static final long serialVersionUID = 7876262101294494488L;
 	InputListenerEditarPedido listener;
 	private JPanel contentPanel;
+	private JTable tableProduto;
 	private JLabel lblNomeCliente;
 	private JLabel lblFuncionario;
 	private JButton btnCancelar;
@@ -34,11 +48,16 @@ public class EditarPedidoView extends JDialog {
 	private JLabel lblPreoTotalr;
 	private JTextField textPreco;
 	private JSpinner spinnerQtde;
-	private Pedido pedido;
+	ClienteDAO clienteDAO = new ClienteDAO();
+	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
+	ProdutoDAO produtoDAO = new ProdutoDAO();
+	PedidoDAO pedidoDAO = new PedidoDAO();
+	private JLabel btnAdd;
+	private JScrollPane scrollPane;
 
 	public static void main(String[] args) {
 		try {
-			EditarPedidoView dialog = new EditarPedidoView();
+			CadastroPedidoView dialog = new CadastroPedidoView();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -46,28 +65,54 @@ public class EditarPedidoView extends JDialog {
 		}
 	}
 
-	public EditarPedidoView() {
+	public EditarPedidoView(Pedido ped) {
 		listener = new InputListenerEditarPedido(this);
 		initialize();
 		initializeListeners();
+		preencherCampos(ped);
 
 	}
-	public EditarPedidoView(Pedido pedido) {
-		this.pedido = pedido;
-		listener = new InputListenerEditarPedido(this);
-		initialize();
-		initializeListeners();
+
+	public void preencherCampos(Pedido ped) {
+		Cliente c = clienteDAO.RetornaCliente(ped.getIdCliente());
+		Funcionario f = funcionarioDAO.RetornaFuncionario(ped.getIdFuncionario());
+		getComboBoxCliente().setSelectedItem(c.getIdCliente()+"-"+c.getNome());
+		getComboBoxFuncionario().setSelectedItem(f.getIdFuncionario()+"-"+f.getNome());
+		
+		String[] colunas = {"id","Nome", "Quantidade", "Preço(R$)"};
+		
+		String[][] dados = pedidoDAO.retornaProdutosPed(ped.getIdPedido());
+		
+		DefaultTableModel model = new DefaultTableModel(dados,colunas) {
+			 /**
+			 * 
+			 */
+			private static final long serialVersionUID = -7018342759131611914L;
+			boolean[] canEdit = new boolean []{  
+			            false, false, false, false
+			        };  
+			        @Override  
+			        public boolean isCellEditable(int rowIndex, int columnIndex) {  
+			            return canEdit [columnIndex];  
+			        }
+		};
+		getTableFuncionario().setModel(model);
+		this.repaint();
+		this.revalidate();
+		
 	}
+
 	public void initializeListeners() {
 		getBtnGravar().addMouseListener(listener);
 		getBtnCancelar().addMouseListener(listener);
+		getBtnAdd().addMouseListener(listener);
 	}
 
 	public void initialize() {
 		this.setModal(true);
-		setBounds(100, 100, 649, 275);
+		setBounds(100, 100, 629, 385);
 		setContentPane(getContentPanel());
-		setTitle("Editar de Pedido");
+		setTitle("Edição de Pedido");
 
 	}
 
@@ -90,6 +135,8 @@ public class EditarPedidoView extends JDialog {
 			contentPanel.add(getLblPreoTotalr());
 			contentPanel.add(getTextPreco());
 			contentPanel.add(getSpinnerQtde());
+			contentPanel.add(getBtnAdd());
+			contentPanel.add(getScrollPane());
 
 		}
 		return contentPanel;
@@ -98,7 +145,7 @@ public class EditarPedidoView extends JDialog {
 	private JLabel getLblNomeCliente() {
 		if (lblNomeCliente == null) {
 			lblNomeCliente = new JLabel("Cliente");
-			lblNomeCliente.setBounds(30, 12, 112, 14);
+			lblNomeCliente.setBounds(10, 11, 112, 14);
 		}
 		return lblNomeCliente;
 	}
@@ -106,7 +153,7 @@ public class EditarPedidoView extends JDialog {
 	private JLabel getLblFuncionario() {
 		if (lblFuncionario == null) {
 			lblFuncionario = new JLabel("Funcion\u00E1rio");
-			lblFuncionario.setBounds(30, 70, 75, 14);
+			lblFuncionario.setBounds(322, 11, 75, 14);
 		}
 		return lblFuncionario;
 	}
@@ -114,7 +161,7 @@ public class EditarPedidoView extends JDialog {
 	public JButton getBtnCancelar() {
 		if (btnCancelar == null) {
 			btnCancelar = new JButton("Cancelar");
-			btnCancelar.setBounds(534, 202, 89, 23);
+			btnCancelar.setBounds(514, 201, 89, 23);
 		}
 		return btnCancelar;
 	}
@@ -122,33 +169,33 @@ public class EditarPedidoView extends JDialog {
 	public JButton getBtnGravar() {
 		if (btnGravar == null) {
 			btnGravar = new JButton("Gravar");
-			btnGravar.setBounds(435, 202, 89, 23);
+			btnGravar.setBounds(415, 201, 89, 23);
 		}
 		return btnGravar;
 	}
 	
 	public JComboBox<Object> getComboBoxCliente() {
 		if(comboBoxCliente == null) {
-			comboBoxCliente = new JComboBox<Object>();
-			comboBoxCliente.addItem("Dom");
-			comboBoxCliente.setBounds(30, 37, 281, 20);
+			String clientes[] = clienteDAO.buscarNomeeId();
+			comboBoxCliente = new JComboBox<Object>(clientes);
+			comboBoxCliente.setBounds(10, 36, 281, 20);
 		}
 		return comboBoxCliente;
 	}
 	
 	public JComboBox<Object> getComboBoxFuncionario() {
 		if (comboBoxFuncionario == null) {
-			comboBoxFuncionario = new JComboBox<Object>();
-			comboBoxFuncionario.addItem("Marina");
-			comboBoxFuncionario.setBounds(30, 95, 281, 20);
+			String funcionarios[] = funcionarioDAO.buscarNomeeId();
+			comboBoxFuncionario = new JComboBox<Object>(funcionarios);
+			comboBoxFuncionario.setBounds(322, 36, 281, 20);
 		}
 		return comboBoxFuncionario;
 	}
 	public JComboBox<Object> getComboBoxProduto() {
 		if (comboBoxProduto == null) {
-			comboBoxProduto = new JComboBox<Object>();
-			comboBoxProduto.addItem("MacBook");
-			comboBoxProduto.setBounds(342, 37, 281, 20);
+			String produtos[] = produtoDAO.buscarNomeeId();
+			comboBoxProduto = new JComboBox<Object>(produtos);
+			comboBoxProduto.setBounds(10, 94, 281, 20);
 		}
 		return comboBoxProduto;
 	}
@@ -156,29 +203,29 @@ public class EditarPedidoView extends JDialog {
 	public JLabel getLabelProduto() {
 		if (labelProduto == null) {
 			labelProduto = new JLabel("Produto");
-			labelProduto.setBounds(342, 12, 75, 14);
+			labelProduto.setBounds(10, 69, 75, 14);
 		}
 		return labelProduto;
 	}
 	public JLabel getLblQuantidade() {
 		if (lblQuantidade == null) {
 			lblQuantidade = new JLabel("Quantidade");
-			lblQuantidade.setBounds(342, 70, 75, 14);
+			lblQuantidade.setBounds(322, 69, 75, 14);
 		}
 		return lblQuantidade;
 	}
 	public JLabel getLblPreoTotalr() {
 		if (lblPreoTotalr == null) {
 			lblPreoTotalr = new JLabel("Pre\u00E7o Total (R$)");
-			lblPreoTotalr.setBounds(342, 126, 130, 14);
+			lblPreoTotalr.setBounds(10, 125, 130, 14);
 		}
 		return lblPreoTotalr;
 	}
 	public JTextField getTextPreco() {
 		if (textPreco == null) {
-			textPreco = new JTextField("R$ 10000,00");
+			textPreco = new JTextField("0.0");
 			textPreco.setEditable(false);
-			textPreco.setBounds(342, 151, 281, 20);
+			textPreco.setBounds(10, 150, 281, 20);
 			textPreco.setColumns(10);
 		}
 		return textPreco;
@@ -187,8 +234,50 @@ public class EditarPedidoView extends JDialog {
 	public JSpinner getSpinnerQtde() {
 		if (spinnerQtde == null) {
 			spinnerQtde = new JSpinner();
-			spinnerQtde.setBounds(342, 95, 281, 20);
+			spinnerQtde.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
+			spinnerQtde.setBounds(322, 94, 247, 20);
 		}
 		return spinnerQtde;
+	}
+	
+	public JLabel getBtnAdd() {
+		if (btnAdd == null) {
+			btnAdd = new JLabel("");
+			btnAdd.setHorizontalAlignment(SwingConstants.CENTER);
+			btnAdd.setIcon(new ImageIcon("Interno/add.png"));
+			btnAdd.setBounds(579, 91, 23, 23);
+		}
+		return btnAdd;
+	}
+	private JScrollPane getScrollPane() {
+		if (scrollPane == null) {
+			scrollPane = new JScrollPane(getTableFuncionario());
+			scrollPane.setBounds(10, 235, 593, 99);
+		}
+		return scrollPane;
+	}
+	
+	public JTable getTableFuncionario() {
+		if(tableProduto == null){
+			String[] colunas = {"id","Nome", "Quantidade", "Preço(R$)"};
+			String[][] dados = null;
+			
+			DefaultTableModel model = new DefaultTableModel(dados,colunas) {
+				 /**
+				 * 
+				 */
+				private static final long serialVersionUID = -7018342759131611914L;
+				boolean[] canEdit = new boolean []{  
+				            false, false, false, false
+				        };  
+				        @Override  
+				        public boolean isCellEditable(int rowIndex, int columnIndex) {  
+				            return canEdit [columnIndex];  
+				        }
+			};
+			tableProduto = new JTable(model);
+			tableProduto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		}
+		return tableProduto;
 	}
 }

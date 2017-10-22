@@ -249,6 +249,6 @@ public class ClienteDAO {
 		} finally {
 			bd.Desconectar(conex);
 		}
-		return result;
+		return true;
 	}
 }

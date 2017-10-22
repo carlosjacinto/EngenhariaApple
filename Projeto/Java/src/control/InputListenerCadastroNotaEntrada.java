@@ -6,7 +6,6 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 
 import view.CadastroNotaEntradaView;
-import view.EscolheProdutoView;
 
 public class InputListenerCadastroNotaEntrada  implements MouseListener{
 	CadastroNotaEntradaView cadastroNotaEntrada;
@@ -27,7 +26,6 @@ public class InputListenerCadastroNotaEntrada  implements MouseListener{
 		}else if (e.getSource() == cadastroNotaEntrada.getLblAddProduto()) {
 			System.out.println("botao add produto na tabela");
 		}else if (e.getSource() == cadastroNotaEntrada.getPesqProduto()) {
-			new EscolheProdutoView().setVisible(true);
 		}
 	}
 
