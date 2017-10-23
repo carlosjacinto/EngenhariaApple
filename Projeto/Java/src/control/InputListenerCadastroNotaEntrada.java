@@ -143,7 +143,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 				return;
 			}
 
-			if (notaDAO.VerificaCompra(getNotaEntrada())) {
+			if (notaDAO.VerificaCompra(getNotaEntrada())>=0) {
 				JOptionPane.showMessageDialog(null, "Essa nota já consta em nossa base de dados",
 						"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
 				return;

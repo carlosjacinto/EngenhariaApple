@@ -47,14 +47,16 @@ public class EditarNotaEntradaView extends JDialog {
 	private JTextField textTotalNota;
 	private JSpinner spinnerQtde;
 	private JLabel lblDataEmissao;
+	private JLabel lblDataCadastro;
 	private JFormattedTextField txtDataEmissao;
-	private JTextField textCodigo;
+	private JTextField textNumeroNFE;
 	private JLabel lblNumNFE;
 	private JTable tableNotaEntrada;
 	private JScrollPane scrollPane;
 	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 	NotaEntradaDAO notaDAO = new NotaEntradaDAO();
+	NotaEntrada nota = new NotaEntrada();
 	private JTextField textPrecoCustoUnit;
 	private JSeparator separator;
 	private JLabel lblPrecoCustoUnit;
@@ -66,13 +68,13 @@ public class EditarNotaEntradaView extends JDialog {
 	private JTextField textFieldVTotalProd;
 	private JTextField textFieldOutrosCustos;
 	private JLabel lblOutrosCustos;
-	private JLabel lblNewLabel;
+	private JLabel lblChave;
 	private JTextField textFieldChaveNFE;
 	private JLabel lblAddProduto;
 	private JComboBox<Object> comboBoxProduto;
 	private JLabel lblidCadastro;
-	private JTextField textFieldIdCadastro;
 	private JTextField textFieldDataCadastro;
+	private JTextField textFieldCodigoNFe;
 
 	public static void main(String[] args) {
 		try {
@@ -92,6 +94,7 @@ public class EditarNotaEntradaView extends JDialog {
 	}
 
 	public EditarNotaEntradaView(NotaEntrada nota) {
+		this.nota= nota;
 		listener = new InputListenerEditarNotaEntrada(this);
 		initialize();
 		initializeListeners();
@@ -178,7 +181,7 @@ public class EditarNotaEntradaView extends JDialog {
 			contentPanel.add(getTextTotalNota());
 			contentPanel.add(getSpinnerQtde());
 			contentPanel.add(getLblNumNFE());
-			contentPanel.add(getTextCodigo());
+			contentPanel.add(getTextNumeroNFE());
 			contentPanel.add(getTextDataEmissao());
 			contentPanel.add(getLblDataEmissao());
 			contentPanel.add(getLblPrecoCustoUnit());
@@ -193,33 +196,28 @@ public class EditarNotaEntradaView extends JDialog {
 			contentPanel.add(getTextFieldVTotalProd());
 			contentPanel.add(getTextFieldOutrosCustos());
 			contentPanel.add(getLblOutrosCustos());
-			contentPanel.add(getLblNewLabel());
+			contentPanel.add(getLblChave());
 			contentPanel.add(getTextFieldChaveNFE());
 			contentPanel.add(getBtnAddProduto());
 			contentPanel.add(getComboBoxProduto());
 			contentPanel.add(getLblidCadastro());
-			
-			textFieldIdCadastro = new JTextField();
-			textFieldIdCadastro.setEditable(false);
-			textFieldIdCadastro.setHorizontalAlignment(SwingConstants.CENTER);
-			textFieldIdCadastro.setBounds(30, 54, 141, 20);
-			contentPanel.add(textFieldIdCadastro);
-			textFieldIdCadastro.setColumns(10);
-			
-			JLabel lblDataCadastro = new JLabel("Data de Cadastro da NFe");
-			lblDataCadastro.setBounds(474, 29, 184, 14);
-			contentPanel.add(lblDataCadastro);
-			
-			textFieldDataCadastro = new JTextField();
-			textFieldDataCadastro.setEditable(false);
-			textFieldDataCadastro.setBounds(474, 54, 149, 20);
-			contentPanel.add(textFieldDataCadastro);
-			textFieldDataCadastro.setColumns(10);
-
+			contentPanel.add(getTextFieldDataCadastro());	
+			contentPanel.add(getLblDataCadastro());
+			contentPanel.add(getTextFieldCodigoNFe());
+					
 		}
 		return contentPanel;
 	}
 
+
+	public JLabel getLblDataCadastro() {
+		if (lblDataCadastro == null) {
+			lblDataCadastro = new JLabel("Data de Cadastro da NFe");
+			lblDataCadastro.setBounds(474, 29, 166, 14);
+		}
+		return lblDataCadastro;
+	}
+	
 	public JTextField getTextPrecoCustoUnit() {
 		if (textPrecoCustoUnit == null) {
 			textPrecoCustoUnit = new JTextField();
@@ -343,6 +341,7 @@ public class EditarNotaEntradaView extends JDialog {
 			textTotalNota.setText("0");
 			textTotalNota.setColumns(10);
 			textTotalNota.setEditable(false);
+			textTotalNota.setText(""+nota.getTotal());
 		}
 		return textTotalNota;
 	}
@@ -355,15 +354,16 @@ public class EditarNotaEntradaView extends JDialog {
 		return spinnerQtde;
 	}
 
-	public JTextField getTextCodigo() {
-		if (textCodigo == null) {
-			textCodigo = new JTextField();
-			textCodigo.setHorizontalAlignment(SwingConstants.CENTER);
-			textCodigo.setBounds(30, 117, 141, 22);
-			textCodigo.setColumns(10);
-			textCodigo.setEditable(true);
+	public JTextField getTextNumeroNFE() {
+		if (textNumeroNFE == null) {
+			textNumeroNFE = new JTextField();
+			textNumeroNFE.setHorizontalAlignment(SwingConstants.CENTER);
+			textNumeroNFE.setBounds(30, 117, 141, 22);
+			textNumeroNFE.setColumns(10);
+			textNumeroNFE.setEditable(false);
+			textNumeroNFE.setText(""+nota.getNumeroNota());
 		}
-		return textCodigo;
+		return textNumeroNFE;
 	}
 
 	public JLabel getLblNumNFE() {
@@ -386,6 +386,7 @@ public class EditarNotaEntradaView extends JDialog {
 			txtDataEmissao.setBounds(310, 224, 149, 20);
 			txtDataEmissao.setColumns(10);
 			txtDataEmissao.setEditable(true);
+			txtDataEmissao.setText(nota.getDataCompra());
 		}
 		return txtDataEmissao;
 	}
@@ -409,9 +410,11 @@ public class EditarNotaEntradaView extends JDialog {
 	public JTextField getTextFieldCNPJ() {
 		if (textFieldCNPJ == null) {
 			textFieldCNPJ = new JTextField();
+			textFieldCNPJ.setEditable(false);
 			textFieldCNPJ.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldCNPJ.setBounds(30, 175, 141, 20);
 			textFieldCNPJ.setColumns(10);
+			textFieldCNPJ.setText(nota.getCnpj());
 		}
 		return textFieldCNPJ;
 	}
@@ -430,6 +433,7 @@ public class EditarNotaEntradaView extends JDialog {
 			textFieldNomeFornec.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldNomeFornec.setBounds(30, 224, 261, 20);
 			textFieldNomeFornec.setColumns(10);
+			textFieldNomeFornec.setText(nota.getFornecedor());
 		}
 		return textFieldNomeFornec;
 	}
@@ -447,7 +451,7 @@ public class EditarNotaEntradaView extends JDialog {
 			textFieldVTotalProd = new JTextField();
 			textFieldVTotalProd.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldVTotalProd.setBounds(474, 176, 149, 20);
-			textFieldVTotalProd.setText("0");
+			textFieldVTotalProd.setText(nota.getTotal()-nota.getOutros()+"");
 			textFieldVTotalProd.setColumns(10);
 			textFieldVTotalProd.setEditable(false);
 		}
@@ -461,6 +465,7 @@ public class EditarNotaEntradaView extends JDialog {
 			textFieldOutrosCustos.setBounds(474, 118, 149, 20);
 			textFieldOutrosCustos.setColumns(10);
 			textFieldOutrosCustos.setEditable(true);
+			textFieldOutrosCustos.setText(""+nota.getOutros());
 		}
 		return textFieldOutrosCustos;
 	}
@@ -473,12 +478,12 @@ public class EditarNotaEntradaView extends JDialog {
 		return lblOutrosCustos;
 	}
 
-	private JLabel getLblNewLabel() {
-		if (lblNewLabel == null) {
-			lblNewLabel = new JLabel("Chave de Acesso da NFe");
-			lblNewLabel.setBounds(183, 92, 231, 14);
+	private JLabel getLblChave() {
+		if (lblChave == null) {
+			lblChave = new JLabel("Chave de Acesso da NFe");
+			lblChave.setBounds(183, 92, 231, 14);
 		}
-		return lblNewLabel;
+		return lblChave;
 	}
 
 	public JTextField getTextFieldChaveNFE() {
@@ -487,6 +492,7 @@ public class EditarNotaEntradaView extends JDialog {
 			textFieldChaveNFE.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldChaveNFE.setBounds(183, 118, 276, 20);
 			textFieldChaveNFE.setColumns(10);
+			textFieldChaveNFE.setText(nota.getChaveAcesso());
 		}
 		return textFieldChaveNFE;
 	}
@@ -518,5 +524,30 @@ public class EditarNotaEntradaView extends JDialog {
 			lblidCadastro.setBounds(30, 29, 212, 14);
 		}
 		return lblidCadastro;
+	}
+	
+	private JTextField getTextFieldDataCadastro() {
+		if (textFieldDataCadastro == null) {
+			textFieldDataCadastro = new JTextField();
+			textFieldDataCadastro.setEditable(false);
+			textFieldDataCadastro.setHorizontalAlignment(SwingConstants.CENTER);
+			textFieldDataCadastro.setBounds(474, 54, 149, 20);
+			textFieldDataCadastro.setColumns(10);
+			textFieldDataCadastro.setText(nota.getDataEntrada()+"");
+		}
+		return textFieldDataCadastro;
+	}
+	
+	
+	private JTextField getTextFieldCodigoNFe() {
+		if (textFieldCodigoNFe == null) {
+			textFieldCodigoNFe = new JTextField();
+			textFieldCodigoNFe.setHorizontalAlignment(SwingConstants.CENTER);
+			textFieldCodigoNFe.setEditable(false);
+			textFieldCodigoNFe.setBounds(30, 54, 141, 20);
+			textFieldCodigoNFe.setColumns(10);
+			textFieldCodigoNFe.setText(""+nota.getIdCompra());
+		}
+		return textFieldCodigoNFe;
 	}
 }

@@ -48,8 +48,9 @@ public class NotaEntradaDAO {
 
 	}
 
-	public boolean VerificaCompra(NotaEntrada c) {
+	public int VerificaCompra(NotaEntrada c) {
 		conex = bd.Conectar();
+		int id = -1;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
 			String SQL = "SELECT * FROM compra";
@@ -61,38 +62,39 @@ public class NotaEntradaDAO {
 				cnpj = rs.getString("cnpjFornecCompra");
 
 				if (c.getNumeroNota() == nota && c.getCnpj().toLowerCase().equals(cnpj.toLowerCase())) {
-					return true;
+					id = rs.getInt("idCompra");
 				}
 			}
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
-			return true;
+			return id;
 		} finally {
 			bd.Desconectar(conex);
 		}
-		return false;
+		return id;
 	}
 
 	public String[][] listaNotaEntradaArray(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM compra WHERE numeroNFECompra LIKE '%" + campo + "%' OR idFuncCompra LIKE '%"
+			String SQL = "SELECT * FROM compra INNER JOIN funcionario ON idfuncCompra = idFuncionario WHERE numeroNFECompra LIKE '%"+campo+"%' OR idFuncCompra LIKE '%"
 					+ campo + "%'";
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.last();
 			int size = rs.getRow();
 			rs.beforeFirst();
 
-			String clientes[][] = new String[size][6];
+			String clientes[][] = new String[size][7];
 			int cont = 0;
 			while (rs.next()) {
 				clientes[cont][1] = rs.getString("nomeFornecCompra");
 				clientes[cont][0] = "" + rs.getInt("numeroNFECompra");
 				clientes[cont][2] = rs.getString("cnpjFornecCompra");
-				clientes[cont][4] = "" + rs.getInt("idFuncCompra");
+				clientes[cont][4] = rs.getString("nomeFunc");
 				clientes[cont][5] = "" + rs.getString("dataEntradaCompra");
 				clientes[cont][3] = "" + rs.getFloat("valorTotalCompra");
+				clientes[cont][6] = "" + rs.getInt("idCompra");
 				cont++;
 			}
 			rs.close();
@@ -115,6 +117,7 @@ public class NotaEntradaDAO {
 			NotaEntrada nota = new NotaEntrada();
 			while (rs.next()) {
 				nota.setFornecedor(rs.getString("nomeFornecCompra"));
+				System.out.println(nota.getFornecedor());
 				nota.setCnpj(rs.getString("cnpjFornecCompra"));
 				nota.setNumeroNota(rs.getInt("numeroNFECompra"));
 				nota.setIdCompra(rs.getInt("idCompra"));
@@ -135,20 +138,24 @@ public class NotaEntradaDAO {
 		}
 	}
 
-	public int excluirNotaEntrada(int iid) {
+	public boolean excluirNotaEntrada(int iid) {
 		conex = bd.Conectar();
-		int result = 0;
+		System.out.println(iid);
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM compra where idCompra = " + iid;
-			result = stmt.executeUpdate(SQL);
-
+			String SQL = "DELETE FROM compra_has_produto where compra_idCompra = "+iid;
+			stmt.executeUpdate(SQL);
+			SQL = "DELETE FROM compra where idCompra = " + iid;
+			stmt.executeUpdate(SQL);
+			return true;
 		} catch (SQLException sqle) {
-			System.out.println("Erro ao consultar..." + sqle.getMessage());
+			System.out.println("Erro ao excluir..." + sqle.getMessage());
+			return false;
 		} finally {
 			bd.Desconectar(conex);
 		}
-		return result;
+		
+		
 	}
 
 	public String[][] retornaProdutosNota(int iid){

@@ -281,7 +281,7 @@ public class CadastroNotaEntradaView extends JDialog {
 			textTotalNota.setHorizontalAlignment(SwingConstants.CENTER);
 			textTotalNota.setEditable(true);
 			textTotalNota.setBounds(474, 144, 152, 20);
-			textTotalNota.setText("0");
+			textTotalNota.setText("0.00");
 			textTotalNota.setColumns(10);
 			textTotalNota.setEditable(false);
 		}
@@ -388,7 +388,7 @@ public class CadastroNotaEntradaView extends JDialog {
 			textFieldVTotalProd = new JTextField();
 			textFieldVTotalProd.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldVTotalProd.setBounds(474, 96, 149, 20);
-			textFieldVTotalProd.setText("0");
+			textFieldVTotalProd.setText("0.00");
 			textFieldVTotalProd.setColumns(10);
 			textFieldVTotalProd.setEditable(false);
 		}

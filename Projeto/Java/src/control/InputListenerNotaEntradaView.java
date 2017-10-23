@@ -40,15 +40,23 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 			confirmarExclusao();
 		} else if (e.getSource() == notaEntradaView.getBtnEditarNotaEntrada()) {
 			if (notaEntradaView.getTableNotaEntrada().getSelectedRow() != -1) {
-				String id = (notaEntradaView.getTableNotaEntrada().getModel()
+				String snum = (notaEntradaView.getTableNotaEntrada().getModel()
 						.getValueAt(notaEntradaView.getTableNotaEntrada().getSelectedRow(), 0).toString());
-				NotaEntrada nota = notaDAO.RetornaNotaEntrada(Integer.parseInt(id));
+				String scnpj = (notaEntradaView.getTableNotaEntrada().getModel()
+						.getValueAt(notaEntradaView.getTableNotaEntrada().getSelectedRow(), 2).toString());
+				NotaEntrada nota = new NotaEntrada(); 
+				nota.setNumeroNota(Integer.parseInt(snum));
+				nota.setCnpj(scnpj);
+				nota.setIdCompra(notaDAO.VerificaCompra(nota));
+				System.out.println(nota.getIdCompra());
+				nota = notaDAO.RetornaNotaEntrada(nota.getIdCompra());
 				new EditarNotaEntradaView(nota).setVisible(true);
 				notaEntradaView.getTextBusca().setText("");
 				mudarTabela();
 			} else
-				JOptionPane.showMessageDialog(null, "Selecione Uma Nota de Entrada!", null, JOptionPane.WARNING_MESSAGE);
-		}else if(e.getSource() == notaEntradaView.getBtnLimparBusca()) {
+				JOptionPane.showMessageDialog(null, "Selecione Uma Nota de Entrada!", null,
+						JOptionPane.WARNING_MESSAGE);
+		} else if (e.getSource() == notaEntradaView.getBtnLimparBusca()) {
 			notaEntradaView.getTextBusca().setText("");
 			mudarTabela();
 		}
@@ -77,17 +85,19 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 	}
 
 	public void confirmarExclusao() {
-		
+
 		int i = notaEntradaView.getTableNotaEntrada().getSelectedRow();
 		if (i != -1) {
 			int result = JOptionPane.showConfirmDialog(null,
 					"Tem certeza que quer excluir " + notaEntradaView.getTableNotaEntrada().getValueAt(i, 1) + "?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
-				int sucesso = notaDAO.excluirNotaEntrada(
-						Integer.parseInt(notaEntradaView.getTableNotaEntrada().getValueAt(i, 0).toString()));
+				NotaEntrada nota = new NotaEntrada();
+				nota.setCnpj(notaEntradaView.getTableNotaEntrada().getValueAt(i, 2).toString());
+				nota.setNumeroNota(Integer.parseInt(notaEntradaView.getTableNotaEntrada().getValueAt(i, 0).toString()));
+				nota.setIdCompra(notaDAO.VerificaCompra(nota));
+				if (notaDAO.excluirNotaEntrada(nota.getIdCompra()))
 
-				if (sucesso == 1)
 					JOptionPane.showMessageDialog(null, "Nota de Entrada Excluido!", null,
 							JOptionPane.INFORMATION_MESSAGE);
 				else
@@ -100,7 +110,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
+
 		if (e.getSource() == notaEntradaView.getbtnExcluirNotaEntrada()) {
 			notaEntradaView.getbtnExcluirNotaEntrada().setIcon(new ImageIcon("Interno/deleteNota2x.png"));
 		} else if (e.getSource() == notaEntradaView.getbtnNovoNotaEntrada()) {
@@ -109,7 +119,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 			notaEntradaView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
 		} else if (e.getSource() == notaEntradaView.getBtnEditarNotaEntrada()) {
 			notaEntradaView.getBtnEditarNotaEntrada().setIcon(new ImageIcon("Interno/editNota2x.png"));
-		}else if(e.getSource() == notaEntradaView.getBtnLimparBusca()) {
+		} else if (e.getSource() == notaEntradaView.getBtnLimparBusca()) {
 			notaEntradaView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
@@ -117,7 +127,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 		if (e.getSource() == notaEntradaView.getbtnExcluirNotaEntrada()) {
 			notaEntradaView.getbtnExcluirNotaEntrada().setIcon(new ImageIcon("Interno/deleteNota.png"));
 		} else if (e.getSource() == notaEntradaView.getbtnNovoNotaEntrada()) {
@@ -126,7 +136,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 			notaEntradaView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		} else if (e.getSource() == notaEntradaView.getBtnEditarNotaEntrada()) {
 			notaEntradaView.getBtnEditarNotaEntrada().setIcon(new ImageIcon("Interno/editNota.png"));
-		}else if(e.getSource() == notaEntradaView.getBtnLimparBusca()) {
+		} else if (e.getSource() == notaEntradaView.getBtnLimparBusca()) {
 			notaEntradaView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
@@ -134,7 +144,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 		if (e.getSource() == notaEntradaView.getbtnExcluirNotaEntrada()) {
 			notaEntradaView.getbtnExcluirNotaEntrada().setIcon(new ImageIcon("Interno/deleteNota.png"));
 		} else if (e.getSource() == notaEntradaView.getbtnNovoNotaEntrada()) {
@@ -143,7 +153,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 			notaEntradaView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		} else if (e.getSource() == notaEntradaView.getBtnEditarNotaEntrada()) {
 			notaEntradaView.getBtnEditarNotaEntrada().setIcon(new ImageIcon("Interno/editNota.png"));
-		}else if(e.getSource() == notaEntradaView.getBtnLimparBusca()) {
+		} else if (e.getSource() == notaEntradaView.getBtnLimparBusca()) {
 			notaEntradaView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
@@ -151,7 +161,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 		if (e.getSource() == notaEntradaView.getbtnExcluirNotaEntrada()) {
 			notaEntradaView.getbtnExcluirNotaEntrada().setIcon(new ImageIcon("Interno/deleteNota2x.png"));
 		} else if (e.getSource() == notaEntradaView.getbtnNovoNotaEntrada()) {
@@ -160,7 +170,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 			notaEntradaView.getBuscarButton().setIcon(new ImageIcon("Interno/search-iconNota2x.png"));
 		} else if (e.getSource() == notaEntradaView.getBtnEditarNotaEntrada()) {
 			notaEntradaView.getBtnEditarNotaEntrada().setIcon(new ImageIcon("Interno/editNota2x.png"));
-		}else if(e.getSource() == notaEntradaView.getBtnLimparBusca()) {
+		} else if (e.getSource() == notaEntradaView.getBtnLimparBusca()) {
 			notaEntradaView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
@@ -168,13 +178,11 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		
 
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		
 
 	}
 
@@ -185,24 +193,21 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		
 
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		
+
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		
 
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		
 
 	}
 

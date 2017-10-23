@@ -70,7 +70,7 @@ public class NotaEntradaView extends JDialog {
 				* 
 				*/
 				private static final long serialVersionUID = -7018342759131611914L;
-				boolean[] canEdit = new boolean[] { false, false, false, false, false, false };
+				boolean[] canEdit = new boolean[] { false, false, false, false, false, false};
 
 				@Override
 				public boolean isCellEditable(int rowIndex, int columnIndex) {
