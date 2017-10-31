@@ -74,13 +74,13 @@ public class PrincipalAdm extends JFrame {
 			panel_1.setLayout(null);
 
 			panel_1.add(getBtFunc());
+			panel_1.add(getBtDesligar());
 			panel_1.add(getBtProd());
 			panel_1.add(getBtSair());
 			panel_1.add(getBarraAtalhos());
 			panel_1.add(getSetaBaixo());
 			panel_1.add(getSetaCima());
 			panel_1.add(getLabel_1());
-			panel_1.add(getBtDesligar());
 		}
 
 		return panel_1;

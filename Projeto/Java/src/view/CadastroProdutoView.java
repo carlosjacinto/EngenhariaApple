@@ -2,6 +2,7 @@ package view;
 
 import java.awt.Color;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -168,6 +169,7 @@ public class CadastroProdutoView extends JDialog {
 		if (lblFoto == null) {
 			lblFoto = new JLabel("");
 			lblFoto.setBounds(348, 69, 275, 281);
+			lblFoto.setIcon(new ImageIcon("Interno/default-produto.png"));
 		}
 		return lblFoto;
 	}

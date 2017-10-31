@@ -1,6 +1,6 @@
 package control;
 
-import view.Principal;
+import view.PrincipalFunc;
 
 public class Main {
 
@@ -11,6 +11,6 @@ public class Main {
 		} catch (Exception e) {
 		}
 		
-		new Principal().setVisible(true);
+		new PrincipalFunc().setVisible(true);
 	}
 }

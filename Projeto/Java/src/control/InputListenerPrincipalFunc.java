@@ -54,7 +54,7 @@ public class InputListenerPrincipalFunc implements MouseListener {
 		} else if (e.getSource() == principalFunc.getBtSair()) {
 			principalFunc.getBtSair().setIcon(new ImageIcon("Interno/sair2x.png"));
 		} else if (e.getSource() == principalFunc.getBtnDesligar()) {
-			principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/sair2x.png"));
+			principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/desligar2x.png"));
 		}
 
 	}
@@ -70,7 +70,7 @@ public class InputListenerPrincipalFunc implements MouseListener {
 		} else if (e.getSource() == principalFunc.getBtSair()) {
 			principalFunc.getBtSair().setIcon(new ImageIcon("Interno/sair.png"));
 		} else if (e.getSource() == principalFunc.getBtnDesligar()) {
-			principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/sair.png"));
+			principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/desligar.png"));
 		}
 
 	}
@@ -87,9 +87,13 @@ public class InputListenerPrincipalFunc implements MouseListener {
 			principalFunc.getBtNotaEntrada().setIcon(new ImageIcon("Interno/nota.png"));
 			new NotaEntradaView().setVisible(true);
 		} else if (e.getSource() == principalFunc.getBtSair()) {
-			principalFunc.getBtSair().setIcon(new ImageIcon("Interno/sair.png"));
-			principalFunc.dispose();
-			new LoginView().setVisible(true);
+			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da sessão usuário?", "Sair",
+					JOptionPane.YES_NO_OPTION);
+			if (result == JOptionPane.YES_OPTION) {
+				principalFunc.getBtSair().setIcon(new ImageIcon("Interno/sair.png"));
+				principalFunc.dispose();
+				new LoginView().setVisible(true);
+			}
 		} else if (e.getSource() == principalFunc.getmntmCliente()) {
 			new ClienteView().setVisible(true);
 		} else if (e.getSource() == principalFunc.getmntmPedidos()) {
@@ -97,11 +101,15 @@ public class InputListenerPrincipalFunc implements MouseListener {
 		} else if (e.getSource() == principalFunc.getmntmNotaEntrada()) {
 			new NotaEntradaView().setVisible(true);
 		} else if (e.getSource() == principalFunc.getBtnDesligar()) {
-			principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/sair.png"));
-			principalFunc.dispose();
+			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?",
+					"Sair", JOptionPane.YES_NO_OPTION);
+			if (result == JOptionPane.YES_OPTION) {
+				principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/sair.png"));
+				principalFunc.dispose();
+			}
 		} else if (e.getSource() == principalFunc.getmntmDesligar()) {
-			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja realmente sair da aplicação?", "Sair",
-					JOptionPane.YES_NO_OPTION);
+			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?",
+					"Sair", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
 				principalFunc.dispose();
 			}
@@ -127,7 +135,7 @@ public class InputListenerPrincipalFunc implements MouseListener {
 		} else if (e.getSource() == principalFunc.getBtSair()) {
 			principalFunc.getBtSair().setIcon(new ImageIcon("Interno/sair2x.png"));
 		} else if (e.getSource() == principalFunc.getBtnDesligar()) {
-			principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/sair2x.png"));
+			principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/desligar2x.png"));
 		}
 
 	}

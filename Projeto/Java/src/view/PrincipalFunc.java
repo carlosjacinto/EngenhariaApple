@@ -84,11 +84,11 @@ public class PrincipalFunc extends JFrame {
 			panel_1.add(getBtPedido());
 			panel_1.add(getBtNotaEntrada());
 			panel_1.add(getBtSair());
+			panel_1.add(getBtnDesligar());
 			panel_1.add(getBarraAtalhos());
 			panel_1.add(getSetaBaixo());
 			panel_1.add(getSetaCima());
 			panel_1.add(getLabel_1());
-			panel_1.add(getBtnDesligar());
 		}
 		
 		return panel_1;
@@ -278,7 +278,7 @@ public class PrincipalFunc extends JFrame {
 			setaBaixo = new JLabel("");
 			setaBaixo.setVisible(false);
 			setaBaixo.setIcon(new ImageIcon("Interno/Seta_Para_Baixo.png"));
-			setaBaixo.setBounds(665, 595, 30, 19);
+			setaBaixo.setBounds(702, 595, 30, 19);
 			
 		}
 		return setaBaixo;
@@ -301,7 +301,7 @@ public class PrincipalFunc extends JFrame {
 			btnDesligar = new JLabel("");
 			btnDesligar.setToolTipText("Desligar");
 			btnDesligar.setIcon(new ImageIcon("Interno/desligar.png"));
-			btnDesligar.setBounds(587, 568, 100, 100);
+			btnDesligar.setBounds(595, 568, 100, 100);
 		}
 		return btnDesligar;
 	}

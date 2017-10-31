@@ -47,7 +47,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			System.out.println("Botão ok Clicado");
 			capturarDadosNotaEntrada();
 		} else if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
-			
+
 			if (!cadastroNotaEntrada.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(cadastroNotaEntrada.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) cadastroNotaEntrada.getComboBoxProduto().getSelectedItem()).split("-");
@@ -114,9 +114,14 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 	}
 
 	public void capturarDadosNotaEntrada() {
-		cadastroNotaEntrada.getTextTotalNota()
-				.setText((Float.parseFloat(cadastroNotaEntrada.getTextFieldVTotalProd().getText())
-						+ Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText()))) + "");
+		try {
+			cadastroNotaEntrada.getTextTotalNota()
+					.setText((Float.parseFloat(cadastroNotaEntrada.getTextFieldVTotalProd().getText())
+							+ Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText()))) + "");
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(null, "Valor Inválido! (Campo: Outros)", null, JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		if (!(cadastroNotaEntrada.getTextCodigo().getText().equals("")
 				|| cadastroNotaEntrada.getTextFieldVTotalProd().getText().equals("")
 				|| cadastroNotaEntrada.getTextFieldOutrosCustos().getText().equals("")
@@ -124,26 +129,35 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 				|| cadastroNotaEntrada.getTextFieldNomeFornec().getText().equals("")
 				|| cadastroNotaEntrada.getTextDataEmissao().getText().equals(""))) {
 
+			try {
+				getNotaEntrada().setTotal(Float.parseFloat((cadastroNotaEntrada.getTextFieldVTotalProd().getText())));
+				getNotaEntrada()
+						.setOutros(Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText())));
+				getNotaEntrada().setNumeroNota(Integer.parseInt(cadastroNotaEntrada.getTextCodigo().getText()));
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Valor Inválido! (Campo: Numero da Nota)", null,
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			String[] funcionario = cadastroNotaEntrada.getComboBoxFuncionario().getSelectedItem().toString().split("-");
 			getNotaEntrada().setIdFuncionario(Integer.parseInt(funcionario[0]));
-			getNotaEntrada().setNumeroNota(Integer.parseInt(cadastroNotaEntrada.getTextCodigo().getText()));
+
 			getNotaEntrada().setDataEntrada(new Date(System.currentTimeMillis()));
 			getNotaEntrada().setChaveAcesso(cadastroNotaEntrada.getTextFieldChaveNFE().getText());
 			getNotaEntrada().setCnpj(cadastroNotaEntrada.getTextFieldCNPJ().getText());
-			getNotaEntrada().setTotal(Float.parseFloat((cadastroNotaEntrada.getTextFieldVTotalProd().getText())));
-			getNotaEntrada().setOutros(Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText())));
 			getNotaEntrada().setFornecedor(cadastroNotaEntrada.getTextFieldNomeFornec().getText());
 			getNotaEntrada().setDataCompra(cadastroNotaEntrada.getTextDataEmissao().getText());
 
 			int tam = cadastroNotaEntrada.getTextFieldChaveNFE().getText().length();
 			System.out.println(tam);
 			if (!(tam == 44 || tam == 0)) {
-				JOptionPane.showMessageDialog(null, "Chave de Acesso deve possuir 44 digitos. Deixe em branco ou digite-a corretamente.",
+				JOptionPane.showMessageDialog(null,
+						"Chave de Acesso deve possuir 44 digitos. Deixe em branco ou digite-a corretamente.",
 						"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
-			if (notaDAO.VerificaCompra(getNotaEntrada())>=0) {
+			if (notaDAO.VerificaCompra(getNotaEntrada()) >= 0) {
 				JOptionPane.showMessageDialog(null, "Essa nota já consta em nossa base de dados",
 						"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
 				return;
@@ -168,7 +182,8 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto a nota!", "Erro",
 						JOptionPane.ERROR_MESSAGE);
 			}
-		}
+		} else
+			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
 	}
 
 	@Override
