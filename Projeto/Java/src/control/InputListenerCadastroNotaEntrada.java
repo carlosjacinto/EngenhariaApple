@@ -45,6 +45,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			cadastroNotaEntrada.dispose();
 		} else if ((e.getSource()) == cadastroNotaEntrada.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
+
 			capturarDadosNotaEntrada();
 		} else if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
 
@@ -61,7 +62,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 					dados[0][1] = p[1];
 					dados[0][2] = p[2];
 					dados[0][3] = p[3];
-					dados[0][3] = p[4];
+					dados[0][4] = p[4];
 
 				} else {
 					int i = dados.length;
@@ -86,28 +87,29 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 						dados[j][3] = aux[j][3];
 						dados[j][4] = aux[j][4];
 					}
-					String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total" };
-					DefaultTableModel model = new DefaultTableModel(dados, colunas) {
-						/**
-						* 
-						*/
-						private static final long serialVersionUID = -7018342759131611914L;
-						boolean[] canEdit = new boolean[] { false, false, false, false, false };
 
-						@Override
-						public boolean isCellEditable(int rowIndex, int columnIndex) {
-							return canEdit[columnIndex];
-						}
-					};
-					cadastroNotaEntrada.getTableFuncionario().setModel(model);
-					cadastroNotaEntrada.repaint();
-					cadastroNotaEntrada.revalidate();
-					valorTotal += precoProdutos;
-					cadastroNotaEntrada.getTextFieldVTotalProd().setText(valorTotal + "");
-					cadastroNotaEntrada.getTextTotalNota().setText(
-							(valorTotal + Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText())))
-									+ "");
 				}
+				String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total" };
+				DefaultTableModel model = new DefaultTableModel(dados, colunas) {
+					/**
+					* 
+					*/
+					private static final long serialVersionUID = -7018342759131611914L;
+					boolean[] canEdit = new boolean[] { false, false, false, false };
+
+					@Override
+					public boolean isCellEditable(int rowIndex, int columnIndex) {
+						return canEdit[columnIndex];
+					}
+				};
+				cadastroNotaEntrada.getTableNotaEntrada().setModel(model);
+				cadastroNotaEntrada.repaint();
+				cadastroNotaEntrada.revalidate();
+				valorTotal += precoProdutos;
+				cadastroNotaEntrada.getTextFieldVTotalProd().setText(valorTotal + "");
+				cadastroNotaEntrada.getTextTotalNota().setText(
+						(valorTotal + Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText())))
+								+ "");
 
 			}
 		}
@@ -184,7 +186,8 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			}
 		} else
 			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
-	}
+
+		}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {

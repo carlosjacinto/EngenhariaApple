@@ -24,13 +24,12 @@ import javax.swing.text.MaskFormatter;
 import control.InputListenerCadastroNotaEntrada;
 import model.FuncionarioDAO;
 import model.ProdutoDAO;
-import java.awt.Component;
+import javax.swing.SpinnerNumberModel;
 
 public class CadastroNotaEntradaView extends JDialog {
 
 	private static final long serialVersionUID = 967851639105823465L;
 	InputListenerCadastroNotaEntrada listener;
-	private JTable tableProduto;
 	private JPanel contentPanel;
 	private JLabel lblFuncionario;
 	private JButton btnCancelar;
@@ -67,7 +66,7 @@ public class CadastroNotaEntradaView extends JDialog {
 
 	public static void main(String[] args) {
 		try {
-			EditarNotaEntradaView dialog = new EditarNotaEntradaView();
+			CadastroNotaEntradaView dialog = new CadastroNotaEntradaView();
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -88,34 +87,13 @@ public class CadastroNotaEntradaView extends JDialog {
 		getBtnAddProduto().addMouseListener(listener);
 	}
 
-	public JTable getTableFuncionario() {
-		if (tableProduto == null) {
-			String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total" };
-			String[][] dados = null;
-
-			DefaultTableModel model = new DefaultTableModel(dados, colunas) {
-				/**
-				* 
-				*/
-				private static final long serialVersionUID = -7018342759131611914L;
-				boolean[] canEdit = new boolean[] { false, false, false, false, false };
-
-				@Override
-				public boolean isCellEditable(int rowIndex, int columnIndex) {
-					return canEdit[columnIndex];
-				}
-			};
-			tableProduto = new JTable(model);
-			tableProduto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		}
-		return tableProduto;
-	}
 
 	public void initialize() {
 		this.setModal(true);
 		setBounds(100, 100, 666, 528);
 		setContentPane(getContentPanel());
 		setTitle("Cadastro de Nota de Entrada");
+		setLocationRelativeTo(null);
 
 	}
 
@@ -162,7 +140,6 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextPrecoCustoUnit() {
 		if (textPrecoCustoUnit == null) {
 			textPrecoCustoUnit = new JTextField();
-			textPrecoCustoUnit.setHorizontalAlignment(SwingConstants.CENTER);
 			textPrecoCustoUnit.setBounds(437, 213, 130, 20);
 			textPrecoCustoUnit.setColumns(10);
 		}
@@ -212,8 +189,6 @@ public class CadastroNotaEntradaView extends JDialog {
 			};
 			tableNotaEntrada = new JTable(model);
 			tableNotaEntrada.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			this.repaint();
-			this.revalidate();
 		}
 		return tableNotaEntrada;
 	}
@@ -278,10 +253,9 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextTotalNota() {
 		if (textTotalNota == null) {
 			textTotalNota = new JTextField();
-			textTotalNota.setHorizontalAlignment(SwingConstants.CENTER);
 			textTotalNota.setEditable(true);
 			textTotalNota.setBounds(474, 144, 152, 20);
-			textTotalNota.setText("0.00");
+			textTotalNota.setText("0");
 			textTotalNota.setColumns(10);
 			textTotalNota.setEditable(false);
 		}
@@ -291,6 +265,7 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JSpinner getSpinnerQtde() {
 		if (spinnerQtde == null) {
 			spinnerQtde = new JSpinner();
+			spinnerQtde.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinnerQtde.setBounds(352, 213, 75, 20);
 		}
 		return spinnerQtde;
@@ -299,7 +274,6 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextCodigo() {
 		if (textCodigo == null) {
 			textCodigo = new JTextField();
-			textCodigo.setHorizontalAlignment(SwingConstants.CENTER);
 			textCodigo.setBounds(30, 37, 141, 22);
 			textCodigo.setColumns(10);
 			textCodigo.setEditable(true);
@@ -319,7 +293,6 @@ public class CadastroNotaEntradaView extends JDialog {
 		if (txtDataEmissao == null) {
 			try {
 				txtDataEmissao = new JFormattedTextField(new MaskFormatter("##/##/####"));
-				txtDataEmissao.setHorizontalAlignment(SwingConstants.CENTER);
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
@@ -350,7 +323,6 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextFieldCNPJ() {
 		if (textFieldCNPJ == null) {
 			textFieldCNPJ = new JTextField();
-			textFieldCNPJ.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldCNPJ.setBounds(30, 95, 141, 20);
 			textFieldCNPJ.setColumns(10);
 		}
@@ -368,7 +340,6 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextFieldNomeFornec() {
 		if (textFieldNomeFornec == null) {
 			textFieldNomeFornec = new JTextField();
-			textFieldNomeFornec.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldNomeFornec.setBounds(30, 144, 261, 20);
 			textFieldNomeFornec.setColumns(10);
 		}
@@ -386,9 +357,8 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextFieldVTotalProd() {
 		if (textFieldVTotalProd == null) {
 			textFieldVTotalProd = new JTextField();
-			textFieldVTotalProd.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldVTotalProd.setBounds(474, 96, 149, 20);
-			textFieldVTotalProd.setText("0.00");
+			textFieldVTotalProd.setText("0");
 			textFieldVTotalProd.setColumns(10);
 			textFieldVTotalProd.setEditable(false);
 		}
@@ -398,7 +368,7 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextFieldOutrosCustos() {
 		if (textFieldOutrosCustos == null) {
 			textFieldOutrosCustos = new JTextField();
-			textFieldOutrosCustos.setHorizontalAlignment(SwingConstants.CENTER);
+			textFieldOutrosCustos.setText("0");
 			textFieldOutrosCustos.setBounds(474, 38, 149, 20);
 			textFieldOutrosCustos.setColumns(10);
 			textFieldOutrosCustos.setEditable(true);
@@ -425,7 +395,6 @@ public class CadastroNotaEntradaView extends JDialog {
 	public JTextField getTextFieldChaveNFE() {
 		if (textFieldChaveNFE == null) {
 			textFieldChaveNFE = new JTextField();
-			textFieldChaveNFE.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldChaveNFE.setBounds(183, 38, 276, 20);
 			textFieldChaveNFE.setColumns(10);
 		}
