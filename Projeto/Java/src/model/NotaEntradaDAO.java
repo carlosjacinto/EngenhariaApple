@@ -28,22 +28,24 @@ public class NotaEntradaDAO {
 				codigo = rs.getInt("MAX(idCompra)");
 			}
 
+			System.out.println(codigo);
 			for (int i = 0; i < produtos.length; i++) {
 
 				stmt.execute(
-						"INSERT INTO compra_has_produto(Compra_idCompra, Produto_idProduto, qtdCompra, qtdControle, precoCompra, precoTotalItem)VALUES ('"
+						"INSERT INTO compra_has_produto(Compra_idCompra, Produto_idProduto, qtdCompra, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
 								+ codigo + "','" + Integer.parseInt(produtos[i][0]) + "','"
-								+ Integer.parseInt(produtos[i][2]) + "','" + Integer.parseInt(produtos[i][2]) + "','"
-								+ Double.parseDouble(produtos[i][3]) / Integer.parseInt(produtos[i][2]) + "','"
-								+ Double.parseDouble(produtos[i][3]) + "') ");
+								+ Integer.parseInt(produtos[i][3]) + "','" + Integer.parseInt(produtos[i][3]) + "','"
+								+ Double.parseDouble(produtos[i][2]) + "','" + Double.parseDouble(produtos[i][4])
+								+ "') ");
 			}
 			System.out.println("deu bom gravar produtos");
 			return true;
 		} catch (SQLException sqle) {
-			System.out.println("Erro ao inserir..." + sqle.getMessage());
+			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
 			return false;
 		} finally {
 			bd.Desconectar(conex);
+
 		}
 
 	}
@@ -78,8 +80,8 @@ public class NotaEntradaDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM compra INNER JOIN funcionario ON idfuncCompra = idFuncionario WHERE numeroNFECompra LIKE '%"+campo+"%' OR idFuncCompra LIKE '%"
-					+ campo + "%'";
+			String SQL = "SELECT * FROM compra INNER JOIN funcionario ON idfuncCompra = idFuncionario WHERE numeroNFECompra LIKE '%"
+					+ campo + "%' OR idFuncCompra LIKE '%" + campo + "%'";
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.last();
 			int size = rs.getRow();
@@ -143,7 +145,7 @@ public class NotaEntradaDAO {
 		System.out.println(iid);
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM compra_has_produto where compra_idCompra = "+iid;
+			String SQL = "DELETE FROM compra_has_produto where compra_idCompra = " + iid;
 			stmt.executeUpdate(SQL);
 			SQL = "DELETE FROM compra where idCompra = " + iid;
 			stmt.executeUpdate(SQL);
@@ -154,41 +156,30 @@ public class NotaEntradaDAO {
 		} finally {
 			bd.Desconectar(conex);
 		}
-		
-		
+
 	}
 
-	public String[][] retornaProdutosNota(int iid){
+	public String[][] retornaProdutosNota(int iid) {
 		conex = bd.Conectar();
 		String produtos[][] = null;
-		/*System.out.println(iid);
-		
-		Statement stmt;
-		try {
-			stmt = conex.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT Produto_idProduto, nomeProduto,qtdVenda,precoTotalItem from pedido_has_produto inner join Produto on Produto_idProduto = idProduto where Pedido_idPedido = "+iid); 
-			int cont = 0;
-			rs.last();
-			produtos = new String[rs.getRow()][4];
-			System.out.println(rs.getRow());
-			rs.beforeFirst();
-			while(rs.next()) {
-				produtos[cont][0] = ""+rs.getInt("Produto_idProduto");
-				produtos[cont][1] = rs.getString("nomeProduto");
-				System.out.println(produtos[cont][1]);
-				produtos[cont][2] = ""+rs.getInt("qtdVenda");
-				produtos[cont][3] = ""+rs.getDouble("precoTotalItem");
-				cont++;
-			}
-			
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		bd.Desconectar(conex);
-		*/
+		/*
+		 * System.out.println(iid);
+		 * 
+		 * Statement stmt; try { stmt = conex.createStatement(); ResultSet rs = stmt.
+		 * executeQuery("SELECT Produto_idProduto, nomeProduto,qtdVenda,precoTotalItem from pedido_has_produto inner join Produto on Produto_idProduto = idProduto where Pedido_idPedido = "
+		 * +iid); int cont = 0; rs.last(); produtos = new String[rs.getRow()][4];
+		 * System.out.println(rs.getRow()); rs.beforeFirst(); while(rs.next()) {
+		 * produtos[cont][0] = ""+rs.getInt("Produto_idProduto"); produtos[cont][1] =
+		 * rs.getString("nomeProduto"); System.out.println(produtos[cont][1]);
+		 * produtos[cont][2] = ""+rs.getInt("qtdVenda"); produtos[cont][3] =
+		 * ""+rs.getDouble("precoTotalItem"); cont++; }
+		 * 
+		 * 
+		 * } catch (SQLException e) { // TODO Auto-generated catch block
+		 * e.printStackTrace(); }
+		 * 
+		 * bd.Desconectar(conex);
+		 */
 		return produtos;
 	}
 }

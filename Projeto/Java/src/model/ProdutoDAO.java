@@ -21,7 +21,8 @@ public class ProdutoDAO {
 			Statement stmt = conex.createStatement();
 			stmt.execute(
 					"INSERT INTO Produto(nomeProduto, precoVendaProduto, descricaoProduto, dataCadastroProduto, percLucro)VALUES ('"
-							+ p.getNomeProduto() + "','" + p.getPrecoVendaProduto() + "','" + p.getDescricaoProduto()+ "','" + p.getDataCadastroProduto()+ "','" + p.getPercentualLucro() +"') ");
+							+ p.getNomeProduto() + "','" + p.getPrecoVendaProduto() + "','" + p.getDescricaoProduto()
+							+ "','" + p.getDataCadastroProduto() + "','" + p.getPercentualLucro() + "') ");
 
 			if (p.getFotoProduto() != null) {
 				int codigo = buscaCodigoProduto(p.getNomeProduto());
@@ -37,7 +38,6 @@ public class ProdutoDAO {
 		}
 
 	}
-	
 
 	public int buscaCodigoProduto(String snome) {
 		conex = bd.Conectar();
@@ -66,7 +66,7 @@ public class ProdutoDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM produto where idProduto = "+iid;
+			String SQL = "SELECT * FROM produto where idProduto = " + iid;
 			ResultSet rs = stmt.executeQuery(SQL);
 			Produto p = new Produto();
 			while (rs.next()) {
@@ -88,6 +88,7 @@ public class ProdutoDAO {
 			bd.Desconectar(conex);
 		}
 	}
+
 	public boolean verificaNome(String snome) {
 		conex = bd.Conectar();
 		try {
@@ -135,7 +136,9 @@ public class ProdutoDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = conex.createStatement();
-			stmt.execute("UPDATE produto SET nomeProduto='" + p.getNomeProduto() + "', precoVendaProduto='" + p.getPrecoVendaProduto() + "', descricaoProduto='" + p.getDescricaoProduto() + "' where idProduto = "+p.getIdProduto());
+			stmt.execute("UPDATE produto SET nomeProduto='" + p.getNomeProduto() + "', precoVendaProduto='"
+					+ p.getPrecoVendaProduto() + "', descricaoProduto='" + p.getDescricaoProduto()
+					+ "' where idProduto = " + p.getIdProduto());
 			stmt.close();
 			return true;
 		} catch (SQLException sqle) {
@@ -151,9 +154,9 @@ public class ProdutoDAO {
 		int result = 0;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM produto where idProduto = "+iid;
+			String SQL = "DELETE FROM produto where idProduto = " + iid;
 			result = stmt.executeUpdate(SQL);
-			
+
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 		} finally {
@@ -161,7 +164,7 @@ public class ProdutoDAO {
 		}
 		return result;
 	}
-	
+
 	public double buscarPrecoVenda(int iid) {
 		conex = bd.Conectar();
 		try {
@@ -184,7 +187,6 @@ public class ProdutoDAO {
 		}
 	}
 
-	
 	public String[][] listaProdutoArray(String campo) {
 		conex = bd.Conectar();
 		try {
@@ -216,7 +218,7 @@ public class ProdutoDAO {
 			bd.Desconectar(conex);
 		}
 	}
-	
+
 	public String[] buscarNomeeId() {
 		conex = bd.Conectar();
 		String produtos[];
@@ -231,7 +233,7 @@ public class ProdutoDAO {
 			produtos = new String[size];
 			int cont = 0;
 			while (rs.next()) {
-				produtos[cont] = rs.getInt("idProduto")+"-"+rs.getString("nomeProduto");
+				produtos[cont] = rs.getInt("idProduto") + "-" + rs.getString("nomeProduto");
 				cont++;
 			}
 			rs.close();
@@ -244,19 +246,22 @@ public class ProdutoDAO {
 			bd.Desconectar(conex);
 		}
 	}
-	
+
 	public boolean PermitirExclusaoProduto(int iid) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM pedido_has_produto WHERE Produto_idProduto = "+iid);
+			ResultSet rs = stmt
+					.executeQuery("SELECT COUNT(*) FROM pedido_has_produto WHERE Produto_idProduto = " + iid);
 			rs.next();
-			if(rs.getInt("count(*)")!=0) return false;
-			
-			rs = stmt.executeQuery("SELECT COUNT(*) FROM compra_has_produto WHERE Produto_idProduto = "+iid);
+			if (rs.getInt("count(*)") != 0)
+				return false;
+
+			rs = stmt.executeQuery("SELECT COUNT(*) FROM compra_has_produto WHERE Produto_idProduto = " + iid);
 			rs.next();
-			if(rs.getInt("count(*)")!=0) return false;
-			
+			if (rs.getInt("count(*)") != 0)
+				return false;
+
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 		} finally {
@@ -264,5 +269,67 @@ public class ProdutoDAO {
 		}
 		return true;
 	}
-	
+
+	public boolean atualizaProduto(String[][] produtos, boolean preco) {
+		conex = bd.Conectar();
+
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			float perc = 0;
+			int estoque = 0;
+
+			ResultSet rs;
+			if (preco) {
+				for (int i = 0; i < produtos.length; i++) {
+
+					rs = stmt.executeQuery("SELECT qtdEstoqueProduto,percLucro FROM Produto WHERE idProduto = "
+							+ Integer.parseInt(produtos[i][0]));
+					while (rs.next()) {
+						perc = rs.getInt("percLucro");
+						estoque = rs.getInt("qtdEstoqueProduto");
+					}
+					estoque += Integer.parseInt(produtos[i][3]);
+					perc = (float) (1 + perc / 100.0);
+					System.out.println(perc);
+					stmt.execute("UPDATE produto SET qtdEstoqueProduto='" + estoque + "', precoCompraProduto='"
+							+ Double.parseDouble(produtos[i][2]) + "', precoVendaProduto='"
+							+ Double.parseDouble(produtos[i][2]) * perc + "' where idProduto = "
+							+ Integer.parseInt(produtos[i][0]));
+
+					perc = 0;
+					estoque = 0;
+
+				}
+			} else {
+				for (int i = 0; i < produtos.length; i++) {
+
+					rs = stmt.executeQuery("SELECT qtdEstoqueProduto FROM Produto WHERE idProduto = "
+							+ Integer.parseInt(produtos[i][0]));
+					while (rs.next()) {
+						estoque = rs.getInt("qtdEstoqueProduto");
+					}
+					estoque += Integer.parseInt(produtos[i][3]);
+					System.out.println(perc);
+					stmt.execute("UPDATE produto SET qtdEstoqueProduto='" + estoque + "' where idProduto = "
+							+ Integer.parseInt(produtos[i][0]));
+
+					perc = 0;
+					estoque = 0;
+
+				}
+			}
+			stmt.close();
+			return true;
+
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao atualizar produtos..." + sqle.getMessage());
+			return false;
+		} finally {
+
+			bd.Desconectar(conex);
+
+		}
+
+	}
+
 }

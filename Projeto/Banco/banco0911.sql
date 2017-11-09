@@ -37,7 +37,7 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`idCliente`),
   UNIQUE KEY `cpfCliente_UNIQUE` (`cpfCliente`),
   UNIQUE KEY `idCliente_UNIQUE` (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cliente` */
 
@@ -49,23 +49,23 @@ DROP TABLE IF EXISTS `compra`;
 
 CREATE TABLE `compra` (
   `idCompra` int(11) NOT NULL AUTO_INCREMENT,
+  `numeroNFECompra` int(10) unsigned NOT NULL,
   `nomeFornecCompra` varchar(45) NOT NULL,
   `cnpjFornecCompra` varchar(45) NOT NULL,
   `dataCompra` varchar(20) NOT NULL,
-  `outrosCompra` float unsigned DEFAULT NULL,
-  `valorTotalCompra` float unsigned NOT NULL,
+  `outrosCompra` float unsigned DEFAULT '0',
+  `valorTotalCompra` float unsigned NOT NULL DEFAULT '0',
   `chaveAcessoCompra` varchar(50) DEFAULT NULL,
   `dataEntradaCompra` date NOT NULL,
-  `numeroNFECompra` int(10) unsigned NOT NULL,
   `idFuncCompra` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idCompra`),
   KEY `idFuncCompra` (`idFuncCompra`),
   CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`idFuncCompra`) REFERENCES `funcionario` (`idFuncionario`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 /*Data for the table `compra` */
 
-insert  into `compra`(`idCompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`numeroNFECompra`,`idFuncCompra`) values (1,'1','1','2017-10-04',1,1,'1','2017-10-10',1,1);
+insert  into `compra`(`idCompra`,`numeroNFECompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`idFuncCompra`) values (5,1,'1','1','null',1,10,'','2017-10-22',1),(6,10,'1','1','null',1,10,'','2017-10-22',1),(8,121,'1','1','11/22/1111',1,15,'','2017-10-22',1),(9,2,'12','1','11/11/1111',1,10,'','2017-10-22',1),(10,7,'12','1','11/11/1111',1,10,'','2017-10-22',1),(11,214124,'21421421421421','21421421421','11/11/1111',2142,132,'','2017-10-22',1),(12,1211,'1','1','11/11/1111',1,30,'','2017-10-22',2),(13,6,'1','1','11/11/1111',1,2,'','2017-11-08',1),(14,1999,'23213','1','12/31/2321',2,10,'','2017-11-09',1),(15,1234,'23214','12','11/11/1111',0,24,'','2017-11-09',1),(16,213412412,'qwdwqdqwf','123','11/11/1111',200,1065620,'12345678901234567890123456789012345678901234','2017-11-09',47),(17,1234,'2312412','1','  /  /    ',1,40,'','2017-11-09',47),(18,3253543,'21421421','21321421','  /  /    ',2121,1200,'','2017-11-09',1),(19,6789,'fdvdsvsdv','3124','11/11/1111',0,60,'','2017-11-09',2),(20,6547658,'134sfvbafbvrev','3214345','11/11/1111',0,3000,'','2017-11-09',1);
 
 /*Table structure for table `compra_has_produto` */
 
@@ -76,7 +76,8 @@ CREATE TABLE `compra_has_produto` (
   `Produto_idProduto` int(10) unsigned NOT NULL,
   `qtdControle` int(10) unsigned NOT NULL DEFAULT '0',
   `qtdCompra` int(10) unsigned NOT NULL DEFAULT '0',
-  `precoCompra` float unsigned NOT NULL,
+  `precoUnitItem` float unsigned NOT NULL DEFAULT '0',
+  `precoTotalItem` float unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`Compra_idCompra`,`Produto_idProduto`),
   KEY `fk_Compra_has_Produto_Produto1_idx` (`Produto_idProduto`),
   KEY `fk_Compra_has_Produto_Compra1_idx` (`Compra_idCompra`),
@@ -85,6 +86,8 @@ CREATE TABLE `compra_has_produto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `compra_has_produto` */
+
+insert  into `compra_has_produto`(`Compra_idCompra`,`Produto_idProduto`,`qtdControle`,`qtdCompra`,`precoUnitItem`,`precoTotalItem`) values (16,4,5,5,213123,1065620),(17,1,4,4,10,40),(18,1,4,4,300,1200),(19,1,3,3,20,60),(20,1,3,3,1000,3000);
 
 /*Table structure for table `conta` */
 
@@ -95,11 +98,11 @@ CREATE TABLE `conta` (
   `aReceber` float unsigned NOT NULL DEFAULT '0',
   `totalCompras` float unsigned NOT NULL DEFAULT '0',
   `pago` float unsigned NOT NULL DEFAULT '0',
-  `Cliente_idCliente` int(10) unsigned NOT NULL,
+  `Pedido_idPedido` int(10) unsigned NOT NULL,
   PRIMARY KEY (`idConta`),
   UNIQUE KEY `idConta_UNIQUE` (`idConta`),
-  KEY `fk_Conta_Cliente1_idx` (`Cliente_idCliente`),
-  CONSTRAINT `fk_Conta_Cliente1` FOREIGN KEY (`Cliente_idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  UNIQUE KEY `fk_Pedido_idPedido` (`Pedido_idPedido`),
+  CONSTRAINT `fk_Pedido_idPedido` FOREIGN KEY (`Pedido_idPedido`) REFERENCES `pedido` (`idPedido`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `conta` */
@@ -133,7 +136,7 @@ CREATE TABLE `funcionario` (
 
 /*Data for the table `funcionario` */
 
-insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30','1','1',1),(2,'teste edicao',1,1,'2','1','1','1','1','1','  /  /    ','1','1','2017-09-25','1','2',0),(46,'1',1,1,'13161894650','1','1','1','1','1','11/11/1111','1','1','2017-10-10','1','1',0),(47,'Carlos Henrique',9999999,10,'11542601606','rua qualquer','comp qualquer','0','bairro qualquer','cidade qualquer','11/11/1111','(35)3333-3333','(35)99999-9999','2017-10-11','37552-184','123456789',1);
+insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30','1','1',1),(2,'teste edicao',1,1,'2','1','1','1','1','1','  /  /    ','1','1','2017-09-25','1','2',0),(47,'Carlos Henrique',9999999,10,'11542601606','rua qualquer','comp qualquer','0','bairro qualquer','cidade qualquer','11/11/1111','(35)3333-3333','(35)99999-9999','2017-10-11','37552-184','123456789',1);
 
 /*Table structure for table `pedido` */
 
@@ -151,11 +154,11 @@ CREATE TABLE `pedido` (
   KEY `fk_Pedido_Funcionario1_idx` (`Funcionario_idFuncionario`),
   CONSTRAINT `fk_Pedido_Cliente` FOREIGN KEY (`Cliente_idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Pedido_Funcionario1` FOREIGN KEY (`Funcionario_idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 /*Data for the table `pedido` */
 
-insert  into `pedido`(`idPedido`,`Cliente_idCliente`,`Funcionario_idFuncionario`,`dataPedido`,`valorTotalPedido`) values (1,9,1,'2017-10-17',0),(2,11,47,'2017-10-17',40),(3,11,47,'2017-10-17',20),(4,11,47,'2017-10-17',0),(5,11,47,'2017-10-17',40),(6,11,47,'2017-10-17',40),(7,9,2,'2017-10-17',40),(8,9,1,'2017-10-17',0),(9,9,1,'2017-10-17',10),(10,9,1,'2017-10-17',0),(11,9,1,'2017-10-17',10),(12,9,1,'2017-10-17',10),(13,9,1,'2017-10-17',40),(14,11,47,'2017-10-17',90),(15,11,2,'2017-10-17',20),(16,9,1,'2017-10-17',0),(17,9,1,'2017-10-17',20),(18,12,2,'2017-10-17',40);
+insert  into `pedido`(`idPedido`,`Cliente_idCliente`,`Funcionario_idFuncionario`,`dataPedido`,`valorTotalPedido`) values (1,9,1,'2017-10-17',0),(3,11,47,'2017-10-17',20),(4,11,47,'2017-10-17',0),(5,11,47,'2017-10-17',40),(6,11,47,'2017-10-17',40),(8,9,1,'2017-10-17',0),(9,9,1,'2017-10-17',10),(10,9,1,'2017-10-17',0),(11,9,1,'2017-10-17',10),(12,9,1,'2017-10-17',10),(13,9,1,'2017-10-17',40),(14,11,47,'2017-10-17',90),(16,9,1,'2017-10-17',0),(17,9,1,'2017-10-17',20),(21,12,47,'2017-10-31',30),(22,9,1,'2017-10-31',0);
 
 /*Table structure for table `pedido_has_produto` */
 
@@ -177,7 +180,7 @@ CREATE TABLE `pedido_has_produto` (
 
 /*Data for the table `pedido_has_produto` */
 
-insert  into `pedido_has_produto`(`Pedido_idPedido`,`Produto_idProduto`,`qtdVenda`,`qtdControle`,`precoUnitItem`,`precoTotalItem`) values (13,1,2,0,10,20),(13,2,1,0,20,20),(14,1,5,0,10,50),(14,2,2,0,20,40),(15,1,2,0,10,20),(17,1,2,2,10,20),(18,2,2,2,20,40);
+insert  into `pedido_has_produto`(`Pedido_idPedido`,`Produto_idProduto`,`qtdVenda`,`qtdControle`,`precoUnitItem`,`precoTotalItem`) values (13,1,2,0,10,20),(13,2,1,0,20,20),(14,1,5,0,10,50),(14,2,2,0,20,40),(17,1,2,2,10,20),(21,1,1,1,10,10),(21,2,1,1,20,20),(22,5,2,2,0,0);
 
 /*Table structure for table `produto` */
 
@@ -195,11 +198,11 @@ CREATE TABLE `produto` (
   `percLucro` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`idProduto`),
   UNIQUE KEY `idProduto_UNIQUE` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 /*Data for the table `produto` */
 
-insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',0,10,5,'kjiasoidoasj',NULL,'2017-10-17',15),(2,'prod2',0,20,2,'sadasdoijowhqeiu	',NULL,'2017-10-17',20);
+insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',300,345,12,'kjiasoidoasj',NULL,'2017-10-17',15),(2,'prod2',0,20,2,'sadasdoijowhqeiu	',NULL,'2017-10-17',20),(4,'Pc1',0,0,8,'Marina testando....',NULL,'2017-10-31',15),(5,'PC2',0,0,99,'Marina testando.....',NULL,'2017-10-31',9);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

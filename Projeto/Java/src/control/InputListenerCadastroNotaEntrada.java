@@ -175,6 +175,24 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 				if (notaDAO.gravarCompra(getNotaEntrada(), dados)) {
 					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
 							JOptionPane.INFORMATION_MESSAGE);
+
+					int result = JOptionPane.showConfirmDialog(null,
+							"Deseja atualizar o preço de custo e venda das mercadorias?", "Atualizar preços",
+							JOptionPane.YES_NO_OPTION);
+					if (result == JOptionPane.YES_OPTION) {
+						if (produtoDAO.atualizaProduto(dados, true)) {
+							JOptionPane.showMessageDialog(null, "Estoque e Preços atualizados com sucesso!", "Sucesso",
+									JOptionPane.INFORMATION_MESSAGE);
+						}
+						else
+							JOptionPane.showMessageDialog(null, "Erro ao atualizar", "Erro", JOptionPane.ERROR_MESSAGE);
+					}else {
+						if (produtoDAO.atualizaProduto(dados, false)) {
+							JOptionPane.showMessageDialog(null, "Estoque atualizado com sucesso!", "Sucesso",
+									JOptionPane.INFORMATION_MESSAGE);
+						}else JOptionPane.showMessageDialog(null, "Erro ao atualizar", "Erro", JOptionPane.ERROR_MESSAGE);
+							
+					}
 					cadastroNotaEntrada.dispose();
 
 				} else {
@@ -187,7 +205,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 		} else
 			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
 
-		}
+	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
