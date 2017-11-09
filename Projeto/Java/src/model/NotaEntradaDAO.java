@@ -162,24 +162,35 @@ public class NotaEntradaDAO {
 	public String[][] retornaProdutosNota(int iid) {
 		conex = bd.Conectar();
 		String produtos[][] = null;
-		/*
-		 * System.out.println(iid);
-		 * 
-		 * Statement stmt; try { stmt = conex.createStatement(); ResultSet rs = stmt.
-		 * executeQuery("SELECT Produto_idProduto, nomeProduto,qtdVenda,precoTotalItem from pedido_has_produto inner join Produto on Produto_idProduto = idProduto where Pedido_idPedido = "
-		 * +iid); int cont = 0; rs.last(); produtos = new String[rs.getRow()][4];
-		 * System.out.println(rs.getRow()); rs.beforeFirst(); while(rs.next()) {
-		 * produtos[cont][0] = ""+rs.getInt("Produto_idProduto"); produtos[cont][1] =
-		 * rs.getString("nomeProduto"); System.out.println(produtos[cont][1]);
-		 * produtos[cont][2] = ""+rs.getInt("qtdVenda"); produtos[cont][3] =
-		 * ""+rs.getDouble("precoTotalItem"); cont++; }
-		 * 
-		 * 
-		 * } catch (SQLException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); }
-		 * 
-		 * bd.Desconectar(conex);
-		 */
+		System.out.println(iid);
+
+		Statement stmt;
+		try {
+			stmt = conex.createStatement();
+			ResultSet rs = stmt.executeQuery(
+					"SELECT Produto_idProduto, nomeProduto,qtdCompra,precoTotalItem, precoUnitItem from compra_has_produto inner join Produto on Produto_idProduto = idProduto where Compra_idCompra = "
+							+ iid);
+			int cont = 0;
+			rs.last();
+			produtos = new String[rs.getRow()][4];
+			System.out.println(rs.getRow());
+			rs.beforeFirst();
+			while (rs.next()) {
+				produtos[cont][0] = "" + rs.getInt("Produto_idProduto");
+				produtos[cont][1] = rs.getString("nomeProduto");
+				produtos[cont][2] = "" + rs.getDouble("precoUnitItem");
+				produtos[cont][3] = "" + rs.getDouble("precoTotalItem");
+				produtos[cont][4] = "" + rs.getInt("qtdCompra");
+				
+				cont++;
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		bd.Desconectar(conex);
 		return produtos;
 	}
 }

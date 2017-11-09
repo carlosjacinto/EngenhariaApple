@@ -161,7 +161,7 @@ public class EditarNotaEntradaView extends JDialog {
 		this.setModal(true);
 		setBounds(100, 100, 666, 618);
 		setContentPane(getContentPanel());
-		setTitle("Cadastro de Nota de Entrada");
+		setTitle("Edição da Nota de Entrada");
 
 	}
 
@@ -204,6 +204,11 @@ public class EditarNotaEntradaView extends JDialog {
 			contentPanel.add(getTextFieldDataCadastro());	
 			contentPanel.add(getLblDataCadastro());
 			contentPanel.add(getTextFieldCodigoNFe());
+			
+			JLabel imagem = new JLabel("");
+			imagem.setIcon(new ImageIcon("Interno/logo3.png"));
+			imagem.setBounds(275, 0, 152, 95);
+			contentPanel.add(imagem);
 					
 		}
 		return contentPanel;

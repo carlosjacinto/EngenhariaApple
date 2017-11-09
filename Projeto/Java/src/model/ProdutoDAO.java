@@ -5,6 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -288,13 +289,14 @@ public class ProdutoDAO {
 						perc = rs.getInt("percLucro");
 						estoque = rs.getInt("qtdEstoqueProduto");
 					}
+					Date data = new Date(System.currentTimeMillis());
 					estoque += Integer.parseInt(produtos[i][3]);
 					perc = (float) (1 + perc / 100.0);
 					System.out.println(perc);
 					stmt.execute("UPDATE produto SET qtdEstoqueProduto='" + estoque + "', precoCompraProduto='"
-							+ Double.parseDouble(produtos[i][2]) + "', precoVendaProduto='"
-							+ Double.parseDouble(produtos[i][2]) * perc + "' where idProduto = "
-							+ Integer.parseInt(produtos[i][0]));
+							+ Double.parseDouble(produtos[i][2]) + "', ultimaDataCompraProduto='" + data
+							+ "', precoVendaProduto='" + Double.parseDouble(produtos[i][2]) * perc
+							+ "' where idProduto = " + Integer.parseInt(produtos[i][0]));
 
 					perc = 0;
 					estoque = 0;
