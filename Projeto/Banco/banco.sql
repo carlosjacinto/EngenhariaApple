@@ -61,11 +61,11 @@ CREATE TABLE `compra` (
   PRIMARY KEY (`idCompra`),
   KEY `idFuncCompra` (`idFuncCompra`),
   CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`idFuncCompra`) REFERENCES `funcionario` (`idFuncionario`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 
 /*Data for the table `compra` */
 
-insert  into `compra`(`idCompra`,`numeroNFECompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`idFuncCompra`) values (5,1,'1','1','null',1,10,'','2017-10-22',1),(6,10,'1','1','null',1,10,'','2017-10-22',1),(8,121,'1','1','11/22/1111',1,15,'','2017-10-22',1),(9,2,'12','1','11/11/1111',1,10,'','2017-10-22',1),(10,7,'12','1','11/11/1111',1,10,'','2017-10-22',1),(11,214124,'21421421421421','21421421421','11/11/1111',2142,132,'','2017-10-22',1),(12,1211,'1','1','11/11/1111',1,30,'','2017-10-22',2),(13,6,'1','1','11/11/1111',1,2,'','2017-11-08',1),(14,1999,'23213','1','12/31/2321',2,10,'','2017-11-09',1),(15,1234,'23214','12','11/11/1111',0,24,'','2017-11-09',1),(16,213412412,'qwdwqdqwf','123','11/11/1111',200,1065620,'12345678901234567890123456789012345678901234','2017-11-09',47),(17,1234,'2312412','1','  /  /    ',1,40,'','2017-11-09',47),(18,3253543,'21421421','21321421','  /  /    ',2121,1200,'','2017-11-09',1),(19,6789,'fdvdsvsdv','3124','11/11/1111',0,60,'','2017-11-09',2),(20,6547658,'134sfvbafbvrev','3214345','11/11/1111',0,3000,'','2017-11-09',1);
+insert  into `compra`(`idCompra`,`numeroNFECompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`idFuncCompra`) values (24,123,'teste geral estoque','12345','11/11/1111',100,700,'','2017-11-11',1),(25,214215,'teste estoque 2','123','22/22/2222',20,1050,'','2017-11-11',1),(26,3435,'estoque 3','112412','33/33/3333',1,400,'','2017-11-11',1);
 
 /*Table structure for table `compra_has_produto` */
 
@@ -87,7 +87,7 @@ CREATE TABLE `compra_has_produto` (
 
 /*Data for the table `compra_has_produto` */
 
-insert  into `compra_has_produto`(`Compra_idCompra`,`Produto_idProduto`,`qtdControle`,`qtdCompra`,`precoUnitItem`,`precoTotalItem`) values (16,4,5,5,213123,1065620),(17,1,4,4,10,40),(18,1,4,4,300,1200),(19,1,3,3,20,60),(20,1,3,3,1000,3000);
+insert  into `compra_has_produto`(`Compra_idCompra`,`Produto_idProduto`,`qtdControle`,`qtdCompra`,`precoUnitItem`,`precoTotalItem`) values (24,1,3,3,100,300),(24,2,2,2,200,400),(25,1,5,5,150,750),(25,2,1,1,300,300),(26,1,1,1,20,20),(26,2,2,2,30,60),(26,4,3,3,40,120),(26,5,4,4,50,200);
 
 /*Table structure for table `conta` */
 
@@ -202,7 +202,7 @@ CREATE TABLE `produto` (
 
 /*Data for the table `produto` */
 
-insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',300,345,12,'kjiasoidoasj',NULL,'2017-10-17',15),(2,'prod2',0,20,2,'sadasdoijowhqeiu	',NULL,'2017-10-17',20),(4,'Pc1',0,0,8,'Marina testando....',NULL,'2017-10-31',15),(5,'PC2',0,0,99,'Marina testando.....',NULL,'2017-10-31',9);
+insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',20,23,9,'kjiasoidoasj','2017-11-11','2017-10-17',15),(2,'prod2',30,36,5,'sadasdoijowhqeiu	','2017-11-11','2017-10-17',20),(4,'Pc1',40,46,3,'Marina testando....','2017-11-11','2017-10-31',15),(5,'PC2',50,54.5,4,'Marina testando.....','2017-11-11','2017-10-31',9);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

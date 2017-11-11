@@ -172,7 +172,8 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			}
 
 			if (dados != null && dados.length > 0) {
-				if (notaDAO.gravarCompra(getNotaEntrada(), dados)) {
+				int cod = notaDAO.gravarCompra(getNotaEntrada(), dados);
+				if (cod >0) {
 					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
 							JOptionPane.INFORMATION_MESSAGE);
 
@@ -180,14 +181,14 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 							"Deseja atualizar o preço de custo e venda das mercadorias?", "Atualizar preços",
 							JOptionPane.YES_NO_OPTION);
 					if (result == JOptionPane.YES_OPTION) {
-						if (produtoDAO.atualizaProduto(dados, true)) {
+						if (produtoDAO.atualizaProdutoCompra(dados, true, cod )) {
 							JOptionPane.showMessageDialog(null, "Estoque e Preços atualizados com sucesso!", "Sucesso",
 									JOptionPane.INFORMATION_MESSAGE);
 						}
 						else
 							JOptionPane.showMessageDialog(null, "Erro ao atualizar", "Erro", JOptionPane.ERROR_MESSAGE);
 					}else {
-						if (produtoDAO.atualizaProduto(dados, false)) {
+						if (produtoDAO.atualizaProdutoCompra(dados, false, cod)) {
 							JOptionPane.showMessageDialog(null, "Estoque atualizado com sucesso!", "Sucesso",
 									JOptionPane.INFORMATION_MESSAGE);
 						}else JOptionPane.showMessageDialog(null, "Erro ao atualizar", "Erro", JOptionPane.ERROR_MESSAGE);

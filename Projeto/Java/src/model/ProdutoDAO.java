@@ -271,26 +271,30 @@ public class ProdutoDAO {
 		return true;
 	}
 
-	public boolean atualizaProduto(String[][] produtos, boolean preco) {
+	public boolean atualizaProdutoCompra(String[][] produtos, boolean preco, int numNFe) {
 		conex = bd.Conectar();
 
 		try {
 			Statement stmt = (Statement) conex.createStatement();
 			float perc = 0;
 			int estoque = 0;
+			int qtdControle = 0;
+			Date data = new Date(System.currentTimeMillis());
 
 			ResultSet rs;
 			if (preco) {
 				for (int i = 0; i < produtos.length; i++) {
 
-					rs = stmt.executeQuery("SELECT qtdEstoqueProduto,percLucro FROM Produto WHERE idProduto = "
-							+ Integer.parseInt(produtos[i][0]));
+					rs = stmt.executeQuery(
+							"SELECT qtdEstoqueProduto,percLucro, qtdControle FROM Produto INNER JOIN compra_has_produto  WHERE Produto_idProduto = idProduto AND Compra_idCompra = '"
+									+ numNFe + "' AND idProduto = " + Integer.parseInt(produtos[i][0]));
 					while (rs.next()) {
 						perc = rs.getInt("percLucro");
 						estoque = rs.getInt("qtdEstoqueProduto");
+						qtdControle = rs.getInt("qtdControle");
 					}
-					Date data = new Date(System.currentTimeMillis());
-					estoque += Integer.parseInt(produtos[i][3]);
+
+					estoque += Integer.parseInt(produtos[i][3]) - qtdControle;
 					perc = (float) (1 + perc / 100.0);
 					System.out.println(perc);
 					stmt.execute("UPDATE produto SET qtdEstoqueProduto='" + estoque + "', precoCompraProduto='"
@@ -298,25 +302,37 @@ public class ProdutoDAO {
 							+ "', precoVendaProduto='" + Double.parseDouble(produtos[i][2]) * perc
 							+ "' where idProduto = " + Integer.parseInt(produtos[i][0]));
 
+					stmt.execute("UPDATE compra_has_produto SET qtdControle='" + Integer.parseInt(produtos[i][3])
+							+ "' where Produto_idProduto = " + Integer.parseInt(produtos[i][0])
+							+ " and Compra_idCompra = '" + numNFe + "'");
+
 					perc = 0;
 					estoque = 0;
+					qtdControle = 0;
 
 				}
 			} else {
 				for (int i = 0; i < produtos.length; i++) {
 
-					rs = stmt.executeQuery("SELECT qtdEstoqueProduto FROM Produto WHERE idProduto = "
-							+ Integer.parseInt(produtos[i][0]));
+					rs = stmt.executeQuery(
+							"SELECT qtdEstoqueProduto, qtdControle FROM Produto INNER JOIN compra_has_produto  WHERE Produto_idProduto = idProduto AND Compra_idCompra = '"
+									+ numNFe + "' AND idProduto = " + Integer.parseInt(produtos[i][0]));
 					while (rs.next()) {
 						estoque = rs.getInt("qtdEstoqueProduto");
+						qtdControle = rs.getInt("qtdControle");
 					}
-					estoque += Integer.parseInt(produtos[i][3]);
+
+					estoque += Integer.parseInt(produtos[i][3]) - qtdControle;
 					System.out.println(perc);
 					stmt.execute("UPDATE produto SET qtdEstoqueProduto='" + estoque + "' where idProduto = "
 							+ Integer.parseInt(produtos[i][0]));
 
-					perc = 0;
+					stmt.execute("UPDATE compra_has_produto SET qtdControle='" + Integer.parseInt(produtos[i][3])
+							+ "' where Produto_idProduto = " + Integer.parseInt(produtos[i][0])
+							+ " and Compra_idCompra = '" + numNFe + "'");
+
 					estoque = 0;
+					qtdControle = 0;
 
 				}
 			}

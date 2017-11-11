@@ -11,7 +11,7 @@ public class NotaEntradaDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
 
-	public boolean gravarCompra(NotaEntrada c, String[][] produtos) {
+	public int gravarCompra(NotaEntrada c, String[][] produtos) {
 		conex = bd.Conectar();
 		int codigo = -1;
 		try {
@@ -34,15 +34,15 @@ public class NotaEntradaDAO {
 				stmt.execute(
 						"INSERT INTO compra_has_produto(Compra_idCompra, Produto_idProduto, qtdCompra, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
 								+ codigo + "','" + Integer.parseInt(produtos[i][0]) + "','"
-								+ Integer.parseInt(produtos[i][3]) + "','" + Integer.parseInt(produtos[i][3]) + "','"
+								+ Integer.parseInt(produtos[i][3]) + "','0','"
 								+ Double.parseDouble(produtos[i][2]) + "','" + Double.parseDouble(produtos[i][4])
 								+ "') ");
 			}
 			System.out.println("deu bom gravar produtos");
-			return true;
+			return codigo;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
-			return false;
+			return -1;
 		} finally {
 			bd.Desconectar(conex);
 

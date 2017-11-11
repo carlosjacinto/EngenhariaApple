@@ -1,6 +1,6 @@
 package control;
 
-import view.NotaEntradaView;
+import view.PrincipalFunc;
 
 public class Main {
 
@@ -11,6 +11,6 @@ public class Main {
 		} catch (Exception e) {
 		}
 
-		new NotaEntradaView().setVisible(true);
+		new PrincipalFunc().setVisible(true);
 	}
 }
