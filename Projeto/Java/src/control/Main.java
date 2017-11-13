@@ -1,11 +1,6 @@
 package control;
 
-<<<<<<< HEAD
-import view.Principal;
-
-=======
-import view.PedidoView;
->>>>>>> refs/remotes/origin/master
+import view.NotaEntradaView;
 
 public class Main {
 
@@ -15,13 +10,8 @@ public class Main {
 			com.birosoft.liquid.LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 		} catch (Exception e) {
 		}
-<<<<<<< HEAD
-		new Principal().setVisible(true);
-=======
 
-
-		new PedidoView().setVisible(true);
->>>>>>> refs/remotes/origin/master
+		new NotaEntradaView().setVisible(true);
 
 	}
 }
