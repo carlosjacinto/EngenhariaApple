@@ -1,6 +1,10 @@
 package control;
 
+<<<<<<< HEAD
 import view.Principal;
+=======
+import view.PedidoView;
+>>>>>>> refs/remotes/origin/master
 
 public class Main {
 
@@ -11,6 +15,10 @@ public class Main {
 		} catch (Exception e) {
 		}
 
+<<<<<<< HEAD
 		new Principal().setVisible(true);
+=======
+		new PedidoView().setVisible(true);
+>>>>>>> refs/remotes/origin/master
 	}
 }

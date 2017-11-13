@@ -30,18 +30,33 @@ public class PedidoDAO {
 				codigo = rs.getInt("MAX(idPedido)");
 			}
 	
-
-			System.out.println(codigo);
 			for (int i = 0; i < produtos.length; i++) {
 
 				stmt.execute(
 						"INSERT INTO pedido_has_produto(Pedido_idPedido, Produto_idProduto, qtdVenda, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
 								+ codigo + "','" + Integer.parseInt(produtos[i][0]) + "','"
-								+ Integer.parseInt(produtos[i][2]) + "','" + Integer.parseInt(produtos[i][2]) + "','"
+								+ Integer.parseInt(produtos[i][2]) + "','" + 0 + "','"
 								+ Double.parseDouble(produtos[i][3]) / Integer.parseInt(produtos[i][2]) + "','"
 								+ Double.parseDouble(produtos[i][3]) + "') ");
 			}
-			System.out.println("deu bom gravar produtos");
+			
+			
+			float aReceber = 0;
+			float totalCompras = 0;
+
+
+			rs = stmt.executeQuery(
+					"SELECT * from conta where Cliente_idCliente = '"+p.getIdCliente()+"'");
+			while (rs.next()) {
+				aReceber = rs.getFloat("aReceber");
+				totalCompras = rs.getFloat("totalCompras");
+			}
+			aReceber += p.getPrecoPed();
+			totalCompras += p.getPrecoPed();
+			System.out.println(totalCompras);
+			stmt.execute("UPDATE conta SET aReceber='" + aReceber + "', totalCompras='"
+					+ totalCompras + "' where Cliente_idCliente = '" + p.getIdCliente()+"'");
+
 			return codigo;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());

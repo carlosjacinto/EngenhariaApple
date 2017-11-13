@@ -347,6 +347,54 @@ public class ProdutoDAO {
 			bd.Desconectar(conex);
 
 		}
+	}
+
+	public boolean atualizaProdutoVenda(String[][] produtos, int numNFe) {
+		conex = bd.Conectar();
+
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			int estoque = 0;
+			int qtdControle = 0;
+
+			ResultSet rs;
+
+			for (int i = 0; i < produtos.length; i++) {
+
+				rs = stmt.executeQuery(
+						"SELECT qtdEstoqueProduto, qtdControle FROM Produto INNER JOIN pedido_has_produto  WHERE Produto_idProduto = idProduto AND Pedido_idPedido = '"
+								+ numNFe + "' AND idProduto = " + Integer.parseInt(produtos[i][0]));
+				while (rs.next()) {
+					estoque = rs.getInt("qtdEstoqueProduto");
+					qtdControle = rs.getInt("qtdControle");
+				}
+
+				estoque -= (Integer.parseInt(produtos[i][2]) - qtdControle);
+				stmt.execute("UPDATE produto SET qtdEstoqueProduto='" + estoque + "' where idProduto = "
+						+ Integer.parseInt(produtos[i][0]));
+
+				stmt.execute("UPDATE pedido_has_produto SET qtdControle='" + Integer.parseInt(produtos[i][2])
+						+ "' where Produto_idProduto = " + Integer.parseInt(produtos[i][0]) + " and Pedido_idPedido = '"
+						+ numNFe + "'");
+
+				estoque = 0;
+				qtdControle = 0;
+
+			}
+
+			stmt.close();
+			return true;
+
+		} catch (
+
+		SQLException sqle) {
+			System.out.println("Erro ao atualizar produtos..." + sqle.getMessage());
+			return false;
+		} finally {
+
+			bd.Desconectar(conex);
+
+		}
 
 	}
 
