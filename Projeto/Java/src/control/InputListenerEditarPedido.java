@@ -2,9 +2,9 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.sql.Date;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import model.Pedido;
@@ -113,27 +113,25 @@ public class InputListenerEditarPedido implements MouseListener {
 
 		if (!(editarPedido.getTextPreco().getText().equals(""))) {
 
-			String[] funcionario = editarPedido.getComboBoxFuncionario().getSelectedItem().toString().split("-");
-			String[] cliente = editarPedido.getComboBoxCliente().getSelectedItem().toString().split("-");
-
-			getPedido().setIdCliente(Integer.parseInt(cliente[0]));
-			getPedido().setIdFuncionario(Integer.parseInt(funcionario[0]));
-
 			getPedido().setPrecoPed(Float.parseFloat(editarPedido.getTextPreco().getText()));
 
-			getPedido().setDataPed(new Date(System.currentTimeMillis()));
-			/*
-			 * if(dados != null && dados.length>0) { if (
-			 * pedDAO.gravarPedido(getPedido(),dados)) { JOptionPane.showMessageDialog(null,
-			 * "Cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
-			 * editarPedido.dispose();
-			 * 
-			 * } else { JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro",
-			 * JOptionPane.ERROR_MESSAGE); } }else { JOptionPane.showMessageDialog(null,
-			 * "Adicione pelo menos um produto ao pedido!", "Erro",
-			 * JOptionPane.ERROR_MESSAGE); }
-			 */
+			if (dados != null && dados.length > 0) {
+				int cod = pedDAO.gravarPedido(getPedido(), dados);
+				if (cod > 0) {
+					if (produtoDAO.atualizaProdutoVenda(dados, cod)) {
+						JOptionPane.showMessageDialog(null, "Venda atualizada com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						editarPedido.dispose();
+					} else
+						JOptionPane.showMessageDialog(null, "Erro ao efetuar atualização da venda!", "Erro",
+								JOptionPane.ERROR_MESSAGE);
+				} else
+					JOptionPane.showMessageDialog(null, "Erro ao efetuar atualização da venda!", "Erro", JOptionPane.ERROR_MESSAGE);
 
+			} else {
+				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto ao pedido!", "Erro",
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 	}
 

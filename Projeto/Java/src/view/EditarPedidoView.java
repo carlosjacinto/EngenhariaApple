@@ -178,6 +178,7 @@ public class EditarPedidoView extends JDialog {
 		if(comboBoxCliente == null) {
 			String clientes[] = clienteDAO.buscarNomeeId();
 			comboBoxCliente = new JComboBox<Object>(clientes);
+			comboBoxCliente.setEnabled(false);
 			comboBoxCliente.setBounds(10, 36, 281, 20);
 		}
 		return comboBoxCliente;
@@ -187,6 +188,8 @@ public class EditarPedidoView extends JDialog {
 		if (comboBoxFuncionario == null) {
 			String funcionarios[] = funcionarioDAO.buscarNomeeId();
 			comboBoxFuncionario = new JComboBox<Object>(funcionarios);
+			comboBoxFuncionario.setEnabled(false);
+			comboBoxFuncionario.setEditable(true);
 			comboBoxFuncionario.setBounds(322, 36, 281, 20);
 		}
 		return comboBoxFuncionario;

@@ -41,22 +41,6 @@ public class PedidoDAO {
 			}
 			
 			
-			float aReceber = 0;
-			float totalCompras = 0;
-
-
-			rs = stmt.executeQuery(
-					"SELECT * from conta where Cliente_idCliente = '"+p.getIdCliente()+"'");
-			while (rs.next()) {
-				aReceber = rs.getFloat("aReceber");
-				totalCompras = rs.getFloat("totalCompras");
-			}
-			aReceber += p.getPrecoPed();
-			totalCompras += p.getPrecoPed();
-			System.out.println(totalCompras);
-			stmt.execute("UPDATE conta SET aReceber='" + aReceber + "', totalCompras='"
-					+ totalCompras + "' where Cliente_idCliente = '" + p.getIdCliente()+"'");
-
 			return codigo;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
@@ -66,12 +50,6 @@ public class PedidoDAO {
 
 		}
 
-	}
-
-	public boolean VerificaPedido(int nota, String scnpj) {
-		conex = bd.Conectar();
-
-		return false;
 	}
 
 	public Pedido RetornaPedido(int iid) {
@@ -122,7 +100,7 @@ public class PedidoDAO {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
@@ -154,7 +132,7 @@ public class PedidoDAO {
 			
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 
