@@ -52,6 +52,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 			if (!cadastroNotaEntrada.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(cadastroNotaEntrada.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) cadastroNotaEntrada.getComboBoxProduto().getSelectedItem()).split("-");
+				cadastroNotaEntrada.getComboBoxProduto().removeItemAt(cadastroNotaEntrada.getComboBoxProduto().getSelectedIndex());
 				double precoCompra = Integer.parseInt(cadastroNotaEntrada.getTextPrecoCustoUnit().getText());
 				System.out.println("preco unit" + precoCompra);
 				double precoProdutos = qtd * precoCompra;

@@ -69,16 +69,21 @@ public class EditarPedidoView extends JDialog {
 			e.printStackTrace();
 		}
 	}
-
+	
+	
 	public EditarPedidoView(Pedido ped) {
-		this.ped= ped;
-		listener = new InputListenerEditarPedido(this);
+		this.ped = ped;
 		initialize();
-		initializeListeners();
 		preencherCampos(ped);
-
+		listener = new InputListenerEditarPedido(this);
+		initializeListeners();
 	}
 
+	public Pedido getPedido() {
+		System.out.println(ped.getIdPedido());
+		return ped;
+	}
+	
 	public void preencherCampos(Pedido ped) {
 		Cliente c = clienteDAO.RetornaCliente(ped.getIdCliente());
 		Funcionario f = funcionarioDAO.RetornaFuncionario(ped.getIdFuncionario());
@@ -88,6 +93,11 @@ public class EditarPedidoView extends JDialog {
 		String[] colunas = {"id","Nome", "Quantidade", "Preço(R$)"};
 		
 		String[][] dados = pedidoDAO.retornaProdutosPed(ped.getIdPedido());
+		
+		for(int i = 0; i< dados.length; i++) {
+			getComboBoxProduto().removeItem(dados[i][0]+"-"+dados[i][1]);
+			System.out.println(dados[i][0]+"-"+dados[i][1]);
+		}
 		
 		DefaultTableModel model = new DefaultTableModel(dados,colunas) {
 			 /**
@@ -210,6 +220,7 @@ public class EditarPedidoView extends JDialog {
 		if(comboBoxCliente == null) {
 			String clientes[] = clienteDAO.buscarNomeeId();
 			comboBoxCliente = new JComboBox<Object>(clientes);
+			comboBoxCliente.setSelectedItem("1-prod2");
 			comboBoxCliente.setEnabled(false);
 			comboBoxCliente.setBounds(10, 90, 281, 20);
 		}
@@ -262,6 +273,7 @@ public class EditarPedidoView extends JDialog {
 			textPreco.setEditable(false);
 			textPreco.setBounds(10, 204, 281, 20);
 			textPreco.setColumns(10);
+			textPreco.setText(""+ped.getPrecoPed());
 		}
 		return textPreco;
 	}
@@ -280,7 +292,7 @@ public class EditarPedidoView extends JDialog {
 			btnAdd = new JLabel("");
 			btnAdd.setHorizontalAlignment(SwingConstants.CENTER);
 			btnAdd.setIcon(new ImageIcon("Interno/add.png"));
-			btnAdd.setBounds(579, 91, 23, 23);
+			btnAdd.setBounds(580, 145, 23, 23);
 		}
 		return btnAdd;
 	}

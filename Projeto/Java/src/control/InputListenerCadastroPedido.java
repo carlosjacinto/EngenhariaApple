@@ -51,6 +51,7 @@ public class InputListenerCadastroPedido implements MouseListener {
 			if (!cadastroPedido.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(cadastroPedido.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) cadastroPedido.getComboBoxProduto().getSelectedItem()).split("-");
+				cadastroPedido.getComboBoxProduto().removeItemAt(cadastroPedido.getComboBoxProduto().getSelectedIndex());
 				if (produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto() >= qtd) {
 					double precoVenda = produtoDAO.buscarPrecoVenda(Integer.parseInt(produto[0]));
 					double precoProdutos = qtd * precoVenda;

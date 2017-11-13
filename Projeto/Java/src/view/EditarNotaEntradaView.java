@@ -107,7 +107,11 @@ public class EditarNotaEntradaView extends JDialog {
 		
 		String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total" };
 
-		String[][] dados = notaDAO.retornaProdutosNota(nota.getNumeroNota());
+		String[][] dados = notaDAO.retornaProdutosNota(nota.getIdCompra());
+		
+		for(int i = 0; i<dados.length;i++) {
+			getComboBoxProduto().removeItem(dados[i][0]+"-"+dados[i][1]);
+		}
 		
 		DefaultTableModel model = new DefaultTableModel(dados,colunas) {
 			 /**
@@ -122,7 +126,7 @@ public class EditarNotaEntradaView extends JDialog {
 			            return canEdit [columnIndex];  
 			        }
 		};
-		getTableFuncionario().setModel(model);
+		getTableNotaEntrada().setModel(model);
 		this.repaint();
 		this.revalidate();
 		
@@ -134,28 +138,6 @@ public class EditarNotaEntradaView extends JDialog {
 		getBtnAddProduto().addMouseListener(listener);
 	}
 
-	public JTable getTableFuncionario() {
-		if (tableProduto == null) {
-			String[] colunas = { "Código", "Nome", "Preço Unit", "Quantidade", "Preço Total" };
-			String[][] dados = null;
-
-			DefaultTableModel model = new DefaultTableModel(dados, colunas) {
-				/**
-				* 
-				*/
-				private static final long serialVersionUID = -7018342759131611914L;
-				boolean[] canEdit = new boolean[] { false, false, false, false, false };
-
-				@Override
-				public boolean isCellEditable(int rowIndex, int columnIndex) {
-					return canEdit[columnIndex];
-				}
-			};
-			tableProduto = new JTable(model);
-			tableProduto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		}
-		return tableProduto;
-	}
 
 	public void initialize() {
 		this.setModal(true);

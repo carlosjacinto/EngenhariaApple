@@ -15,10 +15,11 @@ import view.EditarPedidoView;
 public class InputListenerEditarPedido implements MouseListener {
 	EditarPedidoView editarPedido;
 	ProdutoDAO produtoDAO = new ProdutoDAO();
-	private Pedido ped;
+	Pedido ped;
 	private PedidoDAO pedDAO = new PedidoDAO();
 	String[][] dados;
-	double valorTotal = 0;
+
+	double valorTotal;
 
 	public String[][] getDados() {
 		return dados;
@@ -26,9 +27,9 @@ public class InputListenerEditarPedido implements MouseListener {
 
 	int cont = 0;
 
-	public Pedido getPedido() {
+	public Pedido getPedido2() {
 		if (ped == null) {
-			ped = new Pedido();
+			ped = editarPedido.getPedido();
 		}
 		return ped;
 	}
@@ -36,7 +37,11 @@ public class InputListenerEditarPedido implements MouseListener {
 	public InputListenerEditarPedido(EditarPedidoView editarPedido) {
 		// TODO Auto-generated constructor stub
 		this.editarPedido = editarPedido;
+		dados = pedDAO.retornaProdutosPed(getPedido2().getIdPedido());
+		valorTotal = Double.parseDouble(editarPedido.getTextPreco().getText());
 	}
+	
+	
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -50,6 +55,7 @@ public class InputListenerEditarPedido implements MouseListener {
 			if (!editarPedido.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(editarPedido.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) editarPedido.getComboBoxProduto().getSelectedItem()).split("-");
+				editarPedido.getComboBoxProduto().removeItemAt(editarPedido.getComboBoxProduto().getSelectedIndex());
 				if (produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto() >= qtd) {
 					double precoVenda = produtoDAO.buscarPrecoVenda(Integer.parseInt(produto[0]));
 					double precoProdutos = qtd * precoVenda;
@@ -113,12 +119,12 @@ public class InputListenerEditarPedido implements MouseListener {
 
 		if (!(editarPedido.getTextPreco().getText().equals(""))) {
 
-			getPedido().setPrecoPed(Float.parseFloat(editarPedido.getTextPreco().getText()));
+			getPedido2().setPrecoPed(Float.parseFloat(editarPedido.getTextPreco().getText()));
 
 			if (dados != null && dados.length > 0) {
-				float vAntigo = pedDAO.editarPedido(getPedido(), dados);
+				float vAntigo = pedDAO.editarPedido(getPedido2(), dados);
 				if (vAntigo > 0) {
-					if (produtoDAO.atualizaProdutoVenda(dados, getPedido().getIdPedido())) {
+					if (produtoDAO.atualizaProdutoVenda(dados, getPedido2().getIdPedido())) {
 						JOptionPane.showMessageDialog(null, "Venda atualizada com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 						editarPedido.dispose();

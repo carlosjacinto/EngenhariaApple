@@ -172,7 +172,7 @@ public class NotaEntradaDAO {
 							+ iid);
 			int cont = 0;
 			rs.last();
-			produtos = new String[rs.getRow()][4];
+			produtos = new String[rs.getRow()][5];
 			System.out.println(rs.getRow());
 			rs.beforeFirst();
 			while (rs.next()) {
