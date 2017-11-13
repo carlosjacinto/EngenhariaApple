@@ -13,6 +13,7 @@ import model.Cliente;
 import model.ClienteDAO;
 import view.CadastroClienteView;
 import view.ClienteView;
+import view.ContaView;
 import view.EditarClienteView;
 
 public class InputListenerClienteView implements MouseListener, WindowListener {
@@ -53,6 +54,19 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
 			clienteView.getTextBusca().setText("");
 			mudarTabela();
+		}else if(e.getSource() == clienteView.getBtnVisualizarConta()) {
+			clienteView.getBtnVisualizarConta().setIcon(new ImageIcon("Interno/conta.png"));
+			if(clienteView.getTableCliente().getSelectedRow()!=-1) {
+				String id = (clienteView.getTableCliente().getModel().getValueAt(clienteView.getTableCliente().getSelectedRow(), 0).toString());
+				Cliente clie = clieDAO.RetornaCliente(Integer.parseInt(id));
+				ContaView contaView;
+				contaView = new ContaView(clie);
+				contaView.setVisible(true);
+			}else JOptionPane.showMessageDialog(null, "Selecione Um Cliente!", null,
+					JOptionPane.WARNING_MESSAGE);
+			
+			
+			
 		}
 	}
 	
@@ -114,6 +128,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit2x.png"));
 		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
 			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
+		}else if(e.getSource() == clienteView.getBtnVisualizarConta()) {
+			clienteView.getBtnVisualizarConta().setIcon(new ImageIcon("Interno/conta2x.png"));
 		}
 
 	}
@@ -131,6 +147,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit.png"));
 		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
 			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
+		}else if(e.getSource() == clienteView.getBtnVisualizarConta()) {
+			clienteView.getBtnVisualizarConta().setIcon(new ImageIcon("Interno/conta.png"));
 		}
 
 	}
@@ -148,6 +166,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit.png"));
 		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
 			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
+		}else if(e.getSource() == clienteView.getBtnVisualizarConta()) {
+			clienteView.getBtnVisualizarConta().setIcon(new ImageIcon("Interno/conta.png"));
 		}
 
 	}
@@ -165,6 +185,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			clienteView.getBtnEditarCliente().setIcon(new ImageIcon("Interno/edit2x.png"));
 		}else if(e.getSource() == clienteView.getBtnLimparBusca()) {
 			clienteView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
+		}else if(e.getSource() == clienteView.getBtnVisualizarConta()) {
+			clienteView.getBtnVisualizarConta().setIcon(new ImageIcon("Interno/conta2x.png"));
 		}
 
 	}

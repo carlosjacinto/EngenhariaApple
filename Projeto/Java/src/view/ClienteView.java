@@ -41,6 +41,7 @@ public class ClienteView extends JDialog {
 	private ClienteDAO clieDAO = new ClienteDAO();
 	private JLabel btnEditarCliente;
 	private JLabel btnLimparBusca;
+	private JLabel btnVisualizarConta;
 
 	/**
 	 * Launch the application.
@@ -118,7 +119,7 @@ public class ClienteView extends JDialog {
 		if (btnNovoCliente == null) {
 			btnNovoCliente = new JLabel();
 			btnNovoCliente.setToolTipText("Novo Cliente");
-			btnNovoCliente.setBounds(466, 422, 80, 80);
+			btnNovoCliente.setBounds(376, 422, 80, 80);
 			btnNovoCliente.setIcon(new ImageIcon("Interno/new.png"));
 		}
 		return btnNovoCliente;
@@ -139,6 +140,7 @@ public class ClienteView extends JDialog {
 		getbtnExcluirCliente().addMouseListener(listener);
 		getBtnEditarCliente().addMouseListener(listener);
 		getBtnLimparBusca().addMouseListener(listener);
+		getBtnVisualizarConta().addMouseListener(listener);
 		this.addWindowListener(listener);
 		//TODO: this.addWindowListener(listener);
 	}
@@ -166,6 +168,7 @@ public class ClienteView extends JDialog {
 		panel.add(getlblBuscarPorNome());
 		panel.add(getbtnExcluirCliente());
 		panel.add(getBtnEditarCliente());
+		panel.add(getBtnVisualizarConta());
 		getT1().start();
 	}
 
@@ -175,7 +178,7 @@ public class ClienteView extends JDialog {
 			btnExcluirCliente.setToolTipText("Excluir Cliente");
 			btnExcluirCliente.setHorizontalAlignment(SwingConstants.CENTER);
 			btnExcluirCliente.setIcon(new ImageIcon("Interno/delete.png"));
-			btnExcluirCliente.setBounds(556, 422, 80, 80);
+			btnExcluirCliente.setBounds(466, 422, 80, 80);
 		}
 		return btnExcluirCliente;
 	}
@@ -207,7 +210,7 @@ public class ClienteView extends JDialog {
 			btnEditarCliente.setToolTipText("Editar Cliente");
 			btnEditarCliente.setHorizontalAlignment(SwingConstants.CENTER);
 			btnEditarCliente.setIcon(new ImageIcon("Interno/edit.png"));
-			btnEditarCliente.setBounds(646, 422, 80, 80);
+			btnEditarCliente.setBounds(556, 422, 80, 80);
 		}
 		return btnEditarCliente;
 	}
@@ -221,5 +224,15 @@ public class ClienteView extends JDialog {
 			btnLimparBusca.setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 		return btnLimparBusca;
+	}
+	public JLabel getBtnVisualizarConta() {
+		if (btnVisualizarConta == null) {
+			btnVisualizarConta = new JLabel("");
+			btnVisualizarConta.setToolTipText("Visualizar Conta");
+			btnVisualizarConta.setHorizontalAlignment(SwingConstants.CENTER);
+			btnVisualizarConta.setBounds(646, 422, 80, 80);
+			btnVisualizarConta.setIcon(new ImageIcon("Interno/conta.png"));
+		}
+		return btnVisualizarConta;
 	}
 }
