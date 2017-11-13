@@ -9,7 +9,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import control.InputListenerContaView;
 import model.Cliente;
+import model.ContaDAO;
 
 public class ContaView extends JDialog {
 
@@ -24,6 +26,8 @@ public class ContaView extends JDialog {
 	private JTextField valorTextField;
 	private JButton btnRealizarPagamento;
 	private Cliente c;
+	private ContaDAO contaDAO = new ContaDAO();
+	private InputListenerContaView listener;
 
 	/**
 	 * Launch the application.
@@ -43,12 +47,22 @@ public class ContaView extends JDialog {
 	 */
 	public ContaView(Cliente c) {
 		this.c = c;
+		listener = new InputListenerContaView(this);
+		initialize();
+		initializeListener();
+		
+	}
+	
+	public void initialize() {
 		setModal(true);
 		setBounds(100, 100, 381, 129);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		getContentPane().add(getContentPanel(), BorderLayout.CENTER);
-		
+	}
+	
+	public void initializeListener() {
+		getBtnRealizarPagamento().addMouseListener(listener);
 	}
 	
 	public JPanel getContentPanel() {
@@ -91,17 +105,22 @@ public class ContaView extends JDialog {
 		}
 		return lblValorAPagarr;
 	}
-	private JTextField getValorTextField() {
+	public JTextField getValorTextField() {
 		if (valorTextField == null) {
 			valorTextField = new JTextField();
 			valorTextField.setEditable(false);
 			valorTextField.setBounds(223, 29, 132, 20);
 			valorTextField.setColumns(10);
+			valorTextField.setText(contaDAO.retornaAReceber(c.getIdCliente())+"");
 		}
 		return valorTextField;
 	}
 	
-	private JButton getBtnRealizarPagamento() {
+	public Cliente getCliente() {
+		return c;
+	}
+	
+	public JButton getBtnRealizarPagamento() {
 		if(btnRealizarPagamento == null) {
 			btnRealizarPagamento = new JButton("Realizar Pagamento");
 			btnRealizarPagamento.setBounds(99, 56, 155, 23);

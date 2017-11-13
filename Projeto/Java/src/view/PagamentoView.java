@@ -1,14 +1,16 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+
+import control.InputListenerPagamentoView;
+import model.Cliente;
 
 public class PagamentoView extends JDialog {
 
@@ -19,13 +21,16 @@ public class PagamentoView extends JDialog {
 	private JPanel contentPanel;
 	private JLabel lblValorr;
 	private JTextField textField;
+	private JButton btnPagar;
+	private InputListenerPagamentoView listener;
+	private Cliente c;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			PagamentoView dialog = new PagamentoView();
+			PagamentoView dialog = new PagamentoView(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -36,30 +41,47 @@ public class PagamentoView extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public PagamentoView() {
+	public PagamentoView(Cliente c) {
+		this.c = c;
 		setModal(true);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 230, 113);
+		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
-		
 		getContentPane().add(getContentPanel(), BorderLayout.CENTER);
-		contentPanel.setLayout(null);
-		getContentPanel().setLayout(null);
+		listener = new InputListenerPagamentoView(this);
+		initializeListener();
+		
+	}
+	
+	public void initializeListener() {
+		getBtnPagar().addMouseListener(listener);
+	}
 
-		contentPanel.add(getLblValorr());
+	public Cliente getCliente() {
+		return c;
 	}
 	
 	public JPanel getContentPanel() {
 		if(contentPanel == null) {
 			contentPanel = new JPanel();
 			contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-			
-			textField = new JTextField();
-			textField.setBounds(65, 8, 123, 20);
-			contentPanel.add(textField);
-			textField.setColumns(10);
+			contentPanel.add(getTextField());
+			contentPanel.add(getBtnPagar());
+			contentPanel.setLayout(null);
+			contentPanel.add(getLblValorr());
 		}
 		return contentPanel;
 	}
+	
+	public JTextField getTextField() {
+		if(textField == null) {
+			textField = new JTextField();
+			textField.setBounds(81, 8, 123, 20);
+			textField.setColumns(10);
+		}
+		return textField;
+	}
+	
 	public JLabel getLblValorr() {
 		if(lblValorr == null) {
 			lblValorr = new JLabel("Valor(R$):");
@@ -67,6 +89,11 @@ public class PagamentoView extends JDialog {
 		}
 		return lblValorr;
 	}
-	
-	
+	public JButton getBtnPagar() {
+		if (btnPagar == null) {
+			btnPagar = new JButton("Pagar");
+			btnPagar.setBounds(115, 39, 89, 23);
+		}
+		return btnPagar;
+	}
 }
