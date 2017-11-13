@@ -5,13 +5,11 @@ import java.awt.event.MouseListener;
 import java.sql.Date;
 
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import model.Pedido;
 import model.PedidoDAO;
 import model.ProdutoDAO;
-import view.CadastroPedidoView;
 import view.EditarPedidoView;
 
 public class InputListenerEditarPedido implements MouseListener {
@@ -52,7 +50,7 @@ public class InputListenerEditarPedido implements MouseListener {
 			if (!editarPedido.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(editarPedido.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) editarPedido.getComboBoxProduto().getSelectedItem()).split("-");
-				if(produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto()>=qtd) {
+				if (produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto() >= qtd) {
 					double precoVenda = produtoDAO.buscarPrecoVenda(Integer.parseInt(produto[0]));
 					double precoProdutos = qtd * precoVenda;
 					String[] p = { produto[0], produto[1], qtd + "", precoProdutos + "" };
@@ -105,7 +103,7 @@ public class InputListenerEditarPedido implements MouseListener {
 					valorTotal += precoProdutos;
 					editarPedido.getTextPreco().setText(valorTotal + "");
 				}
-				
+
 			}
 
 		}
@@ -113,34 +111,30 @@ public class InputListenerEditarPedido implements MouseListener {
 
 	public void capturarDadosPedido() {
 
-		if (!(editarPedido.getTextPreco().getText().equals("") 
-				)){
-		
-				String[] funcionario = editarPedido.getComboBoxFuncionario().getSelectedItem().toString().split("-");
-				String[] cliente = editarPedido.getComboBoxCliente().getSelectedItem().toString().split("-");
-				
-				getPedido().setIdCliente(Integer.parseInt(cliente[0]));
-				getPedido().setIdFuncionario(Integer.parseInt(funcionario[0]));
-				
-				getPedido().setPrecoPed(Float.parseFloat(editarPedido.getTextPreco().getText()));
-			
+		if (!(editarPedido.getTextPreco().getText().equals(""))) {
 
-				getPedido().setDataPed(new Date(System.currentTimeMillis()));
-				if(dados != null && dados.length>0) {
-					if ( pedDAO.gravarPedido(getPedido(),dados)) {
-						JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
-								JOptionPane.INFORMATION_MESSAGE);
-						editarPedido.dispose();
+			String[] funcionario = editarPedido.getComboBoxFuncionario().getSelectedItem().toString().split("-");
+			String[] cliente = editarPedido.getComboBoxCliente().getSelectedItem().toString().split("-");
 
-					} else {
-						JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
-					}
-				}else {
-					JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto ao pedido!", "Erro",
-							JOptionPane.ERROR_MESSAGE);
-				}
+			getPedido().setIdCliente(Integer.parseInt(cliente[0]));
+			getPedido().setIdFuncionario(Integer.parseInt(funcionario[0]));
 
-				}
+			getPedido().setPrecoPed(Float.parseFloat(editarPedido.getTextPreco().getText()));
+
+			getPedido().setDataPed(new Date(System.currentTimeMillis()));
+			/*
+			 * if(dados != null && dados.length>0) { if (
+			 * pedDAO.gravarPedido(getPedido(),dados)) { JOptionPane.showMessageDialog(null,
+			 * "Cadastrado com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+			 * editarPedido.dispose();
+			 * 
+			 * } else { JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro",
+			 * JOptionPane.ERROR_MESSAGE); } }else { JOptionPane.showMessageDialog(null,
+			 * "Adicione pelo menos um produto ao pedido!", "Erro",
+			 * JOptionPane.ERROR_MESSAGE); }
+			 */
+
+		}
 	}
 
 	@Override

@@ -126,7 +126,7 @@ public class InputListenerCadastroPedido implements MouseListener {
 			if (dados != null && dados.length > 0) {
 				int cod = pedDAO.gravarPedido(getPedido(), dados);
 				if (cod > 0) {
-					if (produtoDAO.atualizaProdutoCompra(dados, true, cod)) {
+					if (produtoDAO.atualizaProdutoVenda(dados, cod)) {
 						JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 						cadastroPedido.dispose();

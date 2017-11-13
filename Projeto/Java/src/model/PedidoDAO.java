@@ -37,7 +37,7 @@ public class PedidoDAO {
 				stmt.execute(
 						"INSERT INTO pedido_has_produto(Pedido_idPedido, Produto_idProduto, qtdVenda, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
 								+ codigo + "','" + Integer.parseInt(produtos[i][0]) + "','"
-								+ Integer.parseInt(produtos[i][2]) + "','" + Integer.parseInt(produtos[i][2]) + "','"
+								+ Integer.parseInt(produtos[i][2]) + "','" + 0 + "','"
 								+ Double.parseDouble(produtos[i][3]) / Integer.parseInt(produtos[i][2]) + "','"
 								+ Double.parseDouble(produtos[i][3]) + "') ");
 			}
