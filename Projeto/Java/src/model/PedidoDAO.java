@@ -12,7 +12,7 @@ public class PedidoDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
 
-	public boolean gravarPedido(Pedido p, String[][] produtos) {
+	public int gravarPedido(Pedido p, String[][] produtos) {
 		conex = bd.Conectar();
 		int codigo = -1;
 		try {
@@ -42,10 +42,10 @@ public class PedidoDAO {
 								+ Double.parseDouble(produtos[i][3]) + "') ");
 			}
 			System.out.println("deu bom gravar produtos");
-			return true;
+			return codigo;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
-			return false;
+			return -1;
 		} finally {
 			bd.Desconectar(conex);
 

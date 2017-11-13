@@ -124,19 +124,22 @@ public class InputListenerCadastroPedido implements MouseListener {
 
 			getPedido().setDataPed(new Date(System.currentTimeMillis()));
 			if (dados != null && dados.length > 0) {
-				if (pedDAO.gravarPedido(getPedido(), dados)) {
-					JOptionPane.showMessageDialog(null, "Cadastrado com sucesso!", "Sucesso",
-							JOptionPane.INFORMATION_MESSAGE);
-					cadastroPedido.dispose();
+				int cod = pedDAO.gravarPedido(getPedido(), dados);
+				if (cod > 0) {
+					if (produtoDAO.atualizaProdutoCompra(dados, true, cod)) {
+						JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso!", "Sucesso",
+								JOptionPane.INFORMATION_MESSAGE);
+						cadastroPedido.dispose();
+					} else
+						JOptionPane.showMessageDialog(null, "Erro ao efetuar venda!", "Erro",
+								JOptionPane.ERROR_MESSAGE);
+				} else
+					JOptionPane.showMessageDialog(null, "Erro ao efetuar venda!", "Erro", JOptionPane.ERROR_MESSAGE);
 
-				} else {
-					JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
-				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto ao pedido!", "Erro",
 						JOptionPane.ERROR_MESSAGE);
 			}
-
 		}
 	}
 
