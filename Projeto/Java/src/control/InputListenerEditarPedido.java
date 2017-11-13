@@ -116,9 +116,9 @@ public class InputListenerEditarPedido implements MouseListener {
 			getPedido().setPrecoPed(Float.parseFloat(editarPedido.getTextPreco().getText()));
 
 			if (dados != null && dados.length > 0) {
-				int cod = pedDAO.gravarPedido(getPedido(), dados);
-				if (cod > 0) {
-					if (produtoDAO.atualizaProdutoVenda(dados, cod)) {
+				float vAntigo = pedDAO.editarPedido(getPedido(), dados);
+				if (vAntigo > 0) {
+					if (produtoDAO.atualizaProdutoVenda(dados, getPedido().getIdPedido())) {
 						JOptionPane.showMessageDialog(null, "Venda atualizada com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 						editarPedido.dispose();
