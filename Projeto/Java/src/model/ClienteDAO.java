@@ -22,12 +22,18 @@ public class ClienteDAO {
 			stmt.execute(
 					"INSERT INTO Cliente(nomeCliente, ruaCliente, compCliente, numeroCliente, bairroCliente, cidadeCliente, cepCliente, telefoneCliente, celularCliente, cpfCliente, dataCadastro, dataNascCliente)VALUES ('"
 							+ c.getNome() + "','" + c.getRua() + "','" + c.getComplemento() + "','" + c.getNumero()
-							+ "','" + c.getBairro() + "','" + c.getCidade()  + "','" + c.getCep() + "','" + c.getTelefone() + "','" + c.getCelular() + "','" + c.getCpf() +"','" + c.getDataCadastro() +"','" + c.getDataNascimento() +"') ");
-
+							+ "','" + c.getBairro() + "','" + c.getCidade() + "','" + c.getCep() + "','"
+							+ c.getTelefone() + "','" + c.getCelular() + "','" + c.getCpf() + "','"
+							+ c.getDataCadastro() + "','" + c.getDataNascimento() + "') ");
+			int codigo = buscaCodigoCliente(c.getCpf());
 			if (c.getFoto() != null) {
-				int codigo = buscaCodigoCliente(c.getCpf());
+
 				CopiarImagemCliente(codigo, c.getFoto());
 			}
+
+			stmt.execute("INSERT INTO conta(aReceber, totalCompras, pago, Cliente_idCliente)VALUES ('" + 0 + "','" + 0
+					+ "','" + 0 + "','" + codigo + "') ");
+
 			System.out.println("deu bom");
 			return true;
 		} catch (SQLException sqle) {
@@ -38,7 +44,6 @@ public class ClienteDAO {
 		}
 
 	}
-	
 
 	public int buscaCodigoCliente(String CPF) {
 		conex = bd.Conectar();
@@ -67,7 +72,7 @@ public class ClienteDAO {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT * FROM cliente where idCliente = "+iid;
+			String SQL = "SELECT * FROM cliente where idCliente = " + iid;
 			ResultSet rs = stmt.executeQuery(SQL);
 			Cliente c = new Cliente();
 			while (rs.next()) {
@@ -84,7 +89,7 @@ public class ClienteDAO {
 				c.setDataNascimento(rs.getString("dataNascCliente"));
 				c.setTelefone(rs.getString("telefoneCliente"));
 				c.setCelular(rs.getString("celularCliente"));
-				
+
 			}
 			return c;
 		} catch (SQLException sqle) {
@@ -94,6 +99,7 @@ public class ClienteDAO {
 			bd.Desconectar(conex);
 		}
 	}
+
 	public boolean verificaCPF(String CPF) {
 		conex = bd.Conectar();
 		try {
@@ -143,9 +149,11 @@ public class ClienteDAO {
 		try {
 			Statement stmt = conex.createStatement();
 			stmt.execute("UPDATE cliente SET nomeCliente='" + c.getNome() + "', ruaCliente='" + c.getRua()
-					+ "', compCliente='" + c.getComplemento() + "', numeroCliente='" + c.getNumero() + "', bairroCliente='"
-					+ c.getBairro() + "', cidadeCliente='" + c.getCidade() + "', dataNascCliente='" + c.getDataNascimento()
-					+ "', cepCliente ='" + c.getCep() + "', celularCliente='" + c.getCelular() + "', telefoneCliente='" + c.getTelefone() + "'  WHERE idCliente='" + c.getIdCliente() + "' ");
+					+ "', compCliente='" + c.getComplemento() + "', numeroCliente='" + c.getNumero()
+					+ "', bairroCliente='" + c.getBairro() + "', cidadeCliente='" + c.getCidade()
+					+ "', dataNascCliente='" + c.getDataNascimento() + "', cepCliente ='" + c.getCep()
+					+ "', celularCliente='" + c.getCelular() + "', telefoneCliente='" + c.getTelefone()
+					+ "'  WHERE idCliente='" + c.getIdCliente() + "' ");
 			stmt.close();
 			if (c.getFoto() != null) {
 				CopiarImagemCliente(c.getIdCliente(), c.getFoto());
@@ -197,9 +205,9 @@ public class ClienteDAO {
 		int result = 0;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM cliente where idCliente = "+iid;
+			String SQL = "DELETE FROM cliente where idCliente = " + iid;
 			result = stmt.executeUpdate(SQL);
-			
+
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 		} finally {
@@ -207,7 +215,7 @@ public class ClienteDAO {
 		}
 		return result;
 	}
-	
+
 	public String[] buscarNomeeId() {
 		conex = bd.Conectar();
 		String clientes[];
@@ -222,7 +230,7 @@ public class ClienteDAO {
 			clientes = new String[size];
 			int cont = 0;
 			while (rs.next()) {
-				clientes[cont] = rs.getInt("idCliente")+"-"+rs.getString("nomeCliente");
+				clientes[cont] = rs.getInt("idCliente") + "-" + rs.getString("nomeCliente");
 				cont++;
 			}
 			rs.close();
@@ -235,16 +243,17 @@ public class ClienteDAO {
 			bd.Desconectar(conex);
 		}
 	}
-	
+
 	public boolean PermitirExclusaoCliente(int iid) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT COUNT(*) FROM pedido WHERE Cliente_idCliente = "+iid;
+			String SQL = "SELECT COUNT(*) FROM pedido WHERE Cliente_idCliente = " + iid;
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.next();
-			if(rs.getInt("count(*)")!=0) return false;
-			
+			if (rs.getInt("count(*)") != 0)
+				return false;
+
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao consultar..." + sqle.getMessage());
 		} finally {
