@@ -52,8 +52,13 @@ public class EditarPedidoView extends JDialog {
 	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 	PedidoDAO pedidoDAO = new PedidoDAO();
+	Pedido ped;
 	private JLabel btnAdd;
 	private JScrollPane scrollPane;
+	private JLabel lblNumPed;
+	private JLabel lblDataVenda;
+	private JTextField textNumPed;
+	private JTextField textDataVenda;
 
 	public static void main(String[] args) {
 		try {
@@ -66,6 +71,7 @@ public class EditarPedidoView extends JDialog {
 	}
 
 	public EditarPedidoView(Pedido ped) {
+		this.ped= ped;
 		listener = new InputListenerEditarPedido(this);
 		initialize();
 		initializeListeners();
@@ -137,15 +143,41 @@ public class EditarPedidoView extends JDialog {
 			contentPanel.add(getSpinnerQtde());
 			contentPanel.add(getBtnAdd());
 			contentPanel.add(getScrollPane());
-
+			contentPanel.add(getLblNumPed());
+			contentPanel.add(getLblDataVenda());
+			contentPanel.add(getTextNumPed());
+			contentPanel.add(getTextDataVenda());
+			
 		}
 		return contentPanel;
 	}
 
+	public JTextField getTextNumPed() {
+		if (textNumPed == null) {
+			textNumPed = new JTextField();
+			textNumPed.setEditable(false);
+			textNumPed.setBounds(10, 34, 281, 20);
+			textNumPed.setColumns(10);
+			textNumPed.setText(""+ped.getIdPedido());
+		}
+		return textNumPed;
+	}
+	
+	public JTextField getTextDataVenda() {
+		if (textDataVenda == null) {
+			textDataVenda = new JTextField();
+			textDataVenda.setEditable(false);
+			textDataVenda.setBounds(322, 34, 212, 20);
+			textDataVenda.setColumns(10);
+			textDataVenda.setText(""+ped.getDataPed());
+		}
+		return textDataVenda;
+	}
+	
 	private JLabel getLblNomeCliente() {
 		if (lblNomeCliente == null) {
 			lblNomeCliente = new JLabel("Cliente");
-			lblNomeCliente.setBounds(10, 11, 112, 14);
+			lblNomeCliente.setBounds(10, 65, 112, 14);
 		}
 		return lblNomeCliente;
 	}
@@ -153,7 +185,7 @@ public class EditarPedidoView extends JDialog {
 	private JLabel getLblFuncionario() {
 		if (lblFuncionario == null) {
 			lblFuncionario = new JLabel("Funcion\u00E1rio");
-			lblFuncionario.setBounds(322, 11, 75, 14);
+			lblFuncionario.setBounds(322, 65, 75, 14);
 		}
 		return lblFuncionario;
 	}
@@ -178,7 +210,8 @@ public class EditarPedidoView extends JDialog {
 		if(comboBoxCliente == null) {
 			String clientes[] = clienteDAO.buscarNomeeId();
 			comboBoxCliente = new JComboBox<Object>(clientes);
-			comboBoxCliente.setBounds(10, 36, 281, 20);
+			comboBoxCliente.setEnabled(false);
+			comboBoxCliente.setBounds(10, 90, 281, 20);
 		}
 		return comboBoxCliente;
 	}
@@ -187,7 +220,9 @@ public class EditarPedidoView extends JDialog {
 		if (comboBoxFuncionario == null) {
 			String funcionarios[] = funcionarioDAO.buscarNomeeId();
 			comboBoxFuncionario = new JComboBox<Object>(funcionarios);
-			comboBoxFuncionario.setBounds(322, 36, 281, 20);
+			comboBoxFuncionario.setEnabled(false);
+			comboBoxFuncionario.setEditable(true);
+			comboBoxFuncionario.setBounds(322, 90, 281, 20);
 		}
 		return comboBoxFuncionario;
 	}
@@ -195,7 +230,7 @@ public class EditarPedidoView extends JDialog {
 		if (comboBoxProduto == null) {
 			String produtos[] = produtoDAO.buscarNomeeId();
 			comboBoxProduto = new JComboBox<Object>(produtos);
-			comboBoxProduto.setBounds(10, 94, 281, 20);
+			comboBoxProduto.setBounds(10, 148, 281, 20);
 		}
 		return comboBoxProduto;
 	}
@@ -203,21 +238,21 @@ public class EditarPedidoView extends JDialog {
 	public JLabel getLabelProduto() {
 		if (labelProduto == null) {
 			labelProduto = new JLabel("Produto");
-			labelProduto.setBounds(10, 69, 75, 14);
+			labelProduto.setBounds(10, 123, 75, 14);
 		}
 		return labelProduto;
 	}
 	public JLabel getLblQuantidade() {
 		if (lblQuantidade == null) {
 			lblQuantidade = new JLabel("Quantidade");
-			lblQuantidade.setBounds(322, 69, 75, 14);
+			lblQuantidade.setBounds(322, 123, 75, 14);
 		}
 		return lblQuantidade;
 	}
 	public JLabel getLblPreoTotalr() {
 		if (lblPreoTotalr == null) {
 			lblPreoTotalr = new JLabel("Pre\u00E7o Total (R$)");
-			lblPreoTotalr.setBounds(10, 125, 130, 14);
+			lblPreoTotalr.setBounds(10, 179, 130, 14);
 		}
 		return lblPreoTotalr;
 	}
@@ -225,7 +260,7 @@ public class EditarPedidoView extends JDialog {
 		if (textPreco == null) {
 			textPreco = new JTextField("0.0");
 			textPreco.setEditable(false);
-			textPreco.setBounds(10, 150, 281, 20);
+			textPreco.setBounds(10, 204, 281, 20);
 			textPreco.setColumns(10);
 		}
 		return textPreco;
@@ -235,7 +270,7 @@ public class EditarPedidoView extends JDialog {
 		if (spinnerQtde == null) {
 			spinnerQtde = new JSpinner();
 			spinnerQtde.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
-			spinnerQtde.setBounds(322, 94, 247, 20);
+			spinnerQtde.setBounds(322, 148, 247, 20);
 		}
 		return spinnerQtde;
 	}
@@ -279,5 +314,19 @@ public class EditarPedidoView extends JDialog {
 			tableProduto.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
 		return tableProduto;
+	}
+	private JLabel getLblNumPed() {
+		if (lblNumPed == null) {
+			lblNumPed = new JLabel("N\u00FAmero do Pedido");
+			lblNumPed.setBounds(10, 11, 281, 14);
+		}
+		return lblNumPed;
+	}
+	private JLabel getLblDataVenda() {
+		if (lblDataVenda == null) {
+			lblDataVenda = new JLabel("Data da Venda");
+			lblDataVenda.setBounds(322, 11, 182, 14);
+		}
+		return lblDataVenda;
 	}
 }
