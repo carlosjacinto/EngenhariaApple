@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import control.DataBase;
 
@@ -220,7 +221,7 @@ public class ProdutoDAO {
 		}
 	}
 
-	public String[][] retornaProdutoArray(String campo) {
+	public ArrayList<Produto> retornaProdutoArrayList(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
@@ -228,18 +229,20 @@ public class ProdutoDAO {
 					+ "%'";
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.last();
-			int size = rs.getRow();
 			rs.beforeFirst();
-
-			String produtos[][] = new String[size][5];
-			int cont = 0;
+			ArrayList<Produto> produtos = new ArrayList<>();
 			while (rs.next()) {
-				produtos[cont][1] = rs.getString("nomeProduto");
-				produtos[cont][0] = "" + rs.getInt("idProduto");
-				produtos[cont][2] = "" + rs.getLong("precoVendaProduto");
-				produtos[cont][3] = "" + rs.getLong("precoCompraProduto");
-				produtos[cont][4] = "" + rs.getInt("qtdEstoqueProduto");
-				cont++;
+				Produto produto = new Produto();
+				produto.setIdProduto(rs.getInt("idProduto"));
+				produto.setNomeProduto(rs.getString("nomeProduto"));
+				produto.setDataCadastroProduto(rs.getDate("dataCadastroProduto"));
+				produto.setDescricaoProduto("descricaoProduto");
+				produto.setPercentualLucro(rs.getInt("percLucro"));
+				produto.setPrecoCompraProduto(rs.getFloat("precoCompraProduto"));
+				produto.setPrecoVendaProduto(rs.getFloat("precoVendaProduto"));
+				produto.setQtdEstoqueProduto(rs.getInt("qtdEstoqueProduto"));
+				produto.setUltimaDataCompraProduto(rs.getDate("ultimaDataCompraProduto"));
+				produtos.add(produto);
 			}
 			rs.close();
 			stmt.close();
