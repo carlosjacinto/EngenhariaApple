@@ -33,14 +33,14 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 			new CadastroProdutoView().setVisible(true);
 			produtoView.getTextBusca().setText("");
 			mudarTabela();
-		}else if(e.getSource() == produtoView.getTableProduto()) {
+		}else if(e.getSource() == produtoView.buscarProdutos()) {
 			
 		}else if(e.getSource() == produtoView.getBtnEditarProduto()) {
-			int i = produtoView.getTableProduto().getSelectedRow();
+			int i = produtoView.buscarProdutos().getSelectedRow();
 			if(i!=-1) {
 				Produto produto = produtoDAO.RetornaProduto(Integer.parseInt(
-						produtoView.getTableProduto().getValueAt(
-								produtoView.getTableProduto().getSelectedRow(), 0).toString()));
+						produtoView.buscarProdutos().getValueAt(
+								produtoView.buscarProdutos().getSelectedRow(), 0).toString()));
 				new EditarProdutoView(produto).setVisible(true);
 				produtoView.getTextBusca().setText("");
 				mudarTabela();
@@ -54,7 +54,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 	}
 	
 	public void mudarTabela() {
-		String[][] funcs = produtoDAO.listaProdutoArray(produtoView.getTextBusca().getText());
+		String[][] funcs = produtoDAO.listarProdutos(produtoView.getTextBusca().getText());
 		String[] colunas = {"id","Nome", "Preço de Venda(R$)", "Preço de Compra(R$)", "Quantidade"};
 		
 		DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
@@ -70,7 +70,7 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 			            return canEdit [columnIndex];  
 			        }
 		};
-		produtoView.getTableProduto().setModel(model);
+		produtoView.buscarProdutos().setModel(model);
 		produtoView.repaint();
 		produtoView.revalidate();
 		produtoView.setBuscaAT1(produtoView.getTextBusca().getText());
@@ -188,15 +188,15 @@ public class InputListenerProdutoView implements MouseListener, WindowListener {
 	
 	public void confirmarExclusao() {
 	
-		int i = produtoView.getTableProduto().getSelectedRow();
+		int i = produtoView.buscarProdutos().getSelectedRow();
 		if(i!=-1) {
-			if(produtoDAO.PermitirExclusaoProduto(Integer.parseInt(produtoView.getTableProduto().getValueAt(i, 0).toString()))) {
+			if(produtoDAO.PermitirExclusaoProduto(Integer.parseInt(produtoView.buscarProdutos().getValueAt(i, 0).toString()))) {
 			
 			int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
-						+produtoView.getTableProduto().getValueAt(i, 1)+"?",
+						+produtoView.buscarProdutos().getValueAt(i, 1)+"?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
 			if(result == JOptionPane.YES_OPTION) {
-				int sucesso = produtoDAO.excluirProduto(Integer.parseInt(produtoView.getTableProduto().getValueAt(i, 0).toString()));
+				int sucesso = produtoDAO.excluirProduto(Integer.parseInt(produtoView.buscarProdutos().getValueAt(i, 0).toString()));
 				
 				if(sucesso == 1)JOptionPane.showMessageDialog(null, "Produto Excluido!", null,
 						JOptionPane.INFORMATION_MESSAGE);

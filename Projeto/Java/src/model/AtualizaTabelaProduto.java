@@ -32,7 +32,7 @@ public class AtualizaTabelaProduto implements Runnable {
 
 	private void atualizarTabelaCliente() {
 
-		String[][] funcs = produtoDAO.listaProdutoArray(busca);
+		String[][] funcs = produtoDAO.listarProdutos(busca);
 		String[] colunas = {"id","Nome", "Preço de Venda(R$)", "Preço de Compra(R$)", "Quantidade"};
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
@@ -46,11 +46,11 @@ public class AtualizaTabelaProduto implements Runnable {
 			}
 		};
 
-		int l = produtoView.getTableProduto().getSelectedRow();
+		int l = produtoView.buscarProdutos().getSelectedRow();
 
-		produtoView.getTableProduto().setModel(model);
+		produtoView.buscarProdutos().setModel(model);
 		try {
-			produtoView.getTableProduto().setRowSelectionInterval(l, l);
+			produtoView.buscarProdutos().setRowSelectionInterval(l, l);
 		} catch (IllegalArgumentException e) {
 			// TODO: handle exception
 		}

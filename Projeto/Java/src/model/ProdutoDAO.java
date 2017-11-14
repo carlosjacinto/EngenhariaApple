@@ -189,7 +189,7 @@ public class ProdutoDAO {
 		}
 	}
 
-	public String[][] listaProdutoArray(String campo) {
+	public String[][] listarProdutos(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();

@@ -35,14 +35,14 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 			cadastroPedidoView.setVisible(true);
 			pedidoView.getTextBusca().setText("");
 			mudarTabela();
-		} else if (e.getSource() == pedidoView.getTablePedido()) {
+		} else if (e.getSource() == pedidoView.buscarPedidos()) {
 
 		} else if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
 			confirmarExclusao();
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
-			if (pedidoView.getTablePedido().getSelectedRow() != -1) {
-				String id = (pedidoView.getTablePedido().getModel()
-						.getValueAt(pedidoView.getTablePedido().getSelectedRow(), 0).toString());
+			if (pedidoView.buscarPedidos().getSelectedRow() != -1) {
+				String id = (pedidoView.buscarPedidos().getModel()
+						.getValueAt(pedidoView.buscarPedidos().getSelectedRow(), 0).toString());
 				Pedido pedido = pedioDAO.RetornaPedido(Integer.parseInt(id));
 				new EditarPedidoView(pedido).setVisible(true);
 				pedidoView.getTextBusca().setText("");
@@ -60,7 +60,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 	
 
 	public void mudarTabela() {
-		String[][] pedidos = pedioDAO.listaPedidoArray(pedidoView.getTextBusca().getText());
+		String[][] pedidos = pedioDAO.listarPedidos(pedidoView.getTextBusca().getText());
 		String[] colunas = { "Número", "Nome", "CPF", "Total", "Funcionário", "Data do Cadastro" };
 
 		DefaultTableModel model = new DefaultTableModel(pedidos, colunas) {
@@ -75,7 +75,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 				return canEdit[columnIndex];
 			}
 		};
-		pedidoView.getTablePedido().setModel(model);
+		pedidoView.buscarPedidos().setModel(model);
 		pedidoView.repaint();
 		pedidoView.revalidate();
 		pedidoView.setBuscaAT1(pedidoView.getTextBusca().getText());
@@ -83,14 +83,14 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 
 	public void confirmarExclusao() {
 		
-		int i = pedidoView.getTablePedido().getSelectedRow();
+		int i = pedidoView.buscarPedidos().getSelectedRow();
 		if (i != -1) {
 			int result = JOptionPane.showConfirmDialog(null,
-					"Tem certeza que quer excluir o pedido de Nº " + pedidoView.getTablePedido().getValueAt(i, 0) + "?",
+					"Tem certeza que quer excluir o pedido de Nº " + pedidoView.buscarPedidos().getValueAt(i, 0) + "?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
 				int sucesso = pedioDAO.excluirPedido(
-						Integer.parseInt(pedidoView.getTablePedido().getValueAt(i, 0).toString()));
+						Integer.parseInt(pedidoView.buscarPedidos().getValueAt(i, 0).toString()));
 
 				if (sucesso == 1)
 					JOptionPane.showMessageDialog(null, "Pedido Excluido!", null,

@@ -32,7 +32,7 @@ public class InputListenerCadastroProduto implements MouseListener{
 			cadastroProduto.dispose();
 		}else if ((e.getSource()) == cadastroProduto.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
-			capturaDados();
+			capturaDadosProduto();
 		}else if(e.getSource() == cadastroProduto.getbtnPesquisarImagem()){
 			getImagem();
 		}
@@ -61,7 +61,7 @@ public class InputListenerCadastroProduto implements MouseListener{
 		// TODO Auto-generated method stub
 	}
 	
-	public void capturaDados() {
+	public void capturaDadosProduto() {
 		if(!(cadastroProduto.getTextNome().equals("")
 				|| cadastroProduto.getTextDescricao().equals(""))) {
 			

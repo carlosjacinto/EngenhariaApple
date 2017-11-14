@@ -105,7 +105,7 @@ public class PedidoDAO {
 		return produtos;
 	}
 
-	public String[][] listaPedidoArray(String campo) {
+	public String[][] listarPedidos(String campo) {
 		conex = bd.Conectar();
 		String pedidos[][] = null;
 

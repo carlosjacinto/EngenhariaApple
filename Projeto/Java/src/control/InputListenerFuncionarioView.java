@@ -39,7 +39,7 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 			cadastroFuncionarioView.setVisible(true);
 			funcionarioView.getTextBusca().setText("");
 			mudarTabela();
-		} else if (e.getSource() == funcionarioView.getTableFuncionario()) {
+		} else if (e.getSource() == funcionarioView.buscarFuncionarios()) {
 			// String id =
 			// (funcionarioView.getTableFuncionario().getModel().getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(),
 			// 0).toString());
@@ -48,9 +48,9 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 		} else if (e.getSource() == funcionarioView.getbtnExcluirFuncionario()) {
 			confirmarExclusao();
 		} else if (e.getSource() == funcionarioView.getBtnEditarFuncionario()) {
-			if (funcionarioView.getTableFuncionario().getSelectedRow() != -1) {
-				String id = (funcionarioView.getTableFuncionario().getModel()
-						.getValueAt(funcionarioView.getTableFuncionario().getSelectedRow(), 0).toString());
+			if (funcionarioView.buscarFuncionarios().getSelectedRow() != -1) {
+				String id = (funcionarioView.buscarFuncionarios().getModel()
+						.getValueAt(funcionarioView.buscarFuncionarios().getSelectedRow(), 0).toString());
 				Funcionario func = funcDAO.RetornaFuncionario(Integer.parseInt(id));
 				new EditarFuncionarioView(func).setVisible(true);
 				funcionarioView.getTextBusca().setText("");
@@ -64,7 +64,7 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 	}
 
 	public void mudarTabela() {
-		String[][] funcs = funcDAO.listaFuncionarioArray(funcionarioView.getTextBusca().getText());
+		String[][] funcs = funcDAO.listarFuncionarios(funcionarioView.getTextBusca().getText());
 		String[] colunas = { "id", "Nome", "CPF", "Endereço", "Telefone", "Nascimento" };
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
@@ -79,7 +79,7 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 				return canEdit[columnIndex];
 			}
 		};
-		funcionarioView.getTableFuncionario().setModel(model);
+		funcionarioView.buscarFuncionarios().setModel(model);
 		funcionarioView.repaint();
 		funcionarioView.revalidate();
 		funcionarioView.setBuscaAT1(funcionarioView.getTextBusca().getText());
@@ -87,17 +87,17 @@ public class InputListenerFuncionarioView implements MouseListener, WindowListen
 
 	public void confirmarExclusao() {
 		// TODO Auto-generated method stub
-		int i = funcionarioView.getTableFuncionario().getSelectedRow();
+		int i = funcionarioView.buscarFuncionarios().getSelectedRow();
 		if (i != -1) {
 			if (funcDAO.PermitirExclusaoFuncionario(
-					Integer.parseInt(funcionarioView.getTableFuncionario().getValueAt(i, 0).toString()))) {
+					Integer.parseInt(funcionarioView.buscarFuncionarios().getValueAt(i, 0).toString()))) {
 
 				int result = JOptionPane.showConfirmDialog(null,
-						"Tem certeza que quer excluir " + funcionarioView.getTableFuncionario().getValueAt(i, 1) + "?",
+						"Tem certeza que quer excluir " + funcionarioView.buscarFuncionarios().getValueAt(i, 1) + "?",
 						"Excluir", JOptionPane.YES_NO_OPTION);
 				if (result == JOptionPane.YES_OPTION) {
 					int sucesso = funcDAO.excluirFuncionario(
-							Integer.parseInt(funcionarioView.getTableFuncionario().getValueAt(i, 0).toString()));
+							Integer.parseInt(funcionarioView.buscarFuncionarios().getValueAt(i, 0).toString()));
 
 					if (sucesso == 1)
 						JOptionPane.showMessageDialog(null, "Funcionário Excluido!", null,

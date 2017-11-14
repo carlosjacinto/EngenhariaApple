@@ -64,9 +64,9 @@ public class ClienteView extends JDialog {
 		this.tableCliente = tableCliente;
 	}
 
-	public JTable getTableCliente() {
+	public JTable buscarClientes() {
 		if (tableCliente == null) {
-			String[][] clies = clieDAO.listaClienteArray("");
+			String[][] clies = clieDAO.listarClientes("");
 			String[] colunas = { "id", "Nome", "CPF", "Endereço", "Telefone", "Nascimento" };
 
 			DefaultTableModel model = new DefaultTableModel(clies, colunas) {
@@ -91,7 +91,7 @@ public class ClienteView extends JDialog {
 
 	public JScrollPane getScrollBar() {
 		if (scrollBar == null) {
-			scrollBar = new JScrollPane(getTableCliente());
+			scrollBar = new JScrollPane(buscarClientes());
 			scrollBar.setBounds(58, 52, 668, 359);
 		}
 		return scrollBar;
@@ -138,7 +138,7 @@ public class ClienteView extends JDialog {
 	public void initializeListeners() {
 		getBuscarButton().addMouseListener(listener);
 		getbtnNovoCliente().addMouseListener(listener);
-		getTableCliente().addMouseListener(listener);
+		buscarClientes().addMouseListener(listener);
 		getbtnExcluirCliente().addMouseListener(listener);
 		getBtnEditarCliente().addMouseListener(listener);
 		getBtnLimparBusca().addMouseListener(listener);
