@@ -27,7 +27,6 @@ public class AtualizaTabelaPedido implements Runnable{
 	}
 
 	private void atualizarTabelaPedido() {
-
 		String[][] pedidos = pedidoDAO.listaPedidoArray(busca);
 		String[] colunas = { "Número", "Nome", "CPF", "Total", "Funcionário", "Data do Cadastro" };
 
@@ -48,8 +47,9 @@ public class AtualizaTabelaPedido implements Runnable{
 		try {
 			pedidoView.getTablePedido().setRowSelectionInterval(l, l);
 		} catch (IllegalArgumentException e) {
-			// TODO: handle exception
+			
 		}
+			// TODO: handle exception
 
 		pedidoView.repaint();
 		pedidoView.revalidate();

@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import model.ContaDAO;
 import model.Pedido;
 import model.PedidoDAO;
 import model.ProdutoDAO;
@@ -17,6 +18,7 @@ public class InputListenerCadastroPedido implements MouseListener {
 	CadastroPedidoView cadastroPedido;
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 	private Pedido ped;
+	private ContaDAO contaDAO = new ContaDAO();
 	private PedidoDAO pedDAO = new PedidoDAO();
 	String[][] dados;
 	double valorTotal = 0;
@@ -51,8 +53,8 @@ public class InputListenerCadastroPedido implements MouseListener {
 			if (!cadastroPedido.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(cadastroPedido.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) cadastroPedido.getComboBoxProduto().getSelectedItem()).split("-");
-				cadastroPedido.getComboBoxProduto().removeItemAt(cadastroPedido.getComboBoxProduto().getSelectedIndex());
 				if (produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto() >= qtd) {
+					cadastroPedido.getComboBoxProduto().removeItemAt(cadastroPedido.getComboBoxProduto().getSelectedIndex());
 					double precoVenda = produtoDAO.buscarPrecoVenda(Integer.parseInt(produto[0]));
 					double precoProdutos = qtd * precoVenda;
 					String[] p = { produto[0], produto[1], qtd + "", precoProdutos + "" };
@@ -104,6 +106,9 @@ public class InputListenerCadastroPedido implements MouseListener {
 					cadastroPedido.revalidate();
 					valorTotal += precoProdutos;
 					cadastroPedido.getTextPreco().setText(valorTotal + "");
+				}else {
+					JOptionPane.showMessageDialog(null, "Este produto só existe "+qtd+" unidades no estoque!", "Erro",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -128,6 +133,7 @@ public class InputListenerCadastroPedido implements MouseListener {
 				int cod = pedDAO.gravarPedido(getPedido(), dados);
 				if (cod > 0) {
 					if (produtoDAO.atualizaProdutoVenda(dados, cod)) {
+						contaDAO.atualizarConta(getPedido());
 						JOptionPane.showMessageDialog(null, "Venda cadastrada com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 						cadastroPedido.dispose();

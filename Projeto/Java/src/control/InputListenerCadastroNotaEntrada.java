@@ -44,8 +44,6 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 		if (e.getSource() == cadastroNotaEntrada.getBtnCancelar()) {
 			cadastroNotaEntrada.dispose();
 		} else if ((e.getSource()) == cadastroNotaEntrada.getBtnGravar()) {
-			System.out.println("Botão ok Clicado");
-
 			capturarDadosNotaEntrada();
 		} else if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
 

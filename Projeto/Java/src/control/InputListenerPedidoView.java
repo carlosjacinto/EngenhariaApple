@@ -86,7 +86,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 		int i = pedidoView.getTablePedido().getSelectedRow();
 		if (i != -1) {
 			int result = JOptionPane.showConfirmDialog(null,
-					"Tem certeza que quer excluir " + pedidoView.getTablePedido().getValueAt(i, 1) + "?",
+					"Tem certeza que quer excluir o pedido de Nº " + pedidoView.getTablePedido().getValueAt(i, 0) + "?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
 				int sucesso = pedioDAO.excluirPedido(

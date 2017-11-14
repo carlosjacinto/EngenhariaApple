@@ -84,7 +84,9 @@ public class ClienteView extends JDialog {
 			tableCliente = new JTable(model);
 			tableCliente.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		}
+		
 		return tableCliente;
+		
 	}
 
 	public JScrollPane getScrollBar() {

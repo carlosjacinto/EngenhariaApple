@@ -63,7 +63,7 @@ public class PedidoDAO {
 				nota.setIdCliente(rs.getInt("Cliente_idCliente"));
 				nota.setIdFuncionario(rs.getInt("Funcionario_idFuncionario"));
 				nota.setIdPedido(rs.getInt("idPedido"));
-				nota.setPrecoPed(rs.getInt("valorTotalPedido"));
+				nota.setPrecoPed(rs.getFloat("valorTotalPedido"));
 			}
 			return nota;
 		} catch (SQLException sqle) {
@@ -77,7 +77,6 @@ public class PedidoDAO {
 	public String[][] retornaProdutosPed(int iid) {
 		conex = bd.Conectar();
 		String produtos[][] = null;
-		System.out.println(iid);
 
 		Statement stmt;
 		try {
@@ -88,12 +87,10 @@ public class PedidoDAO {
 			int cont = 0;
 			rs.last();
 			produtos = new String[rs.getRow()][4];
-			System.out.println(rs.getRow());
 			rs.beforeFirst();
 			while (rs.next()) {
 				produtos[cont][0] = "" + rs.getInt("Produto_idProduto");
 				produtos[cont][1] = rs.getString("nomeProduto");
-				System.out.println(produtos[cont][1]);
 				produtos[cont][2] = "" + rs.getInt("qtdVenda");
 				produtos[cont][3] = "" + rs.getDouble("precoTotalItem");
 				cont++;

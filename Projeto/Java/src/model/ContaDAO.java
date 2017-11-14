@@ -40,6 +40,32 @@ public class ContaDAO {
 		}
 	}
 	
+	public boolean atualizaValorConta(float valor, int iid) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = conex.createStatement();
+			float aReceber = 0;
+			float totalCompras = 0;
+
+			ResultSet rs = stmt.executeQuery(
+					"SELECT * from conta where Cliente_idCliente = '"+iid+"'");
+			while (rs.next()) {
+				aReceber = rs.getFloat("aReceber");
+				totalCompras = rs.getFloat("totalCompras");
+			}
+			aReceber += valor;
+			totalCompras += valor;
+			stmt.execute("UPDATE conta SET aReceber='" + aReceber + "', totalCompras='"
+					+ totalCompras + "' where Cliente_idCliente = '" +iid+"'");
+			return true;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
+			return false;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	
 	public float retornaAReceber(int iid) {
 		conex = bd.Conectar();
 		
@@ -60,6 +86,24 @@ public class ContaDAO {
 			bd.Desconectar(conex);
 
 		}
+	}
+	
+	
+	public int excluirConta(int iid) {
+		conex = bd.Conectar();
+		int result = 0;
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "DELETE FROM conta where Cliente_idCliente = " + iid;
+			result = stmt.executeUpdate(SQL);
+
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao consultar..." + sqle.getMessage());
+			result = 0;
+		} finally {
+			bd.Desconectar(conex);
+		}
+		return result;
 	}
 	
 	public boolean abaterValor(int iid, float valor) {

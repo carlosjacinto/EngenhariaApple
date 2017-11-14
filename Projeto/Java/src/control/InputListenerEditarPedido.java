@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+import model.ContaDAO;
 import model.Pedido;
 import model.PedidoDAO;
 import model.ProdutoDAO;
@@ -16,10 +17,11 @@ public class InputListenerEditarPedido implements MouseListener {
 	EditarPedidoView editarPedido;
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 	Pedido ped;
+	private ContaDAO contaDAO = new ContaDAO();
 	private PedidoDAO pedDAO = new PedidoDAO();
 	String[][] dados;
 
-	double valorTotal;
+	double valorTotal=0;
 
 	public String[][] getDados() {
 		return dados;
@@ -48,15 +50,14 @@ public class InputListenerEditarPedido implements MouseListener {
 		if (e.getSource() == editarPedido.getBtnCancelar()) {
 			editarPedido.dispose();
 		} else if ((e.getSource()) == editarPedido.getBtnGravar()) {
-			System.out.println("Botão ok Clicado");
 			capturarDadosPedido();
 		}
 		if (e.getSource() == editarPedido.getBtnAdd()) {
 			if (!editarPedido.getSpinnerQtde().getValue().toString().equals("0")) {
 				int qtd = Integer.parseInt(editarPedido.getSpinnerQtde().getValue().toString());
 				String produto[] = ((String) editarPedido.getComboBoxProduto().getSelectedItem()).split("-");
-				editarPedido.getComboBoxProduto().removeItemAt(editarPedido.getComboBoxProduto().getSelectedIndex());
 				if (produtoDAO.RetornaProduto(Integer.parseInt(produto[0])).getQtdEstoqueProduto() >= qtd) {
+					editarPedido.getComboBoxProduto().removeItemAt(editarPedido.getComboBoxProduto().getSelectedIndex());
 					double precoVenda = produtoDAO.buscarPrecoVenda(Integer.parseInt(produto[0]));
 					double precoProdutos = qtd * precoVenda;
 					String[] p = { produto[0], produto[1], qtd + "", precoProdutos + "" };
@@ -108,6 +109,10 @@ public class InputListenerEditarPedido implements MouseListener {
 					editarPedido.revalidate();
 					valorTotal += precoProdutos;
 					editarPedido.getTextPreco().setText(valorTotal + "");
+				}else {
+					//TODO: Printar msg de erro no estoque
+					JOptionPane.showMessageDialog(null, "Este produto só existe "+qtd+" unidades no estoque!", "Erro",
+							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -125,6 +130,7 @@ public class InputListenerEditarPedido implements MouseListener {
 				float vAntigo = pedDAO.editarPedido(getPedido2(), dados);
 				if (vAntigo > 0) {
 					if (produtoDAO.atualizaProdutoVenda(dados, getPedido2().getIdPedido())) {
+						contaDAO.atualizaValorConta(getPedido2().getPrecoPed()-vAntigo, getPedido2().getIdCliente());
 						JOptionPane.showMessageDialog(null, "Venda atualizada com sucesso!", "Sucesso",
 								JOptionPane.INFORMATION_MESSAGE);
 						editarPedido.dispose();
