@@ -93,6 +93,18 @@ public class InputListenerCadastroCliente implements MouseListener {
 
 			getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
 
+			String s =cadastroCliente.getTextDataNascimento().getText();
+			if ((Integer.parseInt(s.substring(0, 2))>31) 
+					|| (Integer.parseInt(s.substring(3,5))>12) 
+					|| (Integer.parseInt(s.substring(0, 2))<1) 
+					||(Integer.parseInt(s.substring(3,5))<1)) {
+				JOptionPane.showMessageDialog(null,
+						"Valor(es) de data invalido(s).",
+						"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			
 			if (clieDAO.verificaCPF(clie.getCpf()))
 				JOptionPane.showMessageDialog(null, "CPF já se encontra cadastrado em nosso sistema!", null,
 						JOptionPane.ERROR_MESSAGE);
