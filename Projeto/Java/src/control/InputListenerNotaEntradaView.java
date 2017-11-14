@@ -89,7 +89,7 @@ public class InputListenerNotaEntradaView implements MouseListener, WindowListen
 		int i = notaEntradaView.getTableNotaEntrada().getSelectedRow();
 		if (i != -1) {
 			int result = JOptionPane.showConfirmDialog(null,
-					"Tem certeza que quer excluir " + notaEntradaView.getTableNotaEntrada().getValueAt(i, 1) + "?",
+					"Tem certeza que quer excluir a nota de entrada de Nº " + notaEntradaView.getTableNotaEntrada().getValueAt(i, 0) + "?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
 				NotaEntrada nota = new NotaEntrada();

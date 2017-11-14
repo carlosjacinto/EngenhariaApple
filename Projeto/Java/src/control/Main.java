@@ -1,6 +1,6 @@
 package control;
 
-import view.PedidoView;
+import view.Principal;
 
 
 public class Main {
@@ -11,6 +11,6 @@ public class Main {
 			com.birosoft.liquid.LiquidLookAndFeel.setLiquidDecorations(true, "mac");
 		} catch (Exception e) {
 		}
-		new PedidoView().setVisible(true);
+		new Principal().setVisible(true);
 	}
 }

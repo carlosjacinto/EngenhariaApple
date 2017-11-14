@@ -14,6 +14,7 @@ import javax.swing.border.BevelBorder;
 
 import control.InputListenerCadastroProduto;
 import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 public class CadastroProdutoView extends JDialog {
 
@@ -176,6 +177,7 @@ public class CadastroProdutoView extends JDialog {
 	public JSpinner getSpinner() {
 		if (spinner == null) {
 			spinner = new JSpinner();
+			spinner.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spinner.setBounds(30, 129, 281, 20);
 		}
 		return spinner;

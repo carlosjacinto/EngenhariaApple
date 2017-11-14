@@ -80,7 +80,6 @@ public class EditarPedidoView extends JDialog {
 	}
 
 	public Pedido getPedido() {
-		System.out.println(ped.getIdPedido());
 		return ped;
 	}
 	
@@ -96,7 +95,6 @@ public class EditarPedidoView extends JDialog {
 		
 		for(int i = 0; i< dados.length; i++) {
 			getComboBoxProduto().removeItem(dados[i][0]+"-"+dados[i][1]);
-			System.out.println(dados[i][0]+"-"+dados[i][1]);
 		}
 		
 		DefaultTableModel model = new DefaultTableModel(dados,colunas) {
@@ -273,6 +271,7 @@ public class EditarPedidoView extends JDialog {
 			textPreco.setEditable(false);
 			textPreco.setBounds(10, 204, 281, 20);
 			textPreco.setColumns(10);
+			System.out.println(ped.getPrecoPed());
 			textPreco.setText(""+ped.getPrecoPed());
 		}
 		return textPreco;
