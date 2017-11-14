@@ -9,6 +9,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import control.DataBase;
 
@@ -220,6 +221,40 @@ public class ProdutoDAO {
 		}
 	}
 
+	public ArrayList<Produto> retornaProdutoArrayList(String campo) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM Produto WHERE nomeProduto LIKE '%" + campo + "%' OR idProduto LIKE '%" + campo
+					+ "%'";
+			ResultSet rs = stmt.executeQuery(SQL);
+			rs.last();
+			rs.beforeFirst();
+			ArrayList<Produto> produtos = new ArrayList<>();
+			while (rs.next()) {
+				Produto produto = new Produto();
+				produto.setIdProduto(rs.getInt("idProduto"));
+				produto.setNomeProduto(rs.getString("nomeProduto"));
+				produto.setDataCadastroProduto(rs.getDate("dataCadastroProduto"));
+				produto.setDescricaoProduto("descricaoProduto");
+				produto.setPercentualLucro(rs.getInt("percLucro"));
+				produto.setPrecoCompraProduto(rs.getFloat("precoCompraProduto"));
+				produto.setPrecoVendaProduto(rs.getFloat("precoVendaProduto"));
+				produto.setQtdEstoqueProduto(rs.getInt("qtdEstoqueProduto"));
+				produto.setUltimaDataCompraProduto(rs.getDate("ultimaDataCompraProduto"));
+				produtos.add(produto);
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao listar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	
 	public String[] buscarNomeeId() {
 		conex = bd.Conectar();
 		String produtos[];
