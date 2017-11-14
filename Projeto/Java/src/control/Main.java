@@ -1,6 +1,6 @@
 package control;
 
-import view.NotaEntradaView;
+import view.PedidoView;
 
 public class Main {
 
@@ -12,7 +12,7 @@ public class Main {
 		}
 
 
-		new NotaEntradaView().setVisible(true);
+		new PedidoView().setVisible(true);
 
 
 	}
