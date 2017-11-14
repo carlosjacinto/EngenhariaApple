@@ -28,7 +28,7 @@ public class AtualizaTabelaFuncionario implements Runnable {
 
 	private void atualizarTabelaFunc() {
 
-		String[][] funcs = funcDAO.listaFuncionarioArray(busca);
+		String[][] funcs = funcDAO.listarFuncionarios(busca);
 		String[] colunas = { "id", "Nome", "CPF", "Endereço", "Telefone", "Nascimento" };
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
@@ -45,11 +45,11 @@ public class AtualizaTabelaFuncionario implements Runnable {
 			}
 		};
 
-		int l = funcionarioView.getTableFuncionario().getSelectedRow();
+		int l = funcionarioView.buscarFuncionarios().getSelectedRow();
 
-		funcionarioView.getTableFuncionario().setModel(model);
+		funcionarioView.buscarFuncionarios().setModel(model);
 		try {
-			funcionarioView.getTableFuncionario().setRowSelectionInterval(l, l);
+			funcionarioView.buscarFuncionarios().setRowSelectionInterval(l, l);
 		} catch (IllegalArgumentException e) {
 			// TODO: handle exception
 		}

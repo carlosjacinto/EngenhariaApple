@@ -188,7 +188,7 @@ public class FuncionarioDAO {
 		return false;
 	}
 
-	public String[][] listaFuncionarioArray(String campo) {
+	public String[][] listarFuncionarios(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();

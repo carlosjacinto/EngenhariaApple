@@ -32,7 +32,6 @@ public class InputListenerCadastroCliente implements MouseListener {
 		if (e.getSource() == cadastroCliente.getBtnCancelar()) {
 			cadastroCliente.dispose();
 		} else if ((e.getSource()) == cadastroCliente.getBtnGravar()) {
-			System.out.println("Botão ok Clicado");
 			capturarDadosCliente();
 		} else if ((e.getSource()) == cadastroCliente.getbtnPesquisarImagem()) {
 			getImagem();
@@ -93,7 +92,7 @@ public class InputListenerCadastroCliente implements MouseListener {
 
 			getClie().setDataNascimento(cadastroCliente.getTextDataNascimento().getText());
 
-			String s =cadastroCliente.getTextDataNascimento().getText();
+			String s=cadastroCliente.getTextDataNascimento().getText();
 			if ((Integer.parseInt(s.substring(0, 2))>31) 
 					|| (Integer.parseInt(s.substring(3,5))>12) 
 					|| (Integer.parseInt(s.substring(0, 2))<1) 

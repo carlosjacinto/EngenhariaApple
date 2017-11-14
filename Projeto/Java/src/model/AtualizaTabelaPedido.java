@@ -27,7 +27,7 @@ public class AtualizaTabelaPedido implements Runnable{
 	}
 
 	private void atualizarTabelaPedido() {
-		String[][] pedidos = pedidoDAO.listaPedidoArray(busca);
+		String[][] pedidos = pedidoDAO.listarPedidos(busca);
 		String[] colunas = { "Número", "Nome", "CPF", "Total", "Funcionário", "Data do Cadastro" };
 
 		DefaultTableModel model = new DefaultTableModel(pedidos, colunas) {
@@ -41,11 +41,11 @@ public class AtualizaTabelaPedido implements Runnable{
 			}
 		};
 
-		int l = pedidoView.getTablePedido().getSelectedRow();
+		int l = pedidoView.buscarPedidos().getSelectedRow();
 
-		pedidoView.getTablePedido().setModel(model);
+		pedidoView.buscarPedidos().setModel(model);
 		try {
-			pedidoView.getTablePedido().setRowSelectionInterval(l, l);
+			pedidoView.buscarPedidos().setRowSelectionInterval(l, l);
 		} catch (IllegalArgumentException e) {
 			
 		}

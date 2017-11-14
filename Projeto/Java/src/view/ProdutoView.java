@@ -61,10 +61,10 @@ public class ProdutoView extends JDialog {
 		initializeListeners();
 	}
 	
-	public JTable getTableProduto() {
+	public JTable buscarProdutos() {
 		if(tableProduto == null){
 			String[] colunas = {"id","Nome", "Preço de Venda(R$)", "Preço de Compra(R$)", "Quantidade"};
-			String[][] dados = produtoDAO.listaProdutoArray("");
+			String[][] dados = produtoDAO.listarProdutos("");
 			tableProduto = new JTable(new DefaultTableModel(dados,colunas) {
 				 /**
 				 * 
@@ -84,7 +84,7 @@ public class ProdutoView extends JDialog {
 	
 	public JScrollPane getScrollBar() {
 		if(scrollBar == null){
-			scrollBar = new JScrollPane(getTableProduto());
+			scrollBar = new JScrollPane(buscarProdutos());
 			scrollBar.setBounds(58, 52, 668, 359);
 		}
 		return scrollBar;
@@ -159,7 +159,7 @@ public class ProdutoView extends JDialog {
 	public void initializeListeners() {
 		getBuscarButton().addMouseListener(listener);
 		getbtnNovoProduto().addMouseListener(listener);
-		getTableProduto().addMouseListener(listener);
+		buscarProdutos().addMouseListener(listener);
 		getBtnExcluirProduto().addMouseListener(listener);
 		getBtnEditarProduto().addMouseListener(listener);
 		getBtnLimparBusca().addMouseListener(listener);

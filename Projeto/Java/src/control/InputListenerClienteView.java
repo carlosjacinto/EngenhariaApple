@@ -38,15 +38,15 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			cadastroClienteView.setVisible(true);
 			clienteView.getTextBusca().setText("");
 			mudarTabela();
-		} else if (e.getSource() == clienteView.getTableCliente()) {
+		} else if (e.getSource() == clienteView.buscarClientes()) {
 			//String id = (clienteView.getTableCliente().getModel().getValueAt(clienteView.getTableCliente().getSelectedRow(), 0).toString());
 			//Cliente clie = clieDAO.RetornaCliente(Integer.parseInt(id));
 			//new EditarClienteView(clie).setVisible(true);
 		}else if(e.getSource() == clienteView.getbtnExcluirCliente()) {
 			confirmarExclusao();
 		}else if(e.getSource() == clienteView.getBtnEditarCliente()) {
-			if(clienteView.getTableCliente().getSelectedRow()!=-1) {
-				String id = (clienteView.getTableCliente().getModel().getValueAt(clienteView.getTableCliente().getSelectedRow(), 0).toString());
+			if(clienteView.buscarClientes().getSelectedRow()!=-1) {
+				String id = (clienteView.buscarClientes().getModel().getValueAt(clienteView.buscarClientes().getSelectedRow(), 0).toString());
 				Cliente clie = clieDAO.RetornaCliente(Integer.parseInt(id));
 				new EditarClienteView(clie).setVisible(true);
 				clienteView.getTextBusca().setText("");
@@ -58,8 +58,8 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			mudarTabela();
 		}else if(e.getSource() == clienteView.getBtnVisualizarConta()) {
 			clienteView.getBtnVisualizarConta().setIcon(new ImageIcon("Interno/conta.png"));
-			if(clienteView.getTableCliente().getSelectedRow()!=-1) {
-				String id = (clienteView.getTableCliente().getModel().getValueAt(clienteView.getTableCliente().getSelectedRow(), 0).toString());
+			if(clienteView.buscarClientes().getSelectedRow()!=-1) {
+				String id = (clienteView.buscarClientes().getModel().getValueAt(clienteView.buscarClientes().getSelectedRow(), 0).toString());
 				Cliente clie = clieDAO.RetornaCliente(Integer.parseInt(id));
 				ContaView contaView;
 				contaView = new ContaView(clie);
@@ -73,7 +73,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 	}
 	
 	public void mudarTabela() {
-		String[][] clies = clieDAO.listaClienteArray(clienteView.getTextBusca().getText());
+		String[][] clies = clieDAO.listarClientes(clienteView.getTextBusca().getText());
 		String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
 		
 		DefaultTableModel model = new DefaultTableModel(clies,colunas) {
@@ -89,7 +89,7 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 			            return canEdit [columnIndex];  
 			        }
 		};
-		clienteView.getTableCliente().setModel(model);
+		clienteView.buscarClientes().setModel(model);
 		clienteView.repaint();
 		clienteView.revalidate();
 		clienteView.setBuscaAT1(clienteView.getTextBusca().getText());
@@ -97,16 +97,16 @@ public class InputListenerClienteView implements MouseListener, WindowListener {
 
 	public void confirmarExclusao() {
 		
-		int i = clienteView.getTableCliente().getSelectedRow();
+		int i = clienteView.buscarClientes().getSelectedRow();
 		if(i!=-1) {
-			if(clieDAO.PermitirExclusaoCliente(Integer.parseInt(clienteView.getTableCliente().getValueAt(i, 0).toString()))){
+			if(clieDAO.PermitirExclusaoCliente(Integer.parseInt(clienteView.buscarClientes().getValueAt(i, 0).toString()))){
 				int result = JOptionPane.showConfirmDialog(null, "Tem certeza que quer excluir "
-							+clienteView.getTableCliente().getValueAt(i, 1)+"?",
+							+clienteView.buscarClientes().getValueAt(i, 1)+"?",
 						"Excluir", JOptionPane.YES_NO_OPTION);
 				if(result == JOptionPane.YES_OPTION) {
-					int sucesso = contaDAO.excluirConta(Integer.parseInt(clienteView.getTableCliente().getValueAt(i, 0).toString()));
+					int sucesso = contaDAO.excluirConta(Integer.parseInt(clienteView.buscarClientes().getValueAt(i, 0).toString()));
 					if(sucesso == 1) {
-					sucesso = clieDAO.excluirCliente(Integer.parseInt(clienteView.getTableCliente().getValueAt(i, 0).toString()));
+					sucesso = clieDAO.excluirCliente(Integer.parseInt(clienteView.buscarClientes().getValueAt(i, 0).toString()));
 					
 					if(sucesso == 1)JOptionPane.showMessageDialog(null, "Cliente Excluido!", null,
 							JOptionPane.INFORMATION_MESSAGE);

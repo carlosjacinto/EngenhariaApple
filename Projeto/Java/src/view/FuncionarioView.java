@@ -63,9 +63,9 @@ public class FuncionarioView extends JDialog {
 		this.tableFuncionario = tableFuncionario;
 	}
 
-	public JTable getTableFuncionario() {
+	public JTable buscarFuncionarios() {
 		if(tableFuncionario == null){
-			String[][] funcs = funcDAO.listaFuncionarioArray("");
+			String[][] funcs = funcDAO.listarFuncionarios("");
 			String[] colunas = {"id","Nome", "CPF", "Endereço", "Telefone","Nascimento"};
 			
 			DefaultTableModel model = new DefaultTableModel(funcs,colunas) {
@@ -89,7 +89,7 @@ public class FuncionarioView extends JDialog {
 	
 	public JScrollPane getScrollBar() {
 		if(scrollBar == null){
-			scrollBar = new JScrollPane(getTableFuncionario());
+			scrollBar = new JScrollPane(buscarFuncionarios());
 			scrollBar.setBounds(58, 52, 668, 359);
 		}
 		return scrollBar;
@@ -136,7 +136,7 @@ public class FuncionarioView extends JDialog {
 	public void initializeListeners() {
 		getBuscarButton().addMouseListener(listener);
 		getbtnNovoFuncionario().addMouseListener(listener);
-		getTableFuncionario().addMouseListener(listener);
+		buscarFuncionarios().addMouseListener(listener);
 		getbtnExcluirFuncionario().addMouseListener(listener);
 		getBtnEditarFuncionario().addMouseListener(listener);
 		getBtnLimparBusca().addMouseListener(listener);

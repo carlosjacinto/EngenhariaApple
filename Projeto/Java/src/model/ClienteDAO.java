@@ -167,7 +167,7 @@ public class ClienteDAO {
 		return false;
 	}
 
-	public String[][] listaClienteArray(String campo) {
+	public String[][] listarClientes(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();

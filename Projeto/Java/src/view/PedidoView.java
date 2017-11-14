@@ -60,9 +60,9 @@ public class PedidoView extends JDialog {
 		this.tablePedido = tablePedido;
 	}
 
-	public JTable getTablePedido() {
+	public JTable buscarPedidos() {
 		if (tablePedido == null) {
-			String[][] notas = pedidoDAO.listaPedidoArray("");
+			String[][] notas = pedidoDAO.listarPedidos("");
 			String[] colunas = { "Número", "Cliente", "CPF", "Total", "Funcionário", "Data do Cadastro" };
 
 			DefaultTableModel model = new DefaultTableModel(notas, colunas) {
@@ -85,7 +85,7 @@ public class PedidoView extends JDialog {
 
 	public JScrollPane getScrollBar() {
 		if (scrollBar == null) {
-			scrollBar = new JScrollPane(getTablePedido());
+			scrollBar = new JScrollPane(buscarPedidos());
 			scrollBar.setBounds(58, 52, 668, 359);
 		}
 		return scrollBar;
@@ -132,7 +132,7 @@ public class PedidoView extends JDialog {
 	public void initializeListeners() {
 		getBuscarButton().addMouseListener(listener);
 		getbtnNovoPedido().addMouseListener(listener);
-		getTablePedido().addMouseListener(listener);
+		buscarPedidos().addMouseListener(listener);
 		getbtnExcluirPedido().addMouseListener(listener);
 		getBtnEditarPedido().addMouseListener(listener);
 		getBtnLimparBusca().addMouseListener(listener);

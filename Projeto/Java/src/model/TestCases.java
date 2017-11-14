@@ -132,14 +132,14 @@ public class TestCases {
 	public void clientesArraySucesso() {
 		ClienteDAO dao = new ClienteDAO();
 		
-		assertEquals(2, dao.listaClienteArray("1").length);
+		assertEquals(2, dao.listarClientes("1").length);
 	}
 	
 	//Test case 014
 	public void clientesArrayFracasso() {
 		ClienteDAO dao = new ClienteDAO();
 		
-		assertEquals(0, dao.listaClienteArray("invalid").length);
+		assertEquals(0, dao.listarClientes("invalid").length);
 	}
 	
 	//Test case 015

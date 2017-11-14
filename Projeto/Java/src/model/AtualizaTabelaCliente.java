@@ -28,7 +28,7 @@ public class AtualizaTabelaCliente implements Runnable {
 
 	private void atualizarTabelaCliente() {
 
-		String[][] funcs = clieDAO.listaClienteArray(busca);
+		String[][] funcs = clieDAO.listarClientes(busca);
 		String[] colunas = { "id", "Nome", "CPF", "Endereço", "Telefone", "Nascimento" };
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
@@ -42,11 +42,11 @@ public class AtualizaTabelaCliente implements Runnable {
 			}
 		};
 
-		int l = clienteView.getTableCliente().getSelectedRow();
+		int l = clienteView.buscarClientes().getSelectedRow();
 
-		clienteView.getTableCliente().setModel(model);
+		clienteView.buscarClientes().setModel(model);
 		try {
-			clienteView.getTableCliente().setRowSelectionInterval(l, l);
+			clienteView.buscarClientes().setRowSelectionInterval(l, l);
 		} catch (IllegalArgumentException e) {
 			// TODO: handle exception
 		}
