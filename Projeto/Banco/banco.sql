@@ -61,9 +61,11 @@ CREATE TABLE `compra` (
   PRIMARY KEY (`idCompra`),
   KEY `idFuncCompra` (`idFuncCompra`),
   CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`idFuncCompra`) REFERENCES `funcionario` (`idFuncionario`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 /*Data for the table `compra` */
+
+insert  into `compra`(`idCompra`,`numeroNFECompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`idFuncCompra`) values (34,11111,'324235','21312','22/22/2222',1221,11,'','2017-11-13',1),(35,24124,'dbrfgbweg','423535','22/22/2222',0,10569,'','2017-11-13',1),(36,24124,'dsgvasgas','12412421','31/12/5555',0,12702,'','2017-11-13',1);
 
 /*Table structure for table `compra_has_produto` */
 
@@ -84,6 +86,8 @@ CREATE TABLE `compra_has_produto` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `compra_has_produto` */
+
+insert  into `compra_has_produto`(`Compra_idCompra`,`Produto_idProduto`,`qtdControle`,`qtdCompra`,`precoUnitItem`,`precoTotalItem`) values (34,1,1,1,11,11),(35,2,3,3,3523,10569),(36,4,3,3,4234,12702);
 
 /*Table structure for table `conta` */
 
@@ -200,7 +204,7 @@ CREATE TABLE `produto` (
 
 /*Data for the table `produto` */
 
-insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',10,11.5,0,'kjiasoidoasj','2017-11-13','2017-10-17',15),(2,'prod2',20,24,0,'sadasdoijowhqeiu	','2017-11-13','2017-10-17',20),(4,'Pc1',40,46,0,'Marina testando....','2017-11-13','2017-10-31',15),(5,'PC2',50,54.5,0,'Marina testando.....','2017-11-13','2017-10-31',9);
+insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',11,12.65,0,'kjiasoidoasj','2017-11-13','2017-10-17',15),(2,'prod2',3523,4227.6,3,'sadasdoijowhqeiu	','2017-11-13','2017-10-17',20),(4,'Pc1',4234,4869.1,3,'Marina testando....','2017-11-13','2017-10-31',15),(5,'PC2',50,54.5,0,'Marina testando.....','2017-11-13','2017-10-31',9);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

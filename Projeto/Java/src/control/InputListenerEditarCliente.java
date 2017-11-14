@@ -85,6 +85,17 @@ public class InputListenerEditarCliente implements MouseListener {
 
 			getClie().setDataNascimento(edicaoCliente.getTextDataNascimento().getText());
 
+			String s =edicaoCliente.getTextDataNascimento().getText();
+			if ((Integer.parseInt(s.substring(0, 2))>31) 
+					|| (Integer.parseInt(s.substring(3,5))>12) 
+					|| (Integer.parseInt(s.substring(0, 2))<1) 
+					||(Integer.parseInt(s.substring(3,5))<1)) {
+				JOptionPane.showMessageDialog(null,
+						"Valor(es) de data invalido(s).",
+						"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
 			if (!(imageIcon == null)) {
 
 				if (clieDAO.editarCliente(clie)) {

@@ -161,12 +161,13 @@ public class PedidoDAO {
 
 	public float editarPedido(Pedido p, String[][] produtos) {
 		conex = bd.Conectar();
+		
 		float vAntigo = -1;
 		ResultSet rs;
 		try {
 
 			Statement stmt = conex.createStatement();
-			rs = stmt.executeQuery("SELECT valorTotalPedido FROM pedido where idPedido = '" + p.getIdPedido());
+			rs = stmt.executeQuery("SELECT valorTotalPedido FROM pedido where idPedido = " + p.getIdPedido());
 			while (rs.next()) {
 				vAntigo = rs.getFloat("valorTotalPedido");
 			}
@@ -176,7 +177,7 @@ public class PedidoDAO {
 
 			int estoque = 0;
 			int qtdControle = 0;
-
+			System.out.println("passou aqui");
 			for (int i = 0; i < produtos.length; i++) {
 				rs = stmt.executeQuery("SELECT * FROM pedido_has_produto  WHERE Produto_idProduto = '"
 						+ Integer.parseInt(produtos[i][0]) + "' AND Pedido_idPedido = " + p.getIdPedido());
@@ -213,7 +214,7 @@ public class PedidoDAO {
 
 			return vAntigo;
 		} catch (SQLException sqle) {
-			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
+			System.out.println("Erro ao alterar pedidos..." + sqle.getMessage());
 			return vAntigo;
 		} finally {
 			bd.Desconectar(conex);

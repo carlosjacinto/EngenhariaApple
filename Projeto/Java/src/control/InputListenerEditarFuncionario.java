@@ -99,6 +99,18 @@ public class InputListenerEditarFuncionario implements MouseListener {
 
 				getFunc().setDataNascimento(edicaoFuncionario.getTextDataNascimento().getText());
 
+				String s =edicaoFuncionario.getTextDataNascimento().getText();
+				if ((Integer.parseInt(s.substring(0, 2))>31) 
+						|| (Integer.parseInt(s.substring(3,5))>12) 
+						|| (Integer.parseInt(s.substring(0, 2))<1) 
+						||(Integer.parseInt(s.substring(3,5))<1)) {
+					JOptionPane.showMessageDialog(null,
+							"Valor(es) de data invalido(s).",
+							"Erro ao preencher campo", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				
 				if (edicaoFuncionario.getChckbxAdministrador().isSelected())
 					getFunc().setAdministrador(true);
 				else
