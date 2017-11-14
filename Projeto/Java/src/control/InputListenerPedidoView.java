@@ -17,8 +17,8 @@ import view.PedidoView;
 
 public class InputListenerPedidoView implements MouseListener, WindowListener {
 	PedidoView pedidoView;
-	
-	private PedidoDAO pedioDAO = new PedidoDAO();
+
+	private PedidoDAO pedidoDAO = new PedidoDAO();
 
 	public InputListenerPedidoView(PedidoView pedidoView) {
 
@@ -43,24 +43,23 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 			if (pedidoView.getTablePedido().getSelectedRow() != -1) {
 				String id = (pedidoView.getTablePedido().getModel()
 						.getValueAt(pedidoView.getTablePedido().getSelectedRow(), 0).toString());
-				Pedido pedido = pedioDAO.RetornaPedido(Integer.parseInt(id));
+				Pedido pedido = pedidoDAO.RetornaPedido(Integer.parseInt(id));
 				new EditarPedidoView(pedido).setVisible(true);
 				pedidoView.getTextBusca().setText("");
 				mudarTabela();
 			} else
-				JOptionPane.showMessageDialog(null, "Selecione Uma Nota de Entrada!", null, JOptionPane.WARNING_MESSAGE);
-		}else if(e.getSource() == pedidoView.getBtnLimparBusca()) {
+				JOptionPane.showMessageDialog(null, "Selecione Uma Nota de Entrada!", null,
+						JOptionPane.WARNING_MESSAGE);
+		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getTextBusca().setText("");
 			mudarTabela();
-		}else if(e.getSource() == pedidoView.getbtnExcluirPedido()) {
+		} else if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
 			confirmarExclusao();
 		}
 	}
-	
-	
 
 	public void mudarTabela() {
-		String[][] pedidos = pedioDAO.listaPedidoArray(pedidoView.getTextBusca().getText());
+		String[][] pedidos = pedidoDAO.listaPedidoArray(pedidoView.getTextBusca().getText());
 		String[] colunas = { "Número", "Nome", "CPF", "Total", "Funcionário", "Data do Cadastro" };
 
 		DefaultTableModel model = new DefaultTableModel(pedidos, colunas) {
@@ -82,19 +81,16 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 	}
 
 	public void confirmarExclusao() {
-		
+
 		int i = pedidoView.getTablePedido().getSelectedRow();
 		if (i != -1) {
 			int result = JOptionPane.showConfirmDialog(null,
 					"Tem certeza que quer excluir o pedido de Nº " + pedidoView.getTablePedido().getValueAt(i, 0) + "?",
 					"Excluir", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
-				int sucesso = pedioDAO.excluirPedido(
-						Integer.parseInt(pedidoView.getTablePedido().getValueAt(i, 0).toString()));
 
-				if (sucesso == 1)
-					JOptionPane.showMessageDialog(null, "Pedido Excluido!", null,
-							JOptionPane.INFORMATION_MESSAGE);
+				if (pedidoDAO.excluirPedido(Integer.parseInt(pedidoView.getTablePedido().getValueAt(i, 0).toString())))
+					JOptionPane.showMessageDialog(null, "Pedido Excluido!", null, JOptionPane.INFORMATION_MESSAGE);
 				else
 					JOptionPane.showMessageDialog(null, "Erro ao tentar excluir!", null,
 							JOptionPane.INFORMATION_MESSAGE);
@@ -105,7 +101,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		
+
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
 			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota2x.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
@@ -114,7 +110,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
 			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota2x.png"));
-		}else if(e.getSource() == pedidoView.getBtnLimparBusca()) {
+		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
@@ -122,7 +118,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		
+
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
 			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
@@ -131,7 +127,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
 			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota.png"));
-		}else if(e.getSource() == pedidoView.getBtnLimparBusca()) {
+		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
@@ -139,7 +135,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
 			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
@@ -148,7 +144,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
 			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota.png"));
-		}else if(e.getSource() == pedidoView.getBtnLimparBusca()) {
+		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
 
@@ -156,7 +152,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
 			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota2x.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
@@ -165,7 +161,7 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-iconNota2x.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
 			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota2x.png"));
-		}else if(e.getSource() == pedidoView.getBtnLimparBusca()) {
+		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
 
@@ -173,13 +169,11 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 
 	@Override
 	public void windowActivated(WindowEvent e) {
-		
 
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		
 
 	}
 
@@ -190,24 +184,21 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
-		
 
 	}
 
 	@Override
 	public void windowDeiconified(WindowEvent e) {
-		
+
 	}
 
 	@Override
 	public void windowIconified(WindowEvent e) {
-		
 
 	}
 
 	@Override
 	public void windowOpened(WindowEvent e) {
-		
 
 	}
 

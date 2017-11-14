@@ -138,7 +138,7 @@ public class PrincipalFunc extends JFrame {
 		if (mnRelatorios == null) {
 			mnRelatorios = new JMenu("Relatórios");
 
-			mnRelatorios.add(mntmRelProd);
+			mnRelatorios.add(getmntmRelProd());
 		}
 
 		return mnRelatorios;
@@ -148,7 +148,6 @@ public class PrincipalFunc extends JFrame {
 		if (mntmRelProd == null) {
 			mntmRelProd = new JMenuItem("Produtos");
 			mntmRelProd.setIcon(new ImageIcon("Interno/prodMin.png"));
-			mntmRelProd.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_MASK));
 		}
 
 		return mntmRelProd;

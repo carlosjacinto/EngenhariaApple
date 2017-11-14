@@ -44,7 +44,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 		if (e.getSource() == cadastroNotaEntrada.getBtnCancelar()) {
 			cadastroNotaEntrada.dispose();
 		} else if ((e.getSource()) == cadastroNotaEntrada.getBtnGravar()) {
-			capturarDadosNotaEntrada();
+			capturarDadosNota();
 		} else if (e.getSource() == cadastroNotaEntrada.getBtnAddProduto()) {
 
 			if (!cadastroNotaEntrada.getSpinnerQtde().getValue().toString().equals("0")) {
@@ -114,7 +114,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 		}
 	}
 
-	public void capturarDadosNotaEntrada() {
+	public void capturarDadosNota() {
 		try {
 			cadastroNotaEntrada.getTextTotalNota()
 					.setText((Float.parseFloat(cadastroNotaEntrada.getTextFieldVTotalProd().getText())

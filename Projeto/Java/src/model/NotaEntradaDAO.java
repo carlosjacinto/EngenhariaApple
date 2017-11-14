@@ -35,14 +35,13 @@ public class NotaEntradaDAO {
 				stmt.execute(
 						"INSERT INTO compra_has_produto(Compra_idCompra, Produto_idProduto, qtdCompra, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
 								+ codigo + "','" + Integer.parseInt(produtos[i][0]) + "','"
-								+ Integer.parseInt(produtos[i][3]) + "','0','"
-								+ Double.parseDouble(produtos[i][2]) + "','" + Double.parseDouble(produtos[i][4])
-								+ "') ");
+								+ Integer.parseInt(produtos[i][3]) + "','0','" + Double.parseDouble(produtos[i][2])
+								+ "','" + Double.parseDouble(produtos[i][4]) + "') ");
 			}
 			System.out.println("deu bom gravar produtos");
 			return codigo;
 		} catch (SQLException sqle) {
-			System.out.println("Erro ao inserir pedidos..." + sqle.getMessage());
+			System.out.println("Erro ao inserir compras..." + sqle.getMessage());
 			return -1;
 		} finally {
 			bd.Desconectar(conex);
@@ -143,34 +142,33 @@ public class NotaEntradaDAO {
 
 	public boolean excluirNotaEntrada(int iid) {
 		conex = bd.Conectar();
-		ResultSet rs ;
+		ResultSet rs;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			
-			rs = stmt.executeQuery("SELECT * FROM compra_has_produto where compra_idCompra = "+iid);
-			System.out.println("chupa ximbinha");
+
+			rs = stmt.executeQuery("SELECT * FROM compra_has_produto where compra_idCompra = " + iid);
 
 			HashMap<Integer, Integer> prod = new HashMap<Integer, Integer>();
-			int cod=0, qtd=0, qtdAntigo=0;
+			int cod = 0, qtd = 0, qtdAntigo = 0;
 			while (rs.next()) {
 				cod = rs.getInt("Produto_idProduto");
 				qtd = rs.getInt("qtdCompra");
 				prod.put(cod, qtd);
-				
+
 			}
-			
-			for (int i:prod.keySet()) {
-				rs = stmt.executeQuery("SELECT qtdestoqueProduto FROM produto where idProduto = "+i);
-				while(rs.next()) {
+
+			for (int i : prod.keySet()) {
+				rs = stmt.executeQuery("SELECT qtdestoqueProduto FROM produto where idProduto = " + i);
+				while (rs.next()) {
 					qtdAntigo = rs.getInt("qtdestoqueProduto");
-					qtdAntigo -= qtd;
+					qtdAntigo -= prod.get(i);
 				}
-				stmt.executeUpdate("update produto set qtdestoqueProduto = " +qtdAntigo +" where idProduto = 1");
-				
+				stmt.executeUpdate("update produto set qtdestoqueProduto = " + qtdAntigo + " where idProduto = "+i);
+				qtd=0;
 			}
 			stmt.executeUpdate("DELETE FROM compra_has_produto where compra_idCompra = " + iid);
 			stmt.executeUpdate("DELETE FROM compra where idCompra = " + iid);
-			
+
 			return true;
 		} catch (SQLException sqle) {
 			System.out.println("Erro ao excluir..." + sqle.getMessage());
@@ -203,7 +201,7 @@ public class NotaEntradaDAO {
 				produtos[cont][2] = "" + rs.getDouble("precoUnitItem");
 				produtos[cont][3] = "" + rs.getDouble("precoTotalItem");
 				produtos[cont][4] = "" + rs.getInt("qtdCompra");
-				
+
 				cont++;
 			}
 
@@ -215,4 +213,68 @@ public class NotaEntradaDAO {
 		bd.Desconectar(conex);
 		return produtos;
 	}
+
+	public float editarCompra(NotaEntrada c, String[][] produtos) {
+		conex = bd.Conectar();
+
+		float vAntigo = -1;
+		ResultSet rs;
+		ResultSet rs1;
+		try {
+
+			Statement stmt = conex.createStatement();
+			rs = stmt.executeQuery("SELECT valorTotalCompra FROM compra where idCompra = " + c.getIdCompra());
+			while (rs.next()) {
+				vAntigo = rs.getFloat("valorTotalCompra");
+			}
+
+			stmt.execute("UPDATE compra SET valorTotalCompra='" + c.getTotal() + "'  WHERE idCompra='" + c.getIdCompra()
+					+ "' ");
+
+			int estoque = 0;
+			int qtdControle = 0;
+			for (int i = 0; i < produtos.length; i++) {
+				rs = stmt.executeQuery("SELECT * FROM compra_has_produto  WHERE Produto_idProduto = '"
+						+ Integer.parseInt(produtos[i][0]) + "' AND Compra_idCompra = " + c.getIdCompra());
+				if (!rs.next()) {
+					stmt.execute(
+							"INSERT INTO compra_has_produto(Compra_idCompra, Produto_idProduto, qtdCompra, qtdControle, precoUnitItem, precoTotalItem)VALUES ('"
+									+ c.getIdCompra() + "','" + Integer.parseInt(produtos[i][0]) + "','"
+									+ Integer.parseInt(produtos[i][3]) + "','0','" + Double.parseDouble(produtos[i][2])
+									+ "','" + Double.parseDouble(produtos[i][4]) + "') ");
+
+					rs1 = stmt.executeQuery(
+							"SELECT qtdEstoqueProduto, qtdControle FROM Produto INNER JOIN compra_has_produto  WHERE Produto_idProduto = idProduto AND Compra_idCompra = '"
+									+ c.getIdCompra() + "' AND idProduto = " + Integer.parseInt(produtos[i][0]));
+					while (rs1.next()) {
+						estoque = rs.getInt("qtdEstoqueProduto");
+						qtdControle = rs.getInt("qtdControle");
+					}
+
+					estoque -= (Integer.parseInt(produtos[i][2]) - qtdControle);
+					stmt.execute("UPDATE produto SET qtdEstoqueProduto='" + estoque + "' where idProduto = "
+							+ Integer.parseInt(produtos[i][0]));
+
+					stmt.execute("UPDATE compra_has_produto SET qtdControle='" + Integer.parseInt(produtos[i][2])
+							+ "' where Produto_idProduto = " + Integer.parseInt(produtos[i][0])
+							+ " and Compra_idCompra = '" + c.getIdCompra() + "'");
+
+					estoque = 0;
+					qtdControle = 0;
+
+				}
+
+			}
+
+			return vAntigo;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao alterar compras..." + sqle.getMessage());
+			return vAntigo;
+		} finally {
+			bd.Desconectar(conex);
+
+		}
+
+	}
+
 }

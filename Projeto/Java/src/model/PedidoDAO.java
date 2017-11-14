@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 
 import control.DataBase;
 
@@ -138,24 +139,45 @@ public class PedidoDAO {
 		return pedidos;
 	}
 
-	public int excluirPedido(int iid) {
+	public boolean excluirPedido(int iid) {
 		conex = bd.Conectar();
-		int result = 0;
+		ResultSet rs;
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "DELETE FROM pedido_has_produto where Pedido_idPedido = " + iid;
-			result = stmt.executeUpdate(SQL);
-			SQL = "DELETE FROM pedido where idPedido = " + iid;
-			result = stmt.executeUpdate(SQL);
 
+			rs = stmt.executeQuery("SELECT * FROM pedido_has_produto where pedido_idPedido = " + iid);
+
+			HashMap<Integer, Integer> prod = new HashMap<Integer, Integer>();
+			int cod = 0, qtd = 0, qtdAntigo = 0;
+			while (rs.next()) {
+				cod = rs.getInt("Produto_idProduto");
+				qtd = rs.getInt("qtdVenda");
+				prod.put(cod, qtd);
+
+			}
+
+			for (int i : prod.keySet()) {
+				rs = stmt.executeQuery("SELECT qtdestoqueProduto FROM produto where idProduto = " + i);
+				while (rs.next()) {
+					qtdAntigo = rs.getInt("qtdestoqueProduto");
+					qtdAntigo += prod.get(i);
+				}
+				stmt.executeUpdate("update produto set qtdestoqueProduto = " + qtdAntigo + " where idProduto = "+i);
+				qtd=0;
+			}
+			stmt.executeUpdate("DELETE FROM pedido_has_produto where pedido_idPedido = " + iid);
+			stmt.executeUpdate("DELETE FROM pedido where idPedido = " + iid);
+
+			return true;
 		} catch (SQLException sqle) {
-			System.out.println("Erro ao consultar..." + sqle.getMessage());
+			System.out.println("Erro ao excluir..." + sqle.getMessage());
+			return false;
 		} finally {
 			bd.Desconectar(conex);
 		}
-		return result;
-	}
 
+
+	}
 	public float editarPedido(Pedido p, String[][] produtos) {
 		conex = bd.Conectar();
 		
