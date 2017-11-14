@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import model.PDFGenerator;
 import view.ClienteView;
 import view.LoginView;
 import view.NotaEntradaView;
@@ -107,7 +108,12 @@ public class InputListenerPrincipalFunc implements MouseListener {
 				principalFunc.getBtnDesligar().setIcon(new ImageIcon("Interno/sair.png"));
 				principalFunc.dispose();
 			}
-		} else if (e.getSource() == principalFunc.getmntmDesligar()) {
+		} else if (e.getSource() == principalFunc.getmntmRelProd()) {
+			if ( new PDFGenerator().createPDF() ) {
+				
+			} 
+		}
+		else if (e.getSource() == principalFunc.getmntmDesligar()) {
 			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?",
 					"Sair", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {

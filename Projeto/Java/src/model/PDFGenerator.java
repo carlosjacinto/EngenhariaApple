@@ -1,6 +1,16 @@
 package model;
 
-public class CreatePDFFile {
+public class PDFGenerator {
+	
+	public PDFGenerator () {
+		
+	}
+	
+	public boolean createPDF() {
+		return true;
+	}
+	
+	
 /*
 	private static final String FILE = "Interno/RelatorioEstoque.pdf";
 
