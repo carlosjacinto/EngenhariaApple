@@ -15,6 +15,9 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.InputListenerPrincipalAdm;
+import javax.swing.KeyStroke;
+import java.awt.event.KeyEvent;
+import java.awt.event.InputEvent;
 
 public class PrincipalAdm extends JFrame {
 
@@ -38,6 +41,7 @@ public class PrincipalAdm extends JFrame {
 	private JLabel btnDesligar;
 	InputListenerPrincipalAdm listener;
 	private JMenuItem mntmDesligar;
+	private JMenuItem mntmRelProd;
 
 	/**
 	 * Launch the application.
@@ -125,9 +129,22 @@ public class PrincipalAdm extends JFrame {
 	public JMenu getmnRelatorios() {
 		if (mnRelatorios == null) {
 			mnRelatorios = new JMenu("Relatórios");
+
+			
+			mnRelatorios.add(mntmRelProd);
 		}
 
 		return mnRelatorios;
+	}
+
+	public JMenuItem getmntmRelProd() {
+		if (mntmRelProd == null) {
+			mntmRelProd = new JMenuItem("Produtos");
+			mntmRelProd.setIcon(new ImageIcon("Interno/prodMin.png"));
+			mntmRelProd.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.ALT_MASK));
+		}
+
+		return mntmRelProd;
 	}
 
 	public JMenu getmnSobre() {
@@ -141,6 +158,7 @@ public class PrincipalAdm extends JFrame {
 	public JMenuItem getmntmFuncionario() {
 		if (mntmFuncionario == null) {
 			mntmFuncionario = new JMenuItem("Funcionário");
+			mntmFuncionario.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F, InputEvent.ALT_MASK));
 		}
 
 		return mntmFuncionario;
@@ -149,6 +167,7 @@ public class PrincipalAdm extends JFrame {
 	public JMenuItem getmntmProdutos() {
 		if (mntmProdutos == null) {
 			mntmProdutos = new JMenuItem("Produtos");
+			mntmProdutos.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, InputEvent.ALT_MASK));
 		}
 
 		return mntmProdutos;
@@ -157,12 +176,11 @@ public class PrincipalAdm extends JFrame {
 	public JMenuItem getmntmSair() {
 		if (mntmSair == null) {
 			mntmSair = new JMenuItem("Sair da sessão do Usuário");
+			mntmSair.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.ALT_MASK));
 		}
 
 		return mntmSair;
 	}
-
-	
 
 	public void initializeListeners() {
 		getBtFunc().addMouseListener(listener);
@@ -282,12 +300,12 @@ public class PrincipalAdm extends JFrame {
 
 		return label_1;
 	}
-	
+
 	public JMenuItem getmntmDesligar() {
 		if (mntmDesligar == null) {
 			mntmDesligar = new JMenuItem("Desligar o programa");
+			mntmDesligar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
 		}
 		return mntmDesligar;
 	}
-	
 }

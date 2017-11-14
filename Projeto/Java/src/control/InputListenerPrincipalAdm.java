@@ -6,6 +6,7 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
+import model.PDFGenerator;
 import view.FuncionarioView;
 import view.LoginView;
 import view.PrincipalAdm;
@@ -97,15 +98,19 @@ public class InputListenerPrincipalAdm implements MouseListener {
 				new LoginView().setVisible(true);
 			}
 		} else if (e.getSource() == principalAdm.getBtDesligar()) {
-			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?",
-					"Sair", JOptionPane.YES_NO_OPTION);
+			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?", "Sair",
+					JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION) {
 				principalAdm.getBtDesligar().setIcon(new ImageIcon("Interno/desligar.png"));
 				principalAdm.dispose();
 			}
+		} else if (e.getSource() == principalAdm.getmntmRelProd()) {
+			if ( new PDFGenerator().createPDF() ) {
+				
+			}
 		} else if (e.getSource() == principalAdm.getmntmDesligar()) {
-			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?",
-					"Sair", JOptionPane.YES_NO_OPTION);
+			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?", "Sair",
+					JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION)
 				principalAdm.dispose();
 		}
