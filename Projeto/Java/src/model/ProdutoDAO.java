@@ -220,6 +220,38 @@ public class ProdutoDAO {
 		}
 	}
 
+	public String[][] retornaProdutoArray(String campo) {
+		conex = bd.Conectar();
+		try {
+			Statement stmt = (Statement) conex.createStatement();
+			String SQL = "SELECT * FROM Produto WHERE nomeProduto LIKE '%" + campo + "%' OR idProduto LIKE '%" + campo
+					+ "%'";
+			ResultSet rs = stmt.executeQuery(SQL);
+			rs.last();
+			int size = rs.getRow();
+			rs.beforeFirst();
+
+			String produtos[][] = new String[size][5];
+			int cont = 0;
+			while (rs.next()) {
+				produtos[cont][1] = rs.getString("nomeProduto");
+				produtos[cont][0] = "" + rs.getInt("idProduto");
+				produtos[cont][2] = "" + rs.getLong("precoVendaProduto");
+				produtos[cont][3] = "" + rs.getLong("precoCompraProduto");
+				produtos[cont][4] = "" + rs.getInt("qtdEstoqueProduto");
+				cont++;
+			}
+			rs.close();
+			stmt.close();
+			return produtos;
+		} catch (SQLException sqle) {
+			System.out.println("Erro ao listar..." + sqle.getMessage());
+			return null;
+		} finally {
+			bd.Desconectar(conex);
+		}
+	}
+	
 	public String[] buscarNomeeId() {
 		conex = bd.Conectar();
 		String produtos[];
