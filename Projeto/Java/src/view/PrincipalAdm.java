@@ -186,7 +186,7 @@ public class PrincipalAdm extends JFrame {
 		getmntmSair().addMouseListener(listener);
 		getmntmDesligar().addMouseListener(listener);
 		getmntmRelProd().addMouseListener(listener);
-
+		getmnSobre().addMouseListener(listener);
 	}
 
 	public void initialize() {
