@@ -76,7 +76,7 @@ public class NotaEntradaDAO {
 		return id;
 	}
 
-	public String[][] listaNotaEntradaArray(String campo) {
+	public String[][] listarNotas(String campo) {
 		conex = bd.Conectar();
 		try {
 			Statement stmt = (Statement) conex.createStatement();
@@ -140,7 +140,7 @@ public class NotaEntradaDAO {
 		}
 	}
 
-	public boolean excluirNotaEntrada(int iid) {
+	public boolean excluirNota(int iid) {
 		conex = bd.Conectar();
 		ResultSet rs;
 		try {

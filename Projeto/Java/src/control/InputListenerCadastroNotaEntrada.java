@@ -131,8 +131,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 				|| cadastroNotaEntrada.getTextDataEmissao().getText().equals(""))) {
 
 			try {
-				getNotaEntrada().setTotal(Float.parseFloat((cadastroNotaEntrada.getTextFieldVTotalProd().getText())));
-				getNotaEntrada()
+				getNotaEntrada().setTotal(Float.parseFloat((cadastroNotaEntrada.getTextTotalNota().getText())));getNotaEntrada()
 						.setOutros(Float.parseFloat((cadastroNotaEntrada.getTextFieldOutrosCustos().getText())));
 				getNotaEntrada().setNumeroNota(Integer.parseInt(cadastroNotaEntrada.getTextCodigo().getText()));
 			} catch (NumberFormatException e) {

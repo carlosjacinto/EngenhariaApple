@@ -22,13 +22,10 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import control.InputListenerEditarNotaEntrada;
-import control.InputListenerEditarPedido;
-import model.Cliente;
 import model.Funcionario;
 import model.FuncionarioDAO;
 import model.NotaEntrada;
 import model.NotaEntradaDAO;
-import model.Pedido;
 import model.ProdutoDAO;
 
 public class EditarNotaEntradaView extends JDialog {
@@ -99,6 +96,10 @@ public class EditarNotaEntradaView extends JDialog {
 		initialize();
 		initializeListeners();
 		preencherCampos(nota);
+	}
+	
+	public NotaEntrada getNota() {
+		return nota;
 	}
 	
 	public void preencherCampos(NotaEntrada nota) {
@@ -290,6 +291,8 @@ public class EditarNotaEntradaView extends JDialog {
 		if (comboBoxFuncionario == null) {
 			String funcionarios[] = funcionarioDAO.buscarNomeeId();
 			comboBoxFuncionario = new JComboBox<Object>(funcionarios);
+			comboBoxFuncionario.setBackground(Color.LIGHT_GRAY);
+			comboBoxFuncionario.setEnabled(false);
 			comboBoxFuncionario.setBounds(183, 176, 281, 20);
 		}
 		return comboBoxFuncionario;
@@ -322,8 +325,11 @@ public class EditarNotaEntradaView extends JDialog {
 	public JTextField getTextTotalNota() {
 		if (textTotalNota == null) {
 			textTotalNota = new JTextField();
+			textTotalNota.setBackground(Color.LIGHT_GRAY);
+			textTotalNota.setDisabledTextColor(Color.BLACK);
+			textTotalNota.setEnabled(false);
 			textTotalNota.setHorizontalAlignment(SwingConstants.CENTER);
-			textTotalNota.setEditable(true);
+			textTotalNota.setEditable(false);
 			textTotalNota.setBounds(474, 224, 152, 20);
 			textTotalNota.setText("0");
 			textTotalNota.setColumns(10);
@@ -344,6 +350,10 @@ public class EditarNotaEntradaView extends JDialog {
 	public JTextField getTextNumeroNFE() {
 		if (textNumeroNFE == null) {
 			textNumeroNFE = new JTextField();
+			textNumeroNFE.setDisabledTextColor(Color.BLACK);
+			textNumeroNFE.setForeground(Color.BLACK);
+			textNumeroNFE.setBackground(Color.LIGHT_GRAY);
+			textNumeroNFE.setEnabled(false);
 			textNumeroNFE.setHorizontalAlignment(SwingConstants.CENTER);
 			textNumeroNFE.setBounds(30, 117, 141, 22);
 			textNumeroNFE.setColumns(10);
@@ -397,6 +407,10 @@ public class EditarNotaEntradaView extends JDialog {
 	public JTextField getTextFieldCNPJ() {
 		if (textFieldCNPJ == null) {
 			textFieldCNPJ = new JTextField();
+			textFieldCNPJ.setDisabledTextColor(Color.BLACK);
+			textFieldCNPJ.setForeground(Color.BLACK);
+			textFieldCNPJ.setBackground(Color.LIGHT_GRAY);
+			textFieldCNPJ.setEnabled(false);
 			textFieldCNPJ.setEditable(false);
 			textFieldCNPJ.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldCNPJ.setBounds(30, 175, 141, 20);
@@ -436,6 +450,9 @@ public class EditarNotaEntradaView extends JDialog {
 	public JTextField getTextFieldVTotalProd() {
 		if (textFieldVTotalProd == null) {
 			textFieldVTotalProd = new JTextField();
+			textFieldVTotalProd.setBackground(Color.LIGHT_GRAY);
+			textFieldVTotalProd.setDisabledTextColor(Color.BLACK);
+			textFieldVTotalProd.setEnabled(false);
 			textFieldVTotalProd.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldVTotalProd.setBounds(474, 176, 149, 20);
 			textFieldVTotalProd.setText(nota.getTotal()-nota.getOutros()+"");
@@ -513,9 +530,12 @@ public class EditarNotaEntradaView extends JDialog {
 		return lblidCadastro;
 	}
 	
-	private JTextField getTextFieldDataCadastro() {
+	public JTextField getTextFieldDataCadastro() {
 		if (textFieldDataCadastro == null) {
 			textFieldDataCadastro = new JTextField();
+			textFieldDataCadastro.setBackground(Color.LIGHT_GRAY);
+			textFieldDataCadastro.setDisabledTextColor(Color.BLACK);
+			textFieldDataCadastro.setEnabled(false);
 			textFieldDataCadastro.setEditable(false);
 			textFieldDataCadastro.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldDataCadastro.setBounds(474, 54, 149, 20);
@@ -526,9 +546,13 @@ public class EditarNotaEntradaView extends JDialog {
 	}
 	
 	
-	private JTextField getTextFieldCodigoNFe() {
+	public JTextField getTextFieldCodigoNFe() {
 		if (textFieldCodigoNFe == null) {
 			textFieldCodigoNFe = new JTextField();
+			textFieldCodigoNFe.setBackground(Color.LIGHT_GRAY);
+			textFieldCodigoNFe.setDisabledTextColor(Color.BLACK);
+			textFieldCodigoNFe.setForeground(Color.BLACK);
+			textFieldCodigoNFe.setEnabled(false);
 			textFieldCodigoNFe.setHorizontalAlignment(SwingConstants.CENTER);
 			textFieldCodigoNFe.setEditable(false);
 			textFieldCodigoNFe.setBounds(30, 54, 141, 20);
