@@ -17,17 +17,24 @@ public class InputListenerPagamentoView implements MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource() == pagamentoView.getBtnPagar()) {
-			try {
-				float valor = Float.parseFloat(pagamentoView.getTextField().getText());
-				if(contaDAO.retornaAReceber(pagamentoView.getCliente().getIdCliente()) >= valor) {
-					contaDAO.abaterValor(pagamentoView.getCliente().getIdCliente(), valor);
-					
-					pagamentoView.dispose();
-				}
+			realizarPagamento();
+			
 				
-			}catch(NumberFormatException exc) {
-				System.out.println(pagamentoView.getTextField().getText()+"Erro");
+			
+		}
+	}
+
+	public void realizarPagamento() {
+		// TODO Auto-generated method stub
+		try {
+			float valor = Float.parseFloat(pagamentoView.getTextField().getText());
+			if(contaDAO.retornaAReceber(pagamentoView.getCliente().getIdCliente()) >= valor) {
+				contaDAO.abaterValor(pagamentoView.getCliente().getIdCliente(), valor);
+				
+				pagamentoView.dispose();
 			}
+		}catch(NumberFormatException exc) {
+			System.out.println(pagamentoView.getTextField().getText()+"Erro");
 		}
 	}
 

@@ -2,11 +2,13 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 import model.PDFGenerator;
+import model.ProdutoDAO;
 import view.ClienteView;
 import view.LoginView;
 import view.NotaEntradaView;
@@ -15,6 +17,7 @@ import view.PrincipalFunc;
 
 public class InputListenerPrincipalFunc implements MouseListener {
 	PrincipalFunc principalFunc;
+	ProdutoDAO prodDAO = new ProdutoDAO();
 
 	public InputListenerPrincipalFunc(PrincipalFunc principalFunc) {
 		this.principalFunc = principalFunc;
@@ -109,9 +112,12 @@ public class InputListenerPrincipalFunc implements MouseListener {
 				principalFunc.dispose();
 			}
 		} else if (e.getSource() == principalFunc.getmntmRelProd()) {
-			if ( new PDFGenerator().createPDF() ) {
-				
-			} 
+			try {
+				new PDFGenerator().createPDF(prodDAO.retornaProdutoArrayList(""));
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		else if (e.getSource() == principalFunc.getmntmDesligar()) {
 			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?",

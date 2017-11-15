@@ -105,9 +105,9 @@ public class InputListenerPrincipalAdm implements MouseListener {
 				principalAdm.dispose();
 			}
 		} else if (e.getSource() == principalAdm.getmntmRelProd()) {
-			if ( new PDFGenerator().createPDF() ) {
+			//if ( new PDFGenerator().createPDF() ) {
 				
-			}
+			//}
 		} else if (e.getSource() == principalAdm.getmntmDesligar()) {
 			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?", "Sair",
 					JOptionPane.YES_NO_OPTION);

@@ -6,5 +6,6 @@
 	<classpathentry kind="lib" path="liquidlnf(mac)-2.9.1/liquidlnf.jar"/>
 	<classpathentry kind="lib" path="mysql-connector-java-5.1.41-bin.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="pdfbox-app-2.0.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

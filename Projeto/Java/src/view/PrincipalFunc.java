@@ -1,10 +1,9 @@
 package view;
 
+
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.SystemColor;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -13,7 +12,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.KeyStroke;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -186,6 +184,7 @@ public class PrincipalFunc extends JFrame {
 	}
 
 	public void initializeListeners() {
+		getmntmRelProd().addMouseListener(listener);
 		getBtCliente().addMouseListener(listener);
 		getBtPedido().addMouseListener(listener);
 		getBtNotaEntrada().addMouseListener(listener);
