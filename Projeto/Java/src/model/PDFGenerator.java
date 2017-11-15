@@ -1,5 +1,6 @@
 package model;
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.swing.JOptionPane;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
@@ -25,7 +27,15 @@ public class PDFGenerator {
 	private static final String DIVISOR = "-------------------------------------------------------------"
 			+ "---------------------------------------------------------------------------------------------";
 	private static final String PATH = "Relatorios/Relatorio";
-	private static final String LOGO_PATH = "Relatorios/logo_pdf.png";
+	private static final String LOGO_PATH = "Interno/logo_pdf.png";
+	private static final String TITULO_PAG = "                 Relátorio de estoque";
+	private static final String TITULO_CAPA = "    Relátorio de estoque";
+	private static final String RODAPE_CAPA = "                                   Apple Cart";
+	private static final String DATA = "                                           ";
+	
+	//Fontes
+	private static final PDFont TITULO = PDType1Font.TIMES_BOLD;
+	private static final PDFont CONTEUDO = PDType1Font.TIMES_ROMAN;
 	
 	public boolean createPDF() throws IOException {
 		if(produtos.isEmpty() || produtos==null) return false;
@@ -40,7 +50,7 @@ public class PDFGenerator {
 			paginaBranco = new PDPage();
 			documento.addPage(paginaBranco);
 			
-			write(documento.getPage(i), i);
+			write(documento.getPage(i), i-1);
 		}
 		
 		savePDF();
@@ -64,41 +74,41 @@ public class PDFGenerator {
 		str.setLeading(14.5f);
 		
 		str.setFont(PDType1Font.COURIER_BOLD, 16);
-		str.showText("                 Relátorio de estoque");
+		str.showText(TITULO_PAG);
 		str.newLine();
 		
 		for (int j = i*5; j <((i+1)*5) && j<produtos.size(); j++) {
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_BOLD, 10);
+			str.setFont(TITULO, 10);
 			str.showText("Nome:");
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_ROMAN, 10);
+			str.setFont(CONTEUDO, 10);
 			str.showText(produtos.get(j).getNomeProduto());
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_BOLD, 10);
+			str.setFont(TITULO, 10);
 			str.showText("Codigo:");
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_ROMAN, 10);
+			str.setFont(CONTEUDO, 10);
 			str.showText(produtos.get(j).getIdProduto()+"");
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_BOLD, 10);
+			str.setFont(TITULO, 10);
 			str.showText("Quantidade:");
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_ROMAN, 10);
+			str.setFont(CONTEUDO, 10);
 			str.showText(produtos.get(j).getQtdEstoqueProduto()+"");
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_BOLD, 10);
+			str.setFont(TITULO, 10);
 			str.showText("Preço:");
 			
 			str.newLine();
-			str.setFont(PDType1Font.TIMES_ROMAN, 10);
+			str.setFont(CONTEUDO, 10);
 			str.showText("R$ " + produtos.get(j).getPrecoVendaProduto());
 			
 			str.newLine();
@@ -106,8 +116,6 @@ public class PDFGenerator {
 			
 		}
 		
-		for (int j = 0; j < 3; j++) str.newLine();
-		str.showText("                                                                                                                                                          "+(i+1));
 		
 		str.endText();
 		str.close();
@@ -116,7 +124,7 @@ public class PDFGenerator {
 	private void criarCapa(PDPage p) {
 		
 		try {
-			PDImageXObject pdImage = PDImageXObject.createFromFile("Interno/logo_pdf.png", documento);
+			PDImageXObject pdImage = PDImageXObject.createFromFile(LOGO_PATH, documento);
 			
 			PDPageContentStream contentStream = new PDPageContentStream(documento, p);
 			
@@ -128,18 +136,18 @@ public class PDFGenerator {
 			contentStream.setLeading(14.5f);
 			
 			contentStream.setFont(PDType1Font.COURIER_BOLD, 30);
-			contentStream.showText("    Relátorio de estoque");
+			contentStream.showText(TITULO_CAPA);
 			
 			for (int i = 0; i < 32; i++) {
 				contentStream.newLine();
 			}
 			
 			contentStream.setFont(PDType1Font.TIMES_BOLD, 22);
-			contentStream.showText("                                   Apple Cart");
+			contentStream.showText(RODAPE_CAPA);
 
 			contentStream.setFont(PDType1Font.TIMES_ROMAN, 14);
 			for (int i = 0; i < 10; i++) contentStream.newLine();
-			contentStream.showText("                                           " + new Date(System.currentTimeMillis()));
+			contentStream.showText(DATA + new Date(System.currentTimeMillis()));
 			
 			contentStream.endText();
 
@@ -147,6 +155,7 @@ public class PDFGenerator {
 
 			
 		} catch (IOException e) {
+			e.printStackTrace();
 			JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
 					JOptionPane.ERROR_MESSAGE);
 		}
@@ -155,16 +164,39 @@ public class PDFGenerator {
 	
 	private void savePDF() throws IOException {
 		
-		File file = new File(PATH+".pdf");
+		File file = new File(PATH + ".pdf");
 		if(file.exists()) {
 			int index=0;
 			while(file.exists()) {
 				index++;
-				file = new File(PATH+"("+ index +").pdf");
+				file = new File(PATH + "("+ index +").pdf");
 			}
-			documento.save(PATH+"("+ index +").pdf");
+			documento.save(PATH + "("+ index +").pdf");
+			
+			if (Desktop.isDesktopSupported()) {
+			    try {
+			        File myFile = new File(PATH + "("+ index +").pdf");
+			        Desktop.getDesktop().open(myFile);
+			    } catch (IOException ex) {
+			        JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
+								JOptionPane.ERROR_MESSAGE);
+			    }
+			}
+			
 		}
-		else documento.save(PATH+".pdf");
+		else {
+			documento.save(PATH + ".pdf");
+			
+			if (Desktop.isDesktopSupported()) {
+			    try {
+			        File myFile = new File(PATH + ".pdf");
+			        Desktop.getDesktop().open(myFile);
+			    } catch (IOException ex) {
+			        JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
+								JOptionPane.ERROR_MESSAGE);
+			    }
+			}
+		}
 		
 		documento.close();
 	}

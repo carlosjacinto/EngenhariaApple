@@ -113,10 +113,13 @@ public class InputListenerPrincipalFunc implements MouseListener {
 			}
 		} else if (e.getSource() == principalFunc.getmntmRelProd()) {
 			try {
-				new PDFGenerator().createPDF();
+				boolean result = new PDFGenerator().createPDF();
+				if(!result) JOptionPane.showMessageDialog(null, "Estoque Vazio!", null,
+						JOptionPane.ERROR_MESSAGE);
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		else if (e.getSource() == principalFunc.getmntmDesligar()) {

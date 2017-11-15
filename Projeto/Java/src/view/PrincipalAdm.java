@@ -15,9 +15,6 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import control.InputListenerPrincipalAdm;
-import javax.swing.KeyStroke;
-import java.awt.event.KeyEvent;
-import java.awt.event.InputEvent;
 
 public class PrincipalAdm extends JFrame {
 
@@ -188,6 +185,7 @@ public class PrincipalAdm extends JFrame {
 		getmntmProdutos().addMouseListener(listener);
 		getmntmSair().addMouseListener(listener);
 		getmntmDesligar().addMouseListener(listener);
+		getmntmRelProd().addMouseListener(listener);
 
 	}
 

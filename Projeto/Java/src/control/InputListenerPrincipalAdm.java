@@ -2,6 +2,7 @@ package control;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -113,6 +114,16 @@ public class InputListenerPrincipalAdm implements MouseListener {
 					JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION)
 				principalAdm.dispose();
+		}else if (e.getSource() == principalAdm.getmntmRelProd()) {
+			try {
+				boolean result = new PDFGenerator().createPDF();
+				if(!result) JOptionPane.showMessageDialog(null, "Estoque Vazio!", null,
+						JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
+						JOptionPane.ERROR_MESSAGE);
+			}
 		}
 
 	}
