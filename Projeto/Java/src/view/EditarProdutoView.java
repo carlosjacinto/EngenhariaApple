@@ -66,13 +66,12 @@ public class EditarProdutoView extends JDialog {
 		initializeListeners();
 
 	}
-	
+
 	public EditarProdutoView(Produto produto) {
 		this.produto = produto;
 		listener = new InputListenerEditarProduto(this);
 		initialize();
 		initializeListeners();
-		
 
 	}
 
@@ -81,7 +80,6 @@ public class EditarProdutoView extends JDialog {
 		setBounds(100, 100, 649, 520);
 		setTitle("Edição de Produto");
 		setContentPane(getContentPanel());
-		
 
 	}
 
@@ -140,21 +138,26 @@ public class EditarProdutoView extends JDialog {
 			panelFoto = new JPanel();
 			panelFoto.setBounds(339, 82, 275, 281);
 			panelFoto.setLayout(null);
-			
-			
+
 			panelFoto.add(getLblFoto());
 		}
 		return panelFoto;
 
 	}
-	
+
 	public JLabel getLblFoto() {
 		lblFoto = new JLabel("");
 		lblFoto.setHorizontalAlignment(SwingConstants.CENTER);
 		lblFoto.setBounds(0, 0, 275, 281);
-		ImageIcon i = new ImageIcon("Media/Produto/"+produto.getIdProduto()+".png");
-		i.setImage(i.getImage().getScaledInstance(275, 281, 100));
-		lblFoto.setIcon(i);
+		ImageIcon i = new ImageIcon("Media/Produto/" + produto.getIdProduto() + ".png");
+		System.out.println(i.getImageLoadStatus());
+		if (i.getImageLoadStatus() == 4) {
+			lblFoto.setIcon(new ImageIcon("Interno/default-produto.png"));
+		} else {
+			i.setImage(i.getImage().getScaledInstance(275, 281, 100));
+			lblFoto.setIcon(i);
+		}
+
 		return lblFoto;
 	}
 
@@ -190,7 +193,7 @@ public class EditarProdutoView extends JDialog {
 			textPrecoCompra.setEditable(false);
 			textPrecoCompra.setBounds(30, 151, 281, 20);
 			textPrecoCompra.setColumns(10);
-			textPrecoCompra.setText(produto.getPrecoCompraProduto()+"");
+			textPrecoCompra.setText(produto.getPrecoCompraProduto() + "");
 		}
 		return textPrecoCompra;
 	}
@@ -209,7 +212,7 @@ public class EditarProdutoView extends JDialog {
 			textPrecoVenda.setEditable(false);
 			textPrecoVenda.setBounds(30, 263, 281, 20);
 			textPrecoVenda.setColumns(10);
-			textPrecoVenda.setText(""+produto.getPrecoVendaProduto());
+			textPrecoVenda.setText("" + produto.getPrecoVendaProduto());
 		}
 		return textPrecoVenda;
 	}
@@ -255,7 +258,7 @@ public class EditarProdutoView extends JDialog {
 			txtDataDoCadastro.setBounds(339, 38, 284, 20);
 			txtDataDoCadastro.setColumns(10);
 			txtDataDoCadastro.setEditable(false);
-			txtDataDoCadastro.setText(""+produto.getDataCadastroProduto());
+			txtDataDoCadastro.setText("" + produto.getDataCadastroProduto());
 		}
 		return txtDataDoCadastro;
 	}
@@ -273,7 +276,7 @@ public class EditarProdutoView extends JDialog {
 			textCodigo = new JTextField();
 			textCodigo.setBounds(30, 37, 281, 22);
 			textCodigo.setEditable(false);
-			textCodigo.setText(""+produto.getIdProduto());
+			textCodigo.setText("" + produto.getIdProduto());
 		}
 		return textCodigo;
 	}
@@ -285,6 +288,7 @@ public class EditarProdutoView extends JDialog {
 		}
 		return lblCodigo;
 	}
+
 	public JLabel getLblPercentuallucro() {
 		if (lblPercentuallucro == null) {
 			lblPercentuallucro = new JLabel("Percentual Lucro");
@@ -292,6 +296,7 @@ public class EditarProdutoView extends JDialog {
 		}
 		return lblPercentuallucro;
 	}
+
 	public JSpinner getSpinner() {
 		if (spinner == null) {
 			spinner = new JSpinner();
