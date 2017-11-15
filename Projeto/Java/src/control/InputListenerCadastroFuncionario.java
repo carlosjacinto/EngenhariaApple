@@ -80,6 +80,27 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 				|| cadastroFuncionario.getTextCelular().getText().equals("")
 				|| cadastroFuncionario.getTextRua().getText().equals("")
 				|| cadastroFuncionario.getTextDataNascimento().getText().equals(""))) {
+			
+			if(!Validacao.isFullname(cadastroFuncionario.getTextNome().getText())) {
+				JOptionPane.showMessageDialog(null, "O nome deve conter apenas letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if(!Validacao.isFullname(cadastroFuncionario.getTextCidade().getText())) {
+				JOptionPane.showMessageDialog(null, "O campo cidade deve conter apenas letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if(!Validacao.isNumeric(cadastroFuncionario.getTextTelefone().getText())) {
+				JOptionPane.showMessageDialog(null, "O campo telefone não pode conter letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if(!Validacao.isNumeric(cadastroFuncionario.getTextCelular().getText())) {
+				JOptionPane.showMessageDialog(null, "O campo celular não pode conter letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
 			if (cadastroFuncionario.getTextPassword1().getText()
 					.equals(cadastroFuncionario.getTextPassword2().getText())
 					&& !cadastroFuncionario.getTextPassword1().getText().equals("")) {
