@@ -29,7 +29,7 @@ public class AtualizaTabelaNotaEntrada implements Runnable{
 
 	private void atualizarTabelaNotaEntrada() {
 
-		String[][] funcs = notaEntradaDAO.listaNotaEntradaArray(busca);
+		String[][] funcs = notaEntradaDAO.listarNotas(busca);
 		String[] colunas = { "Número", "Nome", "CNPJ", "Total", "Funcionário", "Data do Cadastro" };
 
 		DefaultTableModel model = new DefaultTableModel(funcs, colunas) {
@@ -43,11 +43,11 @@ public class AtualizaTabelaNotaEntrada implements Runnable{
 			}
 		};
 
-		int l = notaEntradaView.getTableNotaEntrada().getSelectedRow();
+		int l = notaEntradaView.buscarNotas().getSelectedRow();
 
-		notaEntradaView.getTableNotaEntrada().setModel(model);
+		notaEntradaView.buscarNotas().setModel(model);
 		try {
-			notaEntradaView.getTableNotaEntrada().setRowSelectionInterval(l, l);
+			notaEntradaView.buscarNotas().setRowSelectionInterval(l, l);
 		} catch (IllegalArgumentException e) {
 			// TODO: handle exception
 		}

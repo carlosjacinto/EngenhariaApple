@@ -60,9 +60,9 @@ public class NotaEntradaView extends JDialog {
 		this.tableNotaEntrada = tableNotaEntrada;
 	}
 
-	public JTable getTableNotaEntrada() {
+	public JTable buscarNotas() {
 		if (tableNotaEntrada == null) {
-			String[][] notas = notaEntDAO.listaNotaEntradaArray("");
+			String[][] notas = notaEntDAO.listarNotas("");
 			String[] colunas = { "Número", "Nome", "CNPJ", "Total", "Funcionário", "Data do Cadastro" };
 
 			DefaultTableModel model = new DefaultTableModel(notas, colunas) {
@@ -85,7 +85,7 @@ public class NotaEntradaView extends JDialog {
 
 	public JScrollPane getScrollBar() {
 		if (scrollBar == null) {
-			scrollBar = new JScrollPane(getTableNotaEntrada());
+			scrollBar = new JScrollPane(buscarNotas());
 			scrollBar.setBounds(58, 52, 668, 359);
 		}
 		return scrollBar;
@@ -132,7 +132,7 @@ public class NotaEntradaView extends JDialog {
 	public void initializeListeners() {
 		getBuscarButton().addMouseListener(listener);
 		getbtnNovoNotaEntrada().addMouseListener(listener);
-		getTableNotaEntrada().addMouseListener(listener);
+		buscarNotas().addMouseListener(listener);
 		getbtnExcluirNotaEntrada().addMouseListener(listener);
 		getBtnEditarNotaEntrada().addMouseListener(listener);
 		getBtnLimparBusca().addMouseListener(listener);
