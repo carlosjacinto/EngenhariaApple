@@ -42,14 +42,6 @@ public class PedidoView extends JDialog {
 	private JLabel btnEditarPedido;
 	private JLabel btnLimparBusca;
 
-	public static void main(String[] args) {
-		PedidoView frame = new PedidoView();
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public PedidoView() {
 		listener = new InputListenerPedidoView(this);
 		initialize();

@@ -32,7 +32,6 @@ public class EditarNotaEntradaView extends JDialog {
 
 	private static final long serialVersionUID = 7909862707617137771L;
 	InputListenerEditarNotaEntrada listener;
-	private JTable tableProduto;
 	private JPanel contentPanel;
 	private JLabel lblFuncionario;
 	private JButton btnCancelar;
@@ -72,16 +71,6 @@ public class EditarNotaEntradaView extends JDialog {
 	private JLabel lblidCadastro;
 	private JTextField textFieldDataCadastro;
 	private JTextField textFieldCodigoNFe;
-
-	public static void main(String[] args) {
-		try {
-			EditarNotaEntradaView dialog = new EditarNotaEntradaView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public EditarNotaEntradaView() {
 		listener = new InputListenerEditarNotaEntrada(this);

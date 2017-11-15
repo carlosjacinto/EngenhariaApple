@@ -22,9 +22,6 @@ import model.ProdutoDAO;
 
 public class ProdutoView extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8141345248153320486L;
 	private JPanel contentPane;
 	private JPanel panel;
@@ -42,19 +39,6 @@ public class ProdutoView extends JDialog {
 	private JLabel btnEditarProduto;
 	private JLabel btnLimparBusca;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		
-		ProdutoView frame = new ProdutoView();
-		frame.setVisible(true);
-				
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public ProdutoView() {
 		listener = new InputListenerProdutoView(this);
 		initialize();

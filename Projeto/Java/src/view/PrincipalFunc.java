@@ -1,8 +1,6 @@
 package view;
 
-
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
@@ -18,10 +16,6 @@ import javax.swing.border.EmptyBorder;
 import control.InputListenerPrincipalFunc;
 
 public class PrincipalFunc extends JFrame {
-
-	/**
-	 * 
-	 */
 
 	private static final long serialVersionUID = 6375324782041802229L;
 	private JPanel contentPane;
@@ -47,25 +41,6 @@ public class PrincipalFunc extends JFrame {
 	private JMenuItem mntmDesligar;
 	private JMenuItem mntmRelProd;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PrincipalFunc frame = new PrincipalFunc();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public PrincipalFunc() {
 		listener = new InputListenerPrincipalFunc(this);
 		initialize();

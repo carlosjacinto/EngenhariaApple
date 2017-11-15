@@ -47,17 +47,6 @@ public class CadastroClienteView extends JDialog {
 	private JLabel lblCelular;
 	private JTextField textCelular;
 	private JLabel lblFoto;
-	
-
-	public static void main(String[] args) {
-		try {
-			CadastroClienteView dialog = new CadastroClienteView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
 	public CadastroClienteView() {
 		listener = new InputListenerCadastroCliente(this);

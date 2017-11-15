@@ -1,10 +1,6 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
-import java.awt.Toolkit;
-import java.net.URL;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -27,17 +23,6 @@ public class Principal extends JFrame {
 	private Thread t1;
 	private InputListenerPrincipal listener;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		new Principal().setVisible(true);
-		
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public Principal() {
 		initialize();
 		initializeListeners();

@@ -60,16 +60,6 @@ public class CadastroFuncionarioView extends JDialog {
 	private JCheckBox chckbxAdministrador;
 	private JLabel lblFoto;
 
-	public static void main(String[] args) {
-		try {
-			CadastroFuncionarioView dialog = new CadastroFuncionarioView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public CadastroFuncionarioView() {
 		listener = new InputListenerCadastroFuncionario(this);
 		initialize();
