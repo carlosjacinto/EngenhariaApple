@@ -199,8 +199,8 @@ public class NotaEntradaDAO {
 				produtos[cont][0] = "" + rs.getInt("Produto_idProduto");
 				produtos[cont][1] = rs.getString("nomeProduto");
 				produtos[cont][2] = "" + rs.getDouble("precoUnitItem");
-				produtos[cont][3] = "" + rs.getDouble("precoTotalItem");
-				produtos[cont][4] = "" + rs.getInt("qtdCompra");
+				produtos[cont][4] = "" + rs.getDouble("precoTotalItem");
+				produtos[cont][3] = "" + rs.getInt("qtdCompra");
 
 				cont++;
 			}
@@ -221,13 +221,13 @@ public class NotaEntradaDAO {
 		ResultSet rs;
 		ResultSet rs1;
 		try {
-
+			System.out.println(c.getIdCompra());
 			Statement stmt = conex.createStatement();
 			rs = stmt.executeQuery("SELECT valorTotalCompra FROM compra where idCompra = " + c.getIdCompra());
 			while (rs.next()) {
 				vAntigo = rs.getFloat("valorTotalCompra");
 			}
-
+			System.out.println("teste dessa porra "+vAntigo);
 			stmt.execute("UPDATE compra SET valorTotalCompra='" + c.getTotal() + "'  WHERE idCompra='" + c.getIdCompra()
 					+ "' ");
 
