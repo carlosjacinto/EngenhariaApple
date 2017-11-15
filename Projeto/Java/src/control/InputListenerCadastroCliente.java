@@ -19,7 +19,7 @@ public class InputListenerCadastroCliente implements MouseListener {
 	private JFileChooser jFileChooser;
 	private ImageIcon imageIcon;
 	private Cliente clie;
-	private ClienteDAO clieDAO = new ClienteDAO();
+	private ClienteDAO clieDAO = ClienteDAO.getInstance();
 	private Validacao valida = new Validacao();
 
 	public InputListenerCadastroCliente(CadastroClienteView cadastroCliente) {

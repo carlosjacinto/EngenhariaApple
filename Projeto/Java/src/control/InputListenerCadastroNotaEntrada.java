@@ -17,7 +17,7 @@ public class InputListenerCadastroNotaEntrada implements MouseListener {
 	CadastroNotaEntradaView cadastroNotaEntrada;
 	ProdutoDAO produtoDAO = new ProdutoDAO();
 	private NotaEntrada nota;
-	private NotaEntradaDAO notaDAO = new NotaEntradaDAO();
+	private NotaEntradaDAO notaDAO = NotaEntradaDAO.getInstance();
 	String[][] dados;
 	double valorTotal = 0;
 

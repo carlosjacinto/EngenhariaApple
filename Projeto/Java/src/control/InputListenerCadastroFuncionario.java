@@ -19,7 +19,7 @@ public class InputListenerCadastroFuncionario implements MouseListener {
 	private JFileChooser jFileChooser;
 	private ImageIcon imageIcon;
 	private Funcionario func;
-	private FuncionarioDAO funcDAO = new FuncionarioDAO();
+	private FuncionarioDAO funcDAO = FuncionarioDAO.getInstance();
 	private Validacao valida = new Validacao();
 
 	public InputListenerCadastroFuncionario(CadastroFuncionarioView cadastroFuncionario) {

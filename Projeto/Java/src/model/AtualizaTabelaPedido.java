@@ -7,7 +7,7 @@ import view.PedidoView;
 public class AtualizaTabelaPedido implements Runnable{
 
 	PedidoView pedidoView;
-	PedidoDAO pedidoDAO = new PedidoDAO();
+	PedidoDAO pedidoDAO = PedidoDAO.getInstance();
 	private String busca = "";
 
 	public AtualizaTabelaPedido(PedidoView pedidoView) {

@@ -15,10 +15,10 @@ import view.EditarPedidoView;
 
 public class InputListenerEditarPedido implements MouseListener {
 	EditarPedidoView editarPedido;
-	ProdutoDAO produtoDAO = new ProdutoDAO();
+	ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 	Pedido ped;
-	private ContaDAO contaDAO = new ContaDAO();
-	private PedidoDAO pedDAO = new PedidoDAO();
+	private ContaDAO contaDAO = ContaDAO.getInstance();
+	private PedidoDAO pedDAO = PedidoDAO.getInstance();
 	String[][] dados;
 
 	double valorTotal=0;

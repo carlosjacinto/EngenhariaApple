@@ -54,7 +54,7 @@ public class InputListenerLoginView implements MouseListener{
 		try {
 			Long cpf = Long.parseLong(loginView.getTextCpf().getText());
 			String senha = String.copyValueOf(loginView.getPasswordField().getPassword());
-			int flag = new LoginDAO().verificarSeExisteLogin(cpf, senha);
+			int flag = LoginDAO.getInstance().verificarSeExisteLogin(cpf, senha);
 			if(flag == 2) {
 				new PrincipalFunc().setVisible(true);
 				loginView.dispose();

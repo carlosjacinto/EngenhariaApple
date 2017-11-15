@@ -9,7 +9,7 @@ import view.ProdutoView;
 public class AtualizaTabelaProduto implements Runnable {
 
 	ProdutoView produtoView;
-	ProdutoDAO produtoDAO = new ProdutoDAO();
+	ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 	private String busca = "";
 
 	public AtualizaTabelaProduto(ProdutoView produtoView) {

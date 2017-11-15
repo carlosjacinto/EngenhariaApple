@@ -17,7 +17,7 @@ import view.NotaEntradaView;
 
 public class InputListenerNotaEntradaView implements MouseListener, WindowListener {
 	NotaEntradaView notaEntradaView;
-	private NotaEntradaDAO notaDAO = new NotaEntradaDAO();
+	private NotaEntradaDAO notaDAO = NotaEntradaDAO.getInstance();
 
 	public InputListenerNotaEntradaView(NotaEntradaView notaEntradaView) {
 

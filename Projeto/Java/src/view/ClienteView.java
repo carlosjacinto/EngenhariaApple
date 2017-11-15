@@ -38,7 +38,7 @@ public class ClienteView extends JDialog {
 	InputListenerClienteView listener;
 	private AtualizaTabelaCliente aT1;
 	private Thread t1;
-	private ClienteDAO clieDAO = new ClienteDAO();
+	private ClienteDAO clieDAO = ClienteDAO.getInstance();
 	private JLabel btnEditarCliente;
 	private JLabel btnLimparBusca;
 	private JLabel btnVisualizarConta;

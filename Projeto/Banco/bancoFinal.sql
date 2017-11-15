@@ -61,11 +61,11 @@ CREATE TABLE `compra` (
   PRIMARY KEY (`idCompra`),
   KEY `idFuncCompra` (`idFuncCompra`),
   CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`idFuncCompra`) REFERENCES `funcionario` (`idFuncionario`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 /*Data for the table `compra` */
 
-insert  into `compra`(`idCompra`,`numeroNFECompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`idFuncCompra`) values (34,11111,'324235','21312','22/22/2222',1221,11,'','2017-11-13',1),(35,24124,'dbrfgbweg','423535','22/22/2222',0,10569,'','2017-11-13',1),(36,24124,'dsgvasgas','12412421','31/12/5555',0,12702,'','2017-11-13',1);
+insert  into `compra`(`idCompra`,`numeroNFECompra`,`nomeFornecCompra`,`cnpjFornecCompra`,`dataCompra`,`outrosCompra`,`valorTotalCompra`,`chaveAcessoCompra`,`dataEntradaCompra`,`idFuncCompra`) values (52,11,'1111111','11','11/11/1111',0,165,'','2017-11-15',47);
 
 /*Table structure for table `compra_has_produto` */
 
@@ -87,7 +87,7 @@ CREATE TABLE `compra_has_produto` (
 
 /*Data for the table `compra_has_produto` */
 
-insert  into `compra_has_produto`(`Compra_idCompra`,`Produto_idProduto`,`qtdControle`,`qtdCompra`,`precoUnitItem`,`precoTotalItem`) values (34,1,1,1,11,11),(35,2,3,3,3523,10569),(36,4,3,3,4234,12702);
+insert  into `compra_has_produto`(`Compra_idCompra`,`Produto_idProduto`,`qtdControle`,`qtdCompra`,`precoUnitItem`,`precoTotalItem`) values (52,1,1,1,1,1),(52,2,2,2,1,2),(52,4,3,3,50,150),(52,5,4,4,3,12);
 
 /*Table structure for table `conta` */
 
@@ -156,11 +156,11 @@ CREATE TABLE `pedido` (
   KEY `fk_Pedido_Funcionario1_idx` (`Funcionario_idFuncionario`),
   CONSTRAINT `fk_Pedido_Cliente` FOREIGN KEY (`Cliente_idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Pedido_Funcionario1` FOREIGN KEY (`Funcionario_idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
 
 /*Data for the table `pedido` */
 
-insert  into `pedido`(`idPedido`,`Cliente_idCliente`,`Funcionario_idFuncionario`,`dataPedido`,`valorTotalPedido`) values (1,9,1,'2017-10-17',0),(3,11,47,'2017-10-17',20),(4,11,47,'2017-10-17',0),(5,11,47,'2017-10-17',40),(6,11,47,'2017-10-17',40),(8,9,1,'2017-10-17',0),(9,9,1,'2017-10-17',10),(10,9,1,'2017-10-17',0),(11,9,1,'2017-10-17',10),(12,9,1,'2017-10-17',10),(13,9,1,'2017-10-17',40),(14,11,47,'2017-10-17',90),(16,9,1,'2017-10-17',0),(17,9,1,'2017-10-17',20),(21,12,47,'2017-10-31',30),(22,9,1,'2017-10-31',0),(23,9,1,'2017-11-13',118),(24,9,1,'2017-11-13',141),(25,9,1,'2017-11-13',350.5),(26,9,1,'2017-11-13',405),(27,14,1,'2017-11-13',23),(28,9,1,'2017-11-13',23);
+insert  into `pedido`(`idPedido`,`Cliente_idCliente`,`Funcionario_idFuncionario`,`dataPedido`,`valorTotalPedido`) values (1,9,1,'2017-10-17',0),(3,11,47,'2017-10-17',20),(4,11,47,'2017-10-17',0),(5,11,47,'2017-10-17',40),(6,11,47,'2017-10-17',40),(8,9,1,'2017-10-17',0),(9,9,1,'2017-10-17',10),(10,9,1,'2017-10-17',0),(11,9,1,'2017-10-17',10),(12,9,1,'2017-10-17',10),(13,9,1,'2017-10-17',40),(14,11,47,'2017-10-17',90),(16,9,1,'2017-10-17',0),(17,9,1,'2017-10-17',20),(21,12,47,'2017-10-31',30),(22,9,1,'2017-10-31',0),(23,9,1,'2017-11-13',118),(24,9,1,'2017-11-13',141),(25,9,1,'2017-11-13',350.5),(26,9,1,'2017-11-13',405),(27,14,1,'2017-11-13',23),(28,9,1,'2017-11-13',13347.1);
 
 /*Table structure for table `pedido_has_produto` */
 
@@ -182,7 +182,7 @@ CREATE TABLE `pedido_has_produto` (
 
 /*Data for the table `pedido_has_produto` */
 
-insert  into `pedido_has_produto`(`Pedido_idPedido`,`Produto_idProduto`,`qtdVenda`,`qtdControle`,`precoUnitItem`,`precoTotalItem`) values (13,1,2,0,10,20),(13,2,1,0,20,20),(14,1,5,0,10,50),(14,2,2,0,20,40),(17,1,2,2,10,20),(21,1,1,1,10,10),(21,2,1,1,20,20),(22,5,2,2,0,0),(23,1,2,2,23,46),(23,2,2,2,36,72),(24,1,3,0,23,69),(24,2,2,0,36,72),(25,1,1,0,23,23),(25,2,2,0,36,72),(25,4,2,0,46,92),(25,5,3,0,54.5,163.5),(26,1,1,1,23,23),(26,2,2,2,36,72),(26,4,2,2,46,92),(26,5,4,4,54.5,218),(27,1,1,0,23,23),(28,1,1,1,23,23);
+insert  into `pedido_has_produto`(`Pedido_idPedido`,`Produto_idProduto`,`qtdVenda`,`qtdControle`,`precoUnitItem`,`precoTotalItem`) values (13,1,2,0,10,20),(13,2,1,0,20,20),(14,1,5,0,10,50),(14,2,2,0,20,40),(17,1,2,2,10,20),(21,1,1,1,10,10),(21,2,1,1,20,20),(22,5,2,2,0,0),(23,1,2,2,23,46),(23,2,2,2,36,72),(24,1,3,0,23,69),(24,2,2,0,36,72),(25,1,1,0,23,23),(25,2,2,0,36,72),(25,4,2,0,46,92),(25,5,3,0,54.5,163.5),(26,1,1,1,23,23),(26,2,2,2,36,72),(26,4,2,2,46,92),(26,5,4,4,54.5,218),(27,1,1,0,23,23),(28,1,1,1,23,23),(28,2,2,2,4227.6,8455.2),(28,4,1,1,4869.1,4869.1);
 
 /*Table structure for table `produto` */
 
@@ -204,7 +204,7 @@ CREATE TABLE `produto` (
 
 /*Data for the table `produto` */
 
-insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',11,12.65,0,'kjiasoidoasj','2017-11-13','2017-10-17',15),(2,'prod2',3523,4227.6,3,'sadasdoijowhqeiu	','2017-11-13','2017-10-17',20),(4,'Pc1',4234,4869.1,3,'Marina testando....','2017-11-13','2017-10-31',15),(5,'PC2',50,54.5,0,'Marina testando.....','2017-11-13','2017-10-31',9);
+insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',1,1.15,1,'kjiasoidoasj','2017-11-15','2017-10-17',15),(2,'prod2',1,1.2,2,'sadasdoijowhqeiu	','2017-11-15','2017-10-17',20),(4,'Pc1',50,57.5,3,'Marina testando....','2017-11-15','2017-10-31',15),(5,'PC2',3,3.27,4,'Marina testando.....','2017-11-15','2017-10-31',9);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

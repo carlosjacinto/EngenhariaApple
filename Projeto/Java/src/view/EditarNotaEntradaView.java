@@ -50,9 +50,9 @@ public class EditarNotaEntradaView extends JDialog {
 	private JLabel lblNumNFE;
 	private JTable tableNotaEntrada;
 	private JScrollPane scrollPane;
-	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-	ProdutoDAO produtoDAO = new ProdutoDAO();
-	NotaEntradaDAO notaDAO = new NotaEntradaDAO();
+	FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstance();
+	ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
+	NotaEntradaDAO notaDAO = NotaEntradaDAO.getInstance();
 	NotaEntrada nota = new NotaEntrada();
 	private JTextField textPrecoCustoUnit;
 	private JSeparator separator;

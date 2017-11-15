@@ -38,7 +38,7 @@ public class PedidoView extends JDialog {
 	InputListenerPedidoView listener;
 	private AtualizaTabelaPedido aT1;
 	private Thread t1;
-	private PedidoDAO pedidoDAO = new PedidoDAO();
+	private PedidoDAO pedidoDAO = PedidoDAO.getInstance();
 	private JLabel btnEditarPedido;
 	private JLabel btnLimparBusca;
 

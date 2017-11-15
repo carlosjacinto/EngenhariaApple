@@ -38,7 +38,7 @@ public class FuncionarioView extends JDialog {
 	InputListenerFuncionarioView listener;
 	private AtualizaTabelaFuncionario aT1;
 	private Thread t1;
-	private FuncionarioDAO funcDAO = new FuncionarioDAO();
+	private FuncionarioDAO funcDAO = FuncionarioDAO.getInstance();
 	private JLabel btnEditarFuncionario;
 	private JLabel btnLimparBusca;
 

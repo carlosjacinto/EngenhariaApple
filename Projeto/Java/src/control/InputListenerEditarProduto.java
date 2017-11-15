@@ -19,7 +19,7 @@ public class InputListenerEditarProduto implements MouseListener, ChangeListener
 	private EditarProdutoView edicaoProduto;
 	private Produto produto;
 	private JFileChooser jFileChooser;
-	private ProdutoDAO produtoDAO = new ProdutoDAO();
+	private ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 	private ImageIcon imageIcon;
 	public InputListenerEditarProduto(EditarProdutoView edicaoProduto) {
 		// TODO Auto-generated constructor stub

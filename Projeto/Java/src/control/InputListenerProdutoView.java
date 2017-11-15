@@ -17,7 +17,7 @@ import view.ProdutoView;
 
 public class InputListenerProdutoView implements MouseListener, WindowListener {
 	ProdutoView produtoView;
-	private ProdutoDAO produtoDAO = new ProdutoDAO();
+	private ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 
 	public InputListenerProdutoView(ProdutoView produtoView) {
 

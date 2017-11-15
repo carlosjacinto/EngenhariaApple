@@ -18,7 +18,7 @@ public class InputListenerCadastroProduto implements MouseListener{
 	private JFileChooser jFileChooser;
 	private ImageIcon imageIcon;
 	private Produto produto;
-	private ProdutoDAO produtoDAO = new ProdutoDAO();
+	private ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 	public InputListenerCadastroProduto(CadastroProdutoView cadastroProduto) {
 		// TODO Auto-generated constructor stub
 		this.cadastroProduto = cadastroProduto;

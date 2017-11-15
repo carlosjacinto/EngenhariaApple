@@ -7,7 +7,7 @@ import view.FuncionarioView;
 public class AtualizaTabelaFuncionario implements Runnable {
 
 	FuncionarioView funcionarioView;
-	FuncionarioDAO funcDAO = new FuncionarioDAO();
+	FuncionarioDAO funcDAO = FuncionarioDAO.getInstance();
 	private String busca = "";
 
 	public AtualizaTabelaFuncionario(FuncionarioView funcionarioView) {

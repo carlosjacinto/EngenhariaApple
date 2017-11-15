@@ -17,7 +17,7 @@ import view.FuncionarioView;
 
 public class InputListenerFuncionarioView implements MouseListener, WindowListener {
 	FuncionarioView funcionarioView;
-	private FuncionarioDAO funcDAO = new FuncionarioDAO();
+	private FuncionarioDAO funcDAO = FuncionarioDAO.getInstance();
 
 	public InputListenerFuncionarioView(FuncionarioView funcionarioView) {
 		// TODO Auto-generated constructor stub

@@ -38,7 +38,7 @@ public class NotaEntradaView extends JDialog {
 	InputListenerNotaEntradaView listener;
 	private AtualizaTabelaNotaEntrada aT1;
 	private Thread t1;
-	private NotaEntradaDAO notaEntDAO = new NotaEntradaDAO();
+	private NotaEntradaDAO notaEntDAO = NotaEntradaDAO.getInstance();
 	private JLabel btnEditarNotaEntrada;
 	private JLabel btnLimparBusca;
 

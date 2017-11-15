@@ -11,6 +11,14 @@ import control.DataBase;
 public class NotaEntradaDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
+	private static NotaEntradaDAO classeDAO;
+	
+	public static synchronized NotaEntradaDAO getInstance() {
+		if(classeDAO == null) {
+			classeDAO = new NotaEntradaDAO();
+		}
+		return classeDAO;
+	}
 
 	public int gravarCompra(NotaEntrada c, String[][] produtos) {
 		conex = bd.Conectar();
@@ -163,8 +171,8 @@ public class NotaEntradaDAO {
 					qtdAntigo = rs.getInt("qtdestoqueProduto");
 					qtdAntigo -= prod.get(i);
 				}
-				stmt.executeUpdate("update produto set qtdestoqueProduto = " + qtdAntigo + " where idProduto = "+i);
-				qtd=0;
+				stmt.executeUpdate("update produto set qtdestoqueProduto = " + qtdAntigo + " where idProduto = " + i);
+				qtd = 0;
 			}
 			stmt.executeUpdate("DELETE FROM compra_has_produto where compra_idCompra = " + iid);
 			stmt.executeUpdate("DELETE FROM compra where idCompra = " + iid);
@@ -227,7 +235,7 @@ public class NotaEntradaDAO {
 			while (rs.next()) {
 				vAntigo = rs.getFloat("valorTotalCompra");
 			}
-			System.out.println("teste dessa porra "+vAntigo);
+			System.out.println("teste dessa porra " + vAntigo);
 			stmt.execute("UPDATE compra SET valorTotalCompra='" + c.getTotal() + "'  WHERE idCompra='" + c.getIdCompra()
 					+ "' ");
 

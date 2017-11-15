@@ -48,10 +48,10 @@ public class EditarPedidoView extends JDialog {
 	private JLabel lblPreoTotalr;
 	private JTextField textPreco;
 	private JSpinner spinnerQtde;
-	ClienteDAO clienteDAO = new ClienteDAO();
-	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-	ProdutoDAO produtoDAO = new ProdutoDAO();
-	PedidoDAO pedidoDAO = new PedidoDAO();
+	ClienteDAO clienteDAO = ClienteDAO.getInstance();
+	FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstance();
+	ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
+	PedidoDAO pedidoDAO = PedidoDAO.getInstance();
 	Pedido ped;
 	private JLabel btnAdd;
 	private JScrollPane scrollPane;

@@ -8,7 +8,7 @@ import view.PagamentoView;
 
 public class InputListenerPagamentoView implements MouseListener{
 	PagamentoView pagamentoView;
-	ContaDAO contaDAO = new ContaDAO();
+	ContaDAO contaDAO = ContaDAO.getInstance();
 	
 	public InputListenerPagamentoView(PagamentoView pagamentoView) {
 		this.pagamentoView = pagamentoView;

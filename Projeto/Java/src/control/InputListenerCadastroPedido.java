@@ -16,10 +16,10 @@ import view.CadastroPedidoView;
 
 public class InputListenerCadastroPedido implements MouseListener {
 	CadastroPedidoView cadastroPedido;
-	ProdutoDAO produtoDAO = new ProdutoDAO();
+	ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 	private Pedido ped;
-	private ContaDAO contaDAO = new ContaDAO();
-	private PedidoDAO pedDAO = new PedidoDAO();
+	private ContaDAO contaDAO = ContaDAO.getInstance();
+	private PedidoDAO pedDAO = PedidoDAO.getInstance();
 	String[][] dados;
 	double valorTotal = 0;
 

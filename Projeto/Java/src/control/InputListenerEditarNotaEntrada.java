@@ -11,14 +11,13 @@ import javax.swing.table.DefaultTableModel;
 import model.NotaEntrada;
 import model.NotaEntradaDAO;
 import model.ProdutoDAO;
-import view.CadastroNotaEntradaView;
 import view.EditarNotaEntradaView;
 
 public class InputListenerEditarNotaEntrada implements MouseListener {
 	EditarNotaEntradaView edicaoNotaEntrada;
-	ProdutoDAO produtoDAO = new ProdutoDAO();
+	ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 	private NotaEntrada nota;
-	private NotaEntradaDAO notaDAO = new NotaEntradaDAO();
+	private NotaEntradaDAO notaDAO = NotaEntradaDAO.getInstance();
 	String[][] dados;
 	double valorTotal = 0;
 

@@ -17,7 +17,7 @@ public class InputListenerEditarCliente implements MouseListener {
 	private JFileChooser jFileChooser;
 	private ImageIcon imageIcon;
 	private Cliente clie;
-	private ClienteDAO clieDAO = new ClienteDAO();
+	private ClienteDAO clieDAO = ClienteDAO.getInstance();
 
 	public InputListenerEditarCliente(EditarClienteView edicaoCliente) {
 		// TODO Auto-generated constructor stub

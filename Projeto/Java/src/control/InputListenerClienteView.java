@@ -19,8 +19,8 @@ import view.EditarClienteView;
 
 public class InputListenerClienteView implements MouseListener, WindowListener {
 	ClienteView clienteView;
-	private ClienteDAO clieDAO = new ClienteDAO();
-	private ContaDAO contaDAO = new ContaDAO();
+	private ClienteDAO clieDAO = ClienteDAO.getInstance();
+	private ContaDAO contaDAO = ContaDAO.getInstance();
 
 	public InputListenerClienteView(ClienteView clienteView) {
 		this.clienteView = clienteView;

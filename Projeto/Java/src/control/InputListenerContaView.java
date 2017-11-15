@@ -3,14 +3,13 @@ package control;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import model.ClienteDAO;
 import model.ContaDAO;
 import view.ContaView;
 import view.PagamentoView;
 
 public class InputListenerContaView implements MouseListener{
 	ContaView contaView;
-	ContaDAO contaDAO = new ContaDAO();
+	ContaDAO contaDAO = ContaDAO.getInstance();
 	
 	public InputListenerContaView(ContaView contaView) {
 		this.contaView = contaView;

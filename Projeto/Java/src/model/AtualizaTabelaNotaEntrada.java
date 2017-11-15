@@ -8,7 +8,7 @@ public class AtualizaTabelaNotaEntrada implements Runnable{
 
 
 	NotaEntradaView notaEntradaView;
-	NotaEntradaDAO notaEntradaDAO = new NotaEntradaDAO();
+	NotaEntradaDAO notaEntradaDAO = NotaEntradaDAO.getInstance();
 	private String busca = "";
 
 	public AtualizaTabelaNotaEntrada(NotaEntradaView notaEntradaView) {

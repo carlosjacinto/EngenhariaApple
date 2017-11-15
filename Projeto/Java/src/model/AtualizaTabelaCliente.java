@@ -7,7 +7,7 @@ import view.ClienteView;
 public class AtualizaTabelaCliente implements Runnable {
 
 	ClienteView clienteView;
-	ClienteDAO clieDAO = new ClienteDAO();
+	ClienteDAO clieDAO = ClienteDAO.getInstance();
 	private String busca = "";
 
 	public AtualizaTabelaCliente(ClienteView clienteView) {

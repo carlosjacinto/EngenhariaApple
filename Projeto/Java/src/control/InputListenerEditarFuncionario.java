@@ -17,7 +17,7 @@ public class InputListenerEditarFuncionario implements MouseListener {
 	private JFileChooser jFileChooser;
 	private ImageIcon imageIcon;
 	private Funcionario func;
-	private FuncionarioDAO funcDAO = new FuncionarioDAO();
+	private FuncionarioDAO funcDAO = FuncionarioDAO.getInstance();
 
 	public InputListenerEditarFuncionario(EditarFuncionarioView edicaoFuncionario) {
 		// TODO Auto-generated constructor stub

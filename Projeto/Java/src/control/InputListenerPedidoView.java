@@ -18,7 +18,7 @@ import view.PedidoView;
 public class InputListenerPedidoView implements MouseListener, WindowListener {
 	PedidoView pedidoView;
 
-	private PedidoDAO pedidoDAO = new PedidoDAO();
+	private PedidoDAO pedidoDAO = PedidoDAO.getInstance();
 
 	public InputListenerPedidoView(PedidoView pedidoView) {
 

@@ -26,7 +26,7 @@ public class ContaView extends JDialog {
 	private JTextField valorTextField;
 	private JButton btnRealizarPagamento;
 	private Cliente c;
-	private ContaDAO contaDAO = new ContaDAO();
+	private ContaDAO contaDAO = ContaDAO.getInstance();
 	private InputListenerContaView listener;
 
 	/**

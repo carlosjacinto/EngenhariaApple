@@ -36,7 +36,7 @@ public class ProdutoView extends JDialog {
 	private JScrollPane scrollBar;
 	private AtualizaTabelaProduto aT1;
 	private Thread t1;
-	private ProdutoDAO  produtoDAO = new ProdutoDAO();  
+	private ProdutoDAO  produtoDAO = ProdutoDAO.getInstance();  
 	InputListenerProdutoView listener;
 	private JLabel btnExcluirProduto;
 	private JLabel btnEditarProduto;

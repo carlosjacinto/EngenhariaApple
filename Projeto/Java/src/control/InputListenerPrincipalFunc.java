@@ -17,7 +17,7 @@ import view.PrincipalFunc;
 
 public class InputListenerPrincipalFunc implements MouseListener {
 	PrincipalFunc principalFunc;
-	ProdutoDAO prodDAO = new ProdutoDAO();
+	ProdutoDAO prodDAO = ProdutoDAO.getInstance();
 
 	public InputListenerPrincipalFunc(PrincipalFunc principalFunc) {
 		this.principalFunc = principalFunc;
@@ -113,7 +113,7 @@ public class InputListenerPrincipalFunc implements MouseListener {
 			}
 		} else if (e.getSource() == principalFunc.getmntmRelProd()) {
 			try {
-				new PDFGenerator().createPDF(prodDAO.retornaProdutoArrayList(""));
+				new PDFGenerator().createPDF();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
