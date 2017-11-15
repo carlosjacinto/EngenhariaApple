@@ -12,6 +12,14 @@ public class PedidoDAO {
 
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
+	private static PedidoDAO classeDAO;
+	
+	public static synchronized PedidoDAO getInstance() {
+		if(classeDAO == null) {
+			classeDAO = new PedidoDAO();
+		}
+		return classeDAO;
+	}
 
 	public int gravarPedido(Pedido p, String[][] produtos) {
 		conex = bd.Conectar();

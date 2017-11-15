@@ -14,6 +14,14 @@ import control.DataBase;
 public class ClienteDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
+	private static ClienteDAO classeDAO;
+	
+	public static synchronized ClienteDAO getInstance() {
+		if(classeDAO == null) {
+			classeDAO = new ClienteDAO();
+		}
+		return classeDAO;
+	}
 
 	public boolean gravarCliente(Cliente c) {
 		conex = bd.Conectar();

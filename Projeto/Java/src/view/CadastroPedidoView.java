@@ -44,9 +44,9 @@ public class CadastroPedidoView extends JDialog {
 	private JLabel lblPreoTotalr;
 	private JTextField textPreco;
 	private JSpinner spinnerQtde;
-	ClienteDAO clienteDAO = new ClienteDAO();
-	FuncionarioDAO funcionarioDAO = new FuncionarioDAO();
-	ProdutoDAO produtoDAO = new ProdutoDAO();
+	ClienteDAO clienteDAO = ClienteDAO.getInstance();
+	FuncionarioDAO funcionarioDAO = FuncionarioDAO.getInstance();
+	ProdutoDAO produtoDAO = ProdutoDAO.getInstance();
 	private JLabel btnAdd;
 	private JScrollPane scrollPane;
 

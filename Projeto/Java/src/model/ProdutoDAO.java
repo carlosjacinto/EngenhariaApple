@@ -16,6 +16,14 @@ import control.DataBase;
 public class ProdutoDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
+	private static ProdutoDAO classeDAO;
+	
+	public static synchronized ProdutoDAO getInstance() {
+		if(classeDAO == null) {
+			classeDAO = new ProdutoDAO();
+		}
+		return classeDAO;
+	}
 
 	public boolean gravarProduto(Produto p) {
 		conex = bd.Conectar();

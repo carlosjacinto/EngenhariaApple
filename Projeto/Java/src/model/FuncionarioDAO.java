@@ -14,6 +14,14 @@ import control.DataBase;
 public class FuncionarioDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex = bd.Conectar();
+	private static FuncionarioDAO classeDAO;
+	
+	public static synchronized FuncionarioDAO getInstance() {
+		if(classeDAO == null) {
+			classeDAO = new FuncionarioDAO();
+		}
+		return classeDAO;
+	}
 
 	public boolean gravarFuncionario(Funcionario f) {
 		conex = bd.Conectar();

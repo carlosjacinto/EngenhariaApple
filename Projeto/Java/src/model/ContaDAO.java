@@ -11,6 +11,15 @@ public class ContaDAO {
 
 	DataBase bd = DataBase.getInstance();
 	Connection conex;
+	private static ContaDAO contaDAO;
+	
+	public static synchronized ContaDAO getInstance() {
+		if(contaDAO == null) {
+			contaDAO = new ContaDAO();
+		}
+		return contaDAO;
+	}
+	
 
 	public boolean atualizarConta(Pedido p) {
 		conex = bd.Conectar();

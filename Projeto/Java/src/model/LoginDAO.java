@@ -10,6 +10,14 @@ import control.DataBase;
 public class LoginDAO {
 	DataBase bd = DataBase.getInstance();
 	Connection conex = bd.Conectar();
+	private static LoginDAO classeDAO;
+	
+	public static synchronized LoginDAO getInstance() {
+		if(classeDAO == null) {
+			classeDAO = new LoginDAO();
+		}
+		return classeDAO;
+	}
 	
 	public int verificarSeExisteLogin(long cpf, String senha) {
 		conex = bd.Conectar();
