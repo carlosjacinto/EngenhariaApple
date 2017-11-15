@@ -73,7 +73,7 @@ public class ContaView extends JDialog {
 			contentPanel.add(getNomeClienteTextField());
 			contentPanel.add(getLblCliente());
 			contentPanel.add(getLblValorAPagarr());
-			contentPanel.add(getValorTextField());
+			contentPanel.add(mostrarDebitoConta());
 			contentPanel.add(getBtnRealizarPagamento());
 		}
 		return contentPanel;
@@ -105,7 +105,7 @@ public class ContaView extends JDialog {
 		}
 		return lblValorAPagarr;
 	}
-	public JTextField getValorTextField() {
+	public JTextField mostrarDebitoConta() {
 		if (valorTextField == null) {
 			valorTextField = new JTextField();
 			valorTextField.setEditable(false);

@@ -34,7 +34,7 @@ public class InputListenerEditarProduto implements MouseListener, ChangeListener
 			edicaoProduto.dispose();
 		}else if ((e.getSource()) == edicaoProduto.getBtnGravar()) {
 			System.out.println("Botão ok Clicado");
-			capturaDados();
+			capturaDadosProduto();
 		}
 	}
 
@@ -61,7 +61,7 @@ public class InputListenerEditarProduto implements MouseListener, ChangeListener
 		// TODO Auto-generated method stub
 	}
 	
-	public void capturaDados() {
+	public void capturaDadosProduto() {
 		if(!(edicaoProduto.getTextCodigo().equals("") || edicaoProduto.getTextNome().equals("")
 				|| edicaoProduto.getTextPrecoCompra().equals("") || edicaoProduto.getTextPrecoVenda().equals("")
 				|| edicaoProduto.getTextDescricao().equals("") || edicaoProduto.getTextDataCadastro().equals("")

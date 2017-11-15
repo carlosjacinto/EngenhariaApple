@@ -20,7 +20,7 @@ public class InputListenerContaView implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		if(e.getSource() == contaView.getBtnRealizarPagamento()) {
 			new PagamentoView(contaView.getCliente()).setVisible(true);
-			contaView.getValorTextField().setText(""+contaDAO.retornaAReceber(contaView.getCliente().getIdCliente()));
+			contaView.mostrarDebitoConta().setText(""+contaDAO.retornaAReceber(contaView.getCliente().getIdCliente()));
 		}
 	}
 
