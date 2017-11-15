@@ -110,8 +110,7 @@ public class InputListenerEditarPedido implements MouseListener {
 					valorTotal += precoProdutos;
 					editarPedido.getTextPreco().setText(valorTotal + "");
 				}else {
-					//TODO: Printar msg de erro no estoque
-					JOptionPane.showMessageDialog(null, "Este produto só existe "+qtd+" unidades no estoque!", "Erro",
+					JOptionPane.showMessageDialog(null, "Quantidade maior que o número deste produto no estoque!", "Erro",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
