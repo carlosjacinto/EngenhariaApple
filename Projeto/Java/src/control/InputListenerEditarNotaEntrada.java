@@ -148,7 +148,7 @@ public class InputListenerEditarNotaEntrada implements MouseListener {
 			getNotaEntrada().setCnpj(edicaoNotaEntrada.getTextFieldCNPJ().getText());
 			getNotaEntrada().setFornecedor(edicaoNotaEntrada.getTextFieldNomeFornec().getText());
 			getNotaEntrada().setDataCompra(edicaoNotaEntrada.getTextDataEmissao().getText());
-			getNotaEntrada().setIdCompra(Integer.parseInt(edicaoNotaEntrada.getTextNumeroNFE().getText()));
+			getNotaEntrada().setIdCompra(Integer.parseInt(edicaoNotaEntrada.getTextFieldCodigoNFe().getText()));
 			int tam = edicaoNotaEntrada.getTextFieldChaveNFE().getText().length();
 			if (!(tam == 44 || tam == 0)) {
 				JOptionPane.showMessageDialog(null,
@@ -191,7 +191,7 @@ public class InputListenerEditarNotaEntrada implements MouseListener {
 					edicaoNotaEntrada.dispose();
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Erro ao cadastrar", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Erro ao atualizar nota", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 			} else {
 				JOptionPane.showMessageDialog(null, "Adicione pelo menos um produto a nota!", "Erro",
