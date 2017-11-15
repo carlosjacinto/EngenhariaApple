@@ -88,12 +88,17 @@ public class InputListenerCadastroCliente implements MouseListener {
 			}
 			
 			if(!Validacao.isNumeric(cadastroCliente.getTextTelefone().getText())) {
-				JOptionPane.showMessageDialog(null, "O campo telefone não pode conter letras!", null, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "O campo telefone  deve conter apenas números!", null, JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 			
 			if(!Validacao.isNumeric(cadastroCliente.getTextCelular().getText())) {
-				JOptionPane.showMessageDialog(null, "O campo celular não pode conter letras!", null, JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "O campo celular  deve conter apenas números!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if(!Validacao.isNumeric(cadastroCliente.getTextCEP().getText())) {
+				JOptionPane.showMessageDialog(null, "O campo CEP deve conter apenas números!", null, JOptionPane.ERROR_MESSAGE);
 				return;
 			}
 
