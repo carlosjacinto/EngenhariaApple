@@ -116,7 +116,7 @@ public class PedidoView extends JDialog {
 			btnNovoPedido = new JLabel();
 			btnNovoPedido.setToolTipText("Novo Pedido do Cliente");
 			btnNovoPedido.setBounds(466, 422, 80, 80);
-			btnNovoPedido.setIcon(new ImageIcon("Interno/newNota.png"));
+			btnNovoPedido.setIcon(new ImageIcon("Interno/pedidosNew.png"));
 		}
 		return btnNovoPedido;
 	}
@@ -170,7 +170,7 @@ public class PedidoView extends JDialog {
 			btnExcluirPedido = new JLabel("");
 			btnExcluirPedido.setToolTipText("Excluir Pedido do Cliente");
 			btnExcluirPedido.setHorizontalAlignment(SwingConstants.CENTER);
-			btnExcluirPedido.setIcon(new ImageIcon("Interno/deleteNota.png"));
+			btnExcluirPedido.setIcon(new ImageIcon("Interno/pedidosDelete.png"));
 			btnExcluirPedido.setBounds(556, 422, 80, 80);
 		}
 		return btnExcluirPedido;
@@ -202,7 +202,7 @@ public class PedidoView extends JDialog {
 			btnEditarPedido = new JLabel("");
 			btnEditarPedido.setToolTipText("Editar Pedido do Cliente");
 			btnEditarPedido.setHorizontalAlignment(SwingConstants.CENTER);
-			btnEditarPedido.setIcon(new ImageIcon("Interno/editNota.png"));
+			btnEditarPedido.setIcon(new ImageIcon("Interno/pedidosEdit.png"));
 			btnEditarPedido.setBounds(646, 422, 80, 80);
 		}
 		return btnEditarPedido;

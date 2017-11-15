@@ -76,6 +76,26 @@ public class InputListenerCadastroCliente implements MouseListener {
 				|| cadastroCliente.getTextCelular().getText().equals("")
 				|| cadastroCliente.getTextRua().getText().equals("")
 				|| cadastroCliente.getTextDataNascimento().getText().equals(""))) {
+			
+			if(!Validacao.isFullname(cadastroCliente.getTextNome().getText())) {
+				JOptionPane.showMessageDialog(null, "O nome deve conter apenas letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if(!Validacao.isFullname(cadastroCliente.getTextCidade().getText())) {
+				JOptionPane.showMessageDialog(null, "O campo cidade deve conter apenas letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if(!Validacao.isNumeric(cadastroCliente.getTextTelefone().getText())) {
+				JOptionPane.showMessageDialog(null, "O campo telefone não pode conter letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			
+			if(!Validacao.isNumeric(cadastroCliente.getTextCelular().getText())) {
+				JOptionPane.showMessageDialog(null, "O campo celular não pode conter letras!", null, JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 
 			getClie().setTelefone(cadastroCliente.getTextTelefone().getText());
 			getClie().setCelular(cadastroCliente.getTextCelular().getText());
@@ -134,6 +154,7 @@ public class InputListenerCadastroCliente implements MouseListener {
 					}
 				}
 			}
+			
 		} else
 			JOptionPane.showMessageDialog(null, "Valores em Branco!", null, JOptionPane.WARNING_MESSAGE);
 

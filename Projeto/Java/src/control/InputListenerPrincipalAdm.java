@@ -38,7 +38,16 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getBtSair().setVisible(false);
 			principalAdm.getSetaBaixo().setVisible(false);
 			principalAdm.getBtDesligar().setVisible(false);
+		}else if(e.getSource() == principalAdm.getmnSobre()) {
+			System.out.println("teste");
+			JOptionPane.showMessageDialog(null, "Apple Cart\r\n" + 
+					"Versão 1.9.3\r\n" + 
+					"\r\n" + 
+					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Nicholas Dias e Daniel Borges.\r\n" + 
+					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
+					JOptionPane.INFORMATION_MESSAGE);
 		}
+
 
 	}
 
@@ -124,6 +133,14 @@ public class InputListenerPrincipalAdm implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
 						JOptionPane.ERROR_MESSAGE);
 			}
+		}else if(e.getSource() == principalAdm.getmnSobre()) {
+			System.out.println("teste");
+			JOptionPane.showMessageDialog(null, "Apple Cart\r\n" + 
+					"Versão 1.9.3\r\n" + 
+					"\r\n" + 
+					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Nicholas Dias e Daniel Borges.\r\n" + 
+					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 
 	}

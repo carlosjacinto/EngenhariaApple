@@ -385,9 +385,10 @@ public class EditarClienteView extends JDialog {
 			lblFoto.setBounds(348, 195, 275, 281);
 			
 			ImageIcon i = new ImageIcon("Media/Cliente/" + clie.getIdCliente() + ".png");
-			if (i.getImage()==null)
+			if (i.getImageLoadStatus()==4) {
+				
 				lblFoto.setIcon(new ImageIcon("Interno/default-avatar.png"));
-			else {
+			}else {
 				i.setImage(i.getImage().getScaledInstance(275, 281, 100));
 				lblFoto.setIcon(i);
 			}

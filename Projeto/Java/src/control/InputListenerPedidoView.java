@@ -103,13 +103,13 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 	public void mouseEntered(MouseEvent e) {
 
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
-			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota2x.png"));
+			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/pedidosDelete2x.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
-			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/newNota2x.png"));
+			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/pedidosNew2x.png"));
 		} else if (e.getSource() == pedidoView.getBuscarButton()) {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon2x.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
-			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota2x.png"));
+			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/pedidosEdit2x.png"));
 		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}
@@ -120,13 +120,13 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 	public void mouseExited(MouseEvent e) {
 
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
-			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota.png"));
+			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/pedidosDelete.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
-			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/newNota.png"));
+			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/pedidosNew.png"));
 		} else if (e.getSource() == pedidoView.getBuscarButton()) {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
-			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota.png"));
+			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/pedidosEdit.png"));
 		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
@@ -137,13 +137,13 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 	public void mousePressed(MouseEvent e) {
 
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
-			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota.png"));
+			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/pedidosDelete.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
-			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/newNota.png"));
+			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/pedidosNew.png"));
 		} else if (e.getSource() == pedidoView.getBuscarButton()) {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-icon.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
-			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota.png"));
+			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/pedidosEdit.png"));
 		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search.png"));
 		}
@@ -154,13 +154,13 @@ public class InputListenerPedidoView implements MouseListener, WindowListener {
 	public void mouseReleased(MouseEvent e) {
 
 		if (e.getSource() == pedidoView.getbtnExcluirPedido()) {
-			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/deleteNota2x.png"));
+			pedidoView.getbtnExcluirPedido().setIcon(new ImageIcon("Interno/pedidosDelete2x.png"));
 		} else if (e.getSource() == pedidoView.getbtnNovoPedido()) {
-			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/newNota2x.png"));
+			pedidoView.getbtnNovoPedido().setIcon(new ImageIcon("Interno/pedidosNew2x.png"));
 		} else if (e.getSource() == pedidoView.getBuscarButton()) {
 			pedidoView.getBuscarButton().setIcon(new ImageIcon("Interno/search-iconNota2x.png"));
 		} else if (e.getSource() == pedidoView.getBtnEditarPedido()) {
-			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/editNota2x.png"));
+			pedidoView.getBtnEditarPedido().setIcon(new ImageIcon("Interno/pedidosEdit2x.png"));
 		} else if (e.getSource() == pedidoView.getBtnLimparBusca()) {
 			pedidoView.getBtnLimparBusca().setIcon(new ImageIcon("Interno/clean-search2x.png"));
 		}

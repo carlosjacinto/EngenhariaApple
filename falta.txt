@@ -1,3 +1,0 @@
-modulo compra 
-troca foto do pedido
-adicionar produto lista compra

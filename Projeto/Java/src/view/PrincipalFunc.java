@@ -197,6 +197,8 @@ public class PrincipalFunc extends JFrame {
 		getmntmNotaEntrada().addMouseListener(listener);
 		getmntmDesligar().addMouseListener(listener);
 		getmntmSair().addMouseListener(listener);
+		getmnSobre().addMouseListener(listener);
+		
 
 	}
 
