@@ -25,22 +25,6 @@ public class PagamentoView extends JDialog {
 	private InputListenerPagamentoView listener;
 	private Cliente c;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			PagamentoView dialog = new PagamentoView(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public PagamentoView(Cliente c) {
 		this.c = c;
 		setModal(true);

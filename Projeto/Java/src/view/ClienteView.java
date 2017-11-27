@@ -43,17 +43,6 @@ public class ClienteView extends JDialog {
 	private JLabel btnLimparBusca;
 	private JLabel btnVisualizarConta;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		ClienteView frame = new ClienteView();
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public ClienteView() {
 		listener = new InputListenerClienteView(this);
 		initialize();

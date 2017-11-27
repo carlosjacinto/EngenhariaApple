@@ -107,8 +107,8 @@ public class InputListenerCadastroPedido implements MouseListener {
 					valorTotal += precoProdutos;
 					cadastroPedido.getTextPreco().setText(valorTotal + "");
 				}else {
-					JOptionPane.showMessageDialog(null, "Quantidade maior que o número de produtos no estoque!", "Erro",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Quantidade maior que o número deste produto no estoque!", "Erro",JOptionPane.ERROR_MESSAGE);
+
 				}
 
 			}

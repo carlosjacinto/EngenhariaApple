@@ -42,14 +42,6 @@ public class NotaEntradaView extends JDialog {
 	private JLabel btnEditarNotaEntrada;
 	private JLabel btnLimparBusca;
 
-	public static void main(String[] args) {
-		NotaEntradaView frame = new NotaEntradaView();
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public NotaEntradaView() {
 		listener = new InputListenerNotaEntradaView(this);
 		initialize();

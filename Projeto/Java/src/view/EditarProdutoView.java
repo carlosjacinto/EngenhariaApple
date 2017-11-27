@@ -47,19 +47,6 @@ public class EditarProdutoView extends JDialog {
 	private JSpinner spinner;
 	private JLabel lblFoto;
 
-	public static void main(String[] args) {
-		try {
-			EditarProdutoView dialog = new EditarProdutoView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public EditarProdutoView() {
 		listener = new InputListenerEditarProduto(this);
 		initialize();

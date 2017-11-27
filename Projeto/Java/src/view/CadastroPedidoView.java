@@ -50,16 +50,6 @@ public class CadastroPedidoView extends JDialog {
 	private JLabel btnAdd;
 	private JScrollPane scrollPane;
 
-	public static void main(String[] args) {
-		try {
-			CadastroPedidoView dialog = new CadastroPedidoView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public CadastroPedidoView() {
 		listener = new InputListenerCadastroPedido(this);
 		initialize();

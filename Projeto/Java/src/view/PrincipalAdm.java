@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.SystemColor;
 
 import javax.swing.ImageIcon;
@@ -40,25 +39,6 @@ public class PrincipalAdm extends JFrame {
 	private JMenuItem mntmDesligar;
 	private JMenuItem mntmRelProd;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					PrincipalAdm frame = new PrincipalAdm();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public PrincipalAdm() {
 		listener = new InputListenerPrincipalAdm(this);
 		initialize();
