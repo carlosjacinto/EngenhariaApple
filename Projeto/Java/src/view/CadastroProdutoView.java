@@ -36,16 +36,6 @@ public class CadastroProdutoView extends JDialog {
 	private JLabel lblFoto;
 	private JSpinner spinner;
 
-	public static void main(String[] args) {
-		try {
-			CadastroProdutoView dialog = new CadastroProdutoView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public CadastroProdutoView() {
 		listener = new InputListenerCadastroProduto(this);
 		initialize();

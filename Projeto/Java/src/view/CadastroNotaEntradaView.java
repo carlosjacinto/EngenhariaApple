@@ -64,16 +64,6 @@ public class CadastroNotaEntradaView extends JDialog {
 	private JLabel lblAddProduto;
 	private JComboBox<Object> comboBoxProduto;
 
-	public static void main(String[] args) {
-		try {
-			CadastroNotaEntradaView dialog = new CadastroNotaEntradaView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public CadastroNotaEntradaView() {
 		listener = new InputListenerCadastroNotaEntrada(this);
 		initialize();

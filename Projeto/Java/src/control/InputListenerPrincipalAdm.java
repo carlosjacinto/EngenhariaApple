@@ -115,10 +115,16 @@ public class InputListenerPrincipalAdm implements MouseListener {
 				principalAdm.dispose();
 			}
 		} else if (e.getSource() == principalAdm.getmntmRelProd()) {
-			//if ( new PDFGenerator().createPDF() ) {
-				
-			//}
-		} else if (e.getSource() == principalAdm.getmntmDesligar()) {
+			try {
+				boolean result = new PDFGenerator().createPDF();
+				if(!result) JOptionPane.showMessageDialog(null, "Estoque Vazio!", null,
+						JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}else if (e.getSource() == principalAdm.getmntmDesligar()) {
 			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?", "Sair",
 					JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION)

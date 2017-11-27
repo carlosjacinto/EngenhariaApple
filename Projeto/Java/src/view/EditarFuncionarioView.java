@@ -65,16 +65,6 @@ public class EditarFuncionarioView extends JDialog {
 	private JCheckBox chckbxAdministrador;
 	private JLabel lblFoto;
 
-	public static void main(String[] args) {
-		try {
-			EditarFuncionarioView dialog = new EditarFuncionarioView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public EditarFuncionarioView(Funcionario func) {
 		this.func = func;
 		listener = new InputListenerEditarFuncionario(this);

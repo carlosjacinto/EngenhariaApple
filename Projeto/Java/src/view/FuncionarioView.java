@@ -42,17 +42,6 @@ public class FuncionarioView extends JDialog {
 	private JLabel btnEditarFuncionario;
 	private JLabel btnLimparBusca;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		FuncionarioView frame = new FuncionarioView();
-		frame.setVisible(true);
-	}
-
-	/**
-	 * Create the frame.
-	 */
 	public FuncionarioView() {
 		listener = new InputListenerFuncionarioView(this);
 		initialize();

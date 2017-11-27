@@ -59,17 +59,6 @@ public class EditarPedidoView extends JDialog {
 	private JLabel lblDataVenda;
 	private JTextField textNumPed;
 	private JTextField textDataVenda;
-
-	public static void main(String[] args) {
-		try {
-			CadastroPedidoView dialog = new CadastroPedidoView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
 	
 	public EditarPedidoView(Pedido ped) {
 		this.ped = ped;

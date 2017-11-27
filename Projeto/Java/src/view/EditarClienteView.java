@@ -54,19 +54,6 @@ public class EditarClienteView extends JDialog {
 	private JLabel lblCodigo;
 	Cliente clie;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			EditarClienteView dialog = new EditarClienteView();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
 	public EditarClienteView(Cliente clie) {
 		this.clie = clie;
 		listener = new InputListenerEditarCliente(this);

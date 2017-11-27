@@ -29,22 +29,6 @@ public class ContaView extends JDialog {
 	private ContaDAO contaDAO = ContaDAO.getInstance();
 	private InputListenerContaView listener;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			ContaView dialog = new ContaView(null);
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Create the dialog.
-	 */
 	public ContaView(Cliente c) {
 		this.c = c;
 		listener = new InputListenerContaView(this);
