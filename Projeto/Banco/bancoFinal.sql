@@ -37,11 +37,11 @@ CREATE TABLE `cliente` (
   PRIMARY KEY (`idCliente`),
   UNIQUE KEY `cpfCliente_UNIQUE` (`cpfCliente`),
   UNIQUE KEY `idCliente_UNIQUE` (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 /*Data for the table `cliente` */
 
-insert  into `cliente`(`idCliente`,`nomeCliente`,`cpfCliente`,`celularCliente`,`ruaCliente`,`compCliente`,`numeroCliente`,`bairroCliente`,`cidadeCliente`,`cepCliente`,`dataNascCliente`,`dataCadastro`,`telefoneCliente`) values (9,'1','13161894650','1','1','1','1','1','1','1','11/11/1111','2017-10-10','1'),(11,'etset edicao','11542601606','1','1','1','1','1','1','1','11/11/1111','2017-10-11','1'),(12,'1','09431550610','1','1','1','1','1','1','1','11/11/1111','2017-10-11','1'),(14,'eduardo','01620226626','1','1','1','1','1','1','1','11/11/1111','2017-11-13','1');
+insert  into `cliente`(`idCliente`,`nomeCliente`,`cpfCliente`,`celularCliente`,`ruaCliente`,`compCliente`,`numeroCliente`,`bairroCliente`,`cidadeCliente`,`cepCliente`,`dataNascCliente`,`dataCadastro`,`telefoneCliente`) values (9,'1','13161894650','1','1','1','1','1','1','1','11/11/1111','2017-10-10','1'),(11,'etset edicao','2','1','1','1','1','1','1','1','11/11/1111','2017-10-11','1'),(12,'1','09431550610','1','1','1','1','1','1','1','11/11/1111','2017-10-11','1'),(14,'eduardo','01620226626','1','1','1','1','1','1','1','11/11/1111','2017-11-13','1'),(15,'1111111','1','1','1','1','1','1','1','1','11/11/1111','2017-11-15','1');
 
 /*Table structure for table `compra` */
 
@@ -103,11 +103,11 @@ CREATE TABLE `conta` (
   UNIQUE KEY `idConta_UNIQUE` (`idConta`),
   UNIQUE KEY `fk_Pedido_idPedido` (`Cliente_idCliente`),
   CONSTRAINT `fk_Cliente_idCliente` FOREIGN KEY (`Cliente_idCliente`) REFERENCES `cliente` (`idCliente`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `conta` */
 
-insert  into `conta`(`idConta`,`aReceber`,`totalCompras`,`pago`,`Cliente_idCliente`) values (1,46,46,0,14);
+insert  into `conta`(`idConta`,`aReceber`,`totalCompras`,`pago`,`Cliente_idCliente`) values (1,46,46,0,14),(2,0,0,0,15);
 
 /*Table structure for table `funcionario` */
 
@@ -138,7 +138,7 @@ CREATE TABLE `funcionario` (
 
 /*Data for the table `funcionario` */
 
-insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30','1','1',1),(2,'teste edicao',1,1,'2','1','1','1','1','1','  /  /    ','1','1','2017-09-25','1','2',0),(47,'Carlos Henrique',9999999,10,'11542601606','rua qualquer','comp qualquer','0','bairro qualquer','cidade qualquer','11/11/1111','(35)3333-3333','(35)99999-9999','2017-10-11','37552-184','123456789',1);
+insert  into `funcionario`(`idFuncionario`,`nomeFunc`,`salarioFunc`,`comissaoFunc`,`cpfFunc`,`ruaFunc`,`compFunc`,`numeroFunc`,`bairroFunc`,`cidadeFunc`,`dataNascFunc`,`telefoneFunc`,`celularFunc`,`dataAdmissaoFunc`,`cepFunc`,`senhaFunc`,`administrador`) values (1,'1',1,1,'1','1','1','1','1','1','18/04/1994','1','1','2017-09-30','1','1',1),(2,'teste edicao',1,1,'2','1','1','1','1','1','  /  /    ','1','1','2017-09-25','1','2',0),(47,'Carlos Henrique',9999999,10,'3','rua qualquer','comp qualquer','0','bairro qualquer','cidade qualquer','11/11/1111','(35)3333-3333','(35)99999-9999','2017-10-11','37552-184','123456789',1);
 
 /*Table structure for table `pedido` */
 
@@ -156,7 +156,7 @@ CREATE TABLE `pedido` (
   KEY `fk_Pedido_Funcionario1_idx` (`Funcionario_idFuncionario`),
   CONSTRAINT `fk_Pedido_Cliente` FOREIGN KEY (`Cliente_idCliente`) REFERENCES `cliente` (`idCliente`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_Pedido_Funcionario1` FOREIGN KEY (`Funcionario_idFuncionario`) REFERENCES `funcionario` (`idFuncionario`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
 
 /*Data for the table `pedido` */
 
@@ -200,11 +200,30 @@ CREATE TABLE `produto` (
   `percLucro` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`idProduto`),
   UNIQUE KEY `idProduto_UNIQUE` (`idProduto`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `produto` */
 
-insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',1,1.15,1,'kjiasoidoasj','2017-11-15','2017-10-17',15),(2,'prod2',1,1.2,2,'sadasdoijowhqeiu	','2017-11-15','2017-10-17',20),(4,'Pc1',50,57.5,3,'Marina testando....','2017-11-15','2017-10-31',15),(5,'PC2',3,3.27,4,'Marina testando.....','2017-11-15','2017-10-31',9);
+insert  into `produto`(`idProduto`,`nomeProduto`,`precoCompraProduto`,`precoVendaProduto`,`qtdEstoqueProduto`,`descricaoProduto`,`ultimaDataCompraProduto`,`dataCadastroProduto`,`percLucro`) values (1,'Prod1',1,1.15,1,'kjiasoidoasj','2017-11-15','2017-10-17',15),(2,'prod2',1,1.2,2,'sadasdoijowhqeiu	','2017-11-15','2017-10-17',20),(4,'Pc1',50,59,3,'Marina testando....','2017-11-15','2017-10-31',15),(5,'PC2',3,3.27,4,'Marina testando.....','2017-11-15','2017-10-31',9),(6,'11111111111',0,0,0,'1111111111',NULL,'2017-11-15',1);
+
+/*Table structure for table `listacliente` */
+
+DROP TABLE IF EXISTS `listacliente`;
+
+/*!50001 DROP VIEW IF EXISTS `listacliente` */;
+/*!50001 DROP TABLE IF EXISTS `listacliente` */;
+
+/*!50001 CREATE TABLE  `listacliente`(
+ `idCliente` int(10) unsigned ,
+ `nomeCliente` varchar(200) 
+)*/;
+
+/*View structure for view listacliente */
+
+/*!50001 DROP TABLE IF EXISTS `listacliente` */;
+/*!50001 DROP VIEW IF EXISTS `listacliente` */;
+
+/*!50001 CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `listacliente` AS (select `cliente`.`idCliente` AS `idCliente`,`cliente`.`nomeCliente` AS `nomeCliente` from `cliente` order by `cliente`.`nomeCliente`) */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
