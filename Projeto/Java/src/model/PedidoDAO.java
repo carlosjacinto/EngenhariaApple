@@ -32,8 +32,7 @@ public class PedidoDAO {
 							+ p.getIdCliente() + "','" + p.getIdFuncionario() + "','" + p.getDataPed() + "','"
 							+ p.getPrecoPed() + "') ");
 
-			System.out.println("deu bom gravar cabeçalho");
-
+			
 			ResultSet rs = stmt.executeQuery("SELECT MAX(idPedido) FROM PEDIDO");
 			while (rs.next()) {
 				codigo = rs.getInt("MAX(idPedido)");

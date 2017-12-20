@@ -229,7 +229,7 @@ public class ClienteDAO {
 		String clientes[];
 		try {
 			Statement stmt = (Statement) conex.createStatement();
-			String SQL = "SELECT idCliente,nomeCliente FROM Cliente";
+			String SQL = "SELECT * FROM listacliente";
 			ResultSet rs = stmt.executeQuery(SQL);
 			rs.last();
 			int size = rs.getRow();

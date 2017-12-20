@@ -52,7 +52,7 @@ public class InputListenerLoginView implements MouseListener{
 		//TODO: Pegar dados e verificar login
 		
 		try {
-			Long cpf = Long.parseLong(loginView.getTextCpf().getText());
+			String cpf = loginView.getTextCpf().getText();
 			String senha = String.copyValueOf(loginView.getPasswordField().getPassword());
 			int flag = LoginDAO.getInstance().verificarSeExisteLogin(cpf, senha);
 			if(flag == 2) {

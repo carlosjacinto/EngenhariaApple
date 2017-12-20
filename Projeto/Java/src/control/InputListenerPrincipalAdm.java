@@ -39,13 +39,6 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getSetaBaixo().setVisible(false);
 			principalAdm.getBtDesligar().setVisible(false);
 		}else if(e.getSource() == principalAdm.getmnSobre()) {
-			System.out.println("teste");
-			JOptionPane.showMessageDialog(null, "Apple Cart\r\n" + 
-					"Versão 1.9.3\r\n" + 
-					"\r\n" + 
-					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Nicholas Dias e Daniel Borges.\r\n" + 
-					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
-					JOptionPane.INFORMATION_MESSAGE);
 		}
 
 
@@ -115,9 +108,15 @@ public class InputListenerPrincipalAdm implements MouseListener {
 				principalAdm.dispose();
 			}
 		} else if (e.getSource() == principalAdm.getmntmRelProd()) {
-			//if ( new PDFGenerator().createPDF() ) {
-				
-			//}
+			try {
+				boolean result = new PDFGenerator().createPDF();
+				if(!result) JOptionPane.showMessageDialog(null, "Estoque Vazio!", null,
+						JOptionPane.ERROR_MESSAGE);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
+						JOptionPane.ERROR_MESSAGE);
+			}
 		} else if (e.getSource() == principalAdm.getmntmDesligar()) {
 			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?", "Sair",
 					JOptionPane.YES_NO_OPTION);
@@ -138,8 +137,8 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			JOptionPane.showMessageDialog(null, "Apple Cart\r\n" + 
 					"Versão 1.9.3\r\n" + 
 					"\r\n" + 
-					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Nicholas Dias e Daniel Borges.\r\n" + 
-					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
+					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Pedro Carvalho e Daniel Borges.\r\n" + 
+					"\r\nCopyright © 2017 - CEPD Software s.r.o. Todos os direitos reservados.", null,
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 

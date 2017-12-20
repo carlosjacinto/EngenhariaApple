@@ -19,7 +19,7 @@ public class LoginDAO {
 		return classeDAO;
 	}
 	
-	public int verificarSeExisteLogin(long cpf, String senha) {
+	public int verificarSeExisteLogin(String cpf, String senha) {
 		conex = bd.Conectar();
 		
 		Statement stmt;
