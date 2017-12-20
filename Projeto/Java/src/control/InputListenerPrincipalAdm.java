@@ -39,6 +39,16 @@ public class InputListenerPrincipalAdm implements MouseListener {
 			principalAdm.getSetaBaixo().setVisible(false);
 			principalAdm.getBtDesligar().setVisible(false);
 		}else if(e.getSource() == principalAdm.getmnSobre()) {
+<<<<<<< HEAD
+=======
+			System.out.println("teste");
+			JOptionPane.showMessageDialog(null, "Apple Cart\r\n" + 
+					"Versão 1.9.3\r\n" + 
+					"\r\n" + 
+					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Pedro Carvalho e Daniel Borges.\r\n" + 
+					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
+					JOptionPane.INFORMATION_MESSAGE);
+>>>>>>> 3ebfa5bfe2c529f4f1a1332eaf89c5640b4024bd
 		}
 
 
@@ -117,7 +127,11 @@ public class InputListenerPrincipalAdm implements MouseListener {
 				JOptionPane.showMessageDialog(null, "Não foi possível gerar o relatório!", null,
 						JOptionPane.ERROR_MESSAGE);
 			}
+<<<<<<< HEAD
 		} else if (e.getSource() == principalAdm.getmntmDesligar()) {
+=======
+		}else if (e.getSource() == principalAdm.getmntmDesligar()) {
+>>>>>>> 3ebfa5bfe2c529f4f1a1332eaf89c5640b4024bd
 			int result = JOptionPane.showConfirmDialog(null, "Deseja realmente sair da aplicação?", "Sair",
 					JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION)
@@ -138,7 +152,11 @@ public class InputListenerPrincipalAdm implements MouseListener {
 					"Versão 1.9.3\r\n" + 
 					"\r\n" + 
 					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Pedro Carvalho e Daniel Borges.\r\n" + 
+<<<<<<< HEAD
 					"\r\nCopyright © 2017 - CEPD Software s.r.o. Todos os direitos reservados.", null,
+=======
+					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
+>>>>>>> 3ebfa5bfe2c529f4f1a1332eaf89c5640b4024bd
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 

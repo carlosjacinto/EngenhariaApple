@@ -44,6 +44,16 @@ public class InputListenerPrincipalFunc implements MouseListener {
 			principalFunc.getSetaBaixo().setVisible(false);
 			principalFunc.getBtnDesligar().setVisible(false);
 		}else if(e.getSource() == principalFunc.getmnSobre()) {
+<<<<<<< HEAD
+=======
+			System.out.println("teste");
+			JOptionPane.showMessageDialog(null, "Apple Cart\r\n" + 
+					"Versão 1.9.3\r\n" + 
+					"\r\n" + 
+					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Pedro Carvalho e Daniel Borges.\r\n" + 
+					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
+					JOptionPane.INFORMATION_MESSAGE);
+>>>>>>> 3ebfa5bfe2c529f4f1a1332eaf89c5640b4024bd
 		}
 
 	}
@@ -142,7 +152,11 @@ public class InputListenerPrincipalFunc implements MouseListener {
 					"Versão 1.9.3\r\n" + 
 					"\r\n" + 
 					"Desenvolvedores: Carlos Henrique, Eduardo Rotundaro, Pedro Carvalho e Daniel Borges.\r\n" + 
+<<<<<<< HEAD
 					"\r\nCopyright © 2017 - CEPD Software s.r.o. Todos os direitos reservados.", null,
+=======
+					"\r\nCopyright © 2017 - CEND Software s.r.o. Todos os direitos reservados.", null,
+>>>>>>> 3ebfa5bfe2c529f4f1a1332eaf89c5640b4024bd
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 
